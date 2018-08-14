@@ -1,7 +1,8 @@
 # Watog API
 
 ## Endpoints
- - POST /api/users  
+ - Sign Up. 
+   POST /api/users  
    Body: 
    ```
    {
