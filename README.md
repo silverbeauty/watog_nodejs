@@ -4,15 +4,20 @@
 
 ### Sign Up. 
    
-   POST `/api/users`  
+  POST `/api/users`  
    
-   Body: 
-   ```
-   {
-   	 "email": "user@email.com",
-   	 "password": "pwd"
-   }
-   ```
+  Body: 
+  ```
+  {
+    "email": "user@email.com",
+    "password": "pwd"
+    "first_name": ""
+    "last_name": ""
+    "cell_phone": "",
+    "country": "",
+    "hospital": ""
+  }
+  ```
 
 ### Login.
    
