@@ -4,7 +4,7 @@
 
 ### Sign Up. 
    
-   POST /api/users  
+   POST `/api/users`  
    
    Body: 
    ```
@@ -16,7 +16,7 @@
 
 ### Login.
    
-   POST /api/users/login  
+   POST `/api/users/login`  
    
    Body: 
    ```
