@@ -1,4 +1,6 @@
+
 var sequelize = require('../config/database');
+
 
 var User = sequelize.define('User', {
     id: {
@@ -36,5 +38,15 @@ var User = sequelize.define('User', {
         allowNull: false,
     },
 });
+
+User.hasMany('Category',{
+    foreignKey: 'user_id',
+    constraints: false
+})
+
+User.hasOne('Votes',{
+    foreignKey: 'voteBy',
+    constraints: false
+})
 
 module.exports = User;
