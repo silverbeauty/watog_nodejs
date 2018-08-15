@@ -1,7 +1,8 @@
 # Watog API
 
 ## Endpoints
- - Sign Up. 
+
+### Sign Up. 
    
    POST /api/users  
    
