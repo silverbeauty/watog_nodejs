@@ -14,6 +14,18 @@
    }
    ```
 
+### Login.
+   
+   POST /api/users/login  
+   
+   Body: 
+   ```
+   {
+       "email": "user@email.com",
+       "password": "pwd"
+   }
+   ```
+
 ## Installed Package
    npm install --save sequelize 
    npm install --save sqlite3
