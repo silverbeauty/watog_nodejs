@@ -27,6 +27,46 @@
   }
   ```
 
+  Response:  
+  
+  HTTP Status: 200
+  ```
+    {
+        "status": true,
+        "data": {
+            "id": 2,
+            "email": "test1@test.com",
+            "first_name": "A",
+            "last_name": "B",
+            "cell_phone": "1234567890",
+            "country": "usa",
+            "hospital": "a",
+            "updatedAt": "2018-08-16T14:38:33.188Z",
+            "createdAt": "2018-08-16T14:38:33.188Z"
+        }
+    }
+  ```
+
+  HTTP Status: 500
+  ```
+    {
+        "status": false,
+        "error": [
+            {
+                "message": "email must be unique",
+                "type": "unique violation",
+                "path": "email",
+                "value": "test1@test.com",
+                "origin": "DB",
+                "instance": {},
+                "validatorKey": "not_unique",
+                "validatorName": null,
+                "validatorArgs": []
+            }
+        ]
+    }
+  ```
+
 ### Login.
    
    POST `/api/users/login`  
