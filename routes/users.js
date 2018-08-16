@@ -18,7 +18,7 @@ router.post('/', [
 ], Users.signup)
 
 router.post('/login', [
-	check('email').isEmail(),
+  check('email').isEmail(),
   check('password').isLength({ min: 1 })
 ], Users.login)
 

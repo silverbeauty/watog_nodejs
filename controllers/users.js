@@ -58,7 +58,7 @@ const login = async (req, res) => {
     })
   }
 
-  const user = _user.get({plain:true})
+  const user = _user.get({plain: true})
 
   // Check password
   if (!bcrypt.compareSync(password, user.password)) {
@@ -68,8 +68,8 @@ const login = async (req, res) => {
     })
   }
 
-  //TODO: Include only email for now
-  const token =  jwt.sign({email}, process.env.JWT_SECRET)
+  // TODO: Include only email for now
+  const token = jwt.sign({email}, process.env.JWT_SECRET)
 
   // prevent user's password to be returned
   delete user.password
