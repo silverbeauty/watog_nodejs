@@ -1,4 +1,6 @@
-var sequelize = require('../config/database')
+var sequelize = require('../config/database');
+
+const Sequelize = require('sequelize');
 
 var Uploads = sequelize.define('Uploads', {
   id: {
@@ -25,12 +27,12 @@ var Uploads = sequelize.define('Uploads', {
 })
 
 Uploads.associate = function (models) {
-  Uploads.hasOne(models.Votes,
-    {
-      foreignKey: 'upload_id',
-      constraints: false
-    }
-  )
-}
+    Uploads.hasOne(models.Votes,
+        {
+            foreignKey: 'upload_id',
+            constraints: false
+        }
+    )
+};
 
-module.exports = Uploads
+module.exports = Uploads;
