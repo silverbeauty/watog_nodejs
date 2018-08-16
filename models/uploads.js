@@ -1,5 +1,6 @@
 var sequelize = require('../config/database');
 
+const Sequelize = require('sequelize');
 
 var Uploads = sequelize.define('Uploads', {
     id: {
@@ -34,9 +35,5 @@ Uploads.associate = function (models) {
         }
     )
 };
-
-
-
-
 
 module.exports = Uploads;

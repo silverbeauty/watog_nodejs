@@ -1,5 +1,5 @@
 var sequelize = require('../config/database');
-
+const Sequelize = require('sequelize');
 
 var User = sequelize.define('User', {
     id: {
@@ -35,7 +35,7 @@ var User = sequelize.define('User', {
     hospital: {
         type: Sequelize.STRING,
         allowNull: false,
-    },
+    }
 });
 
 User.associate = function (models) {
