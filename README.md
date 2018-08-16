@@ -1,5 +1,13 @@
 # Watog API
 
+## How to run
+### Dev  
+`npm run start:dev`
+### Production
+`npm start`
+### Required Env Variables
+#### JWT_SECRET
+
 ## Endpoints
 
 ### Sign Up. 
@@ -28,6 +36,14 @@
    {
        "email": "user@email.com",
        "password": "pwd"
+   }
+   ```
+
+   Response:
+
+   ```
+   {
+
    }
    ```
 
