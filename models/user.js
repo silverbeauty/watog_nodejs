@@ -9,7 +9,7 @@ const User = sequelize.define('User', {
         autoIncrement: true,
         primaryKey: true,
     },
-    first_name:{
+    first_name: {
         type: Sequelize.STRING,
         allowNull: false,
     },
@@ -39,6 +39,24 @@ const User = sequelize.define('User', {
         allowNull: false,
     },
 });
+
+User.associate = function (models) {
+    User.hasMany(models.Category,
+        {
+            foreignKey: 'user_id',
+            constraints: false
+        }
+    )
+};
+
+User.associate = function (models) {
+    User.hasOne(models.Votes,
+        {
+            foreignKey: 'voteBy',
+            constraints: false
+        }
+    )
+};
 
 User.sync()
 
