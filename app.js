@@ -16,7 +16,7 @@ var dbConfig = require('./config/database');
 // Check requried envs
 
 if (!process.env.JWT_SECRET) { 
-	console.eror('Please set JWT_SECRET env!')
+	console.error('Please set JWT_SECRET env!')
 	process.exit()
 }
 
