@@ -1,6 +1,8 @@
-var sequelize = require('../config/database');
+const Sequelize = require('sequelize')
 
-var User = sequelize.define('User', {
+const sequelize = require('../config/database');
+
+const User = sequelize.define('User', {
     id: {
         type: Sequelize.INTEGER,
         allowNull: false,
@@ -22,6 +24,7 @@ var User = sequelize.define('User', {
     email: {
         type: Sequelize.STRING,
         allowNull: false,
+        unique: true
     },
     cell_phone: {
         type: Sequelize.STRING,
@@ -37,4 +40,6 @@ var User = sequelize.define('User', {
     },
 });
 
-module.exports = User;
+User.sync()
+
+module.exports = User
