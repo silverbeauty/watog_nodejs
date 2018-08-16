@@ -6,7 +6,7 @@
     "start": "node ./bin/www",
     "start:dev": "nodemon ./bin/www",
     "lint": "eslint config controllers models routes",
-    "lint": "eslint config controllers models routes --fix"
+    "lint-fix": "eslint config controllers models routes --fix"
   },
   "dependencies": {
     "ajv": "^6.5.2",
