@@ -82,7 +82,14 @@ const login = async (req, res) => {
   })
 }
 
+const checkAuth = (req, res, next) => {
+  const authorization = req.getHeader('Authorization')
+
+  
+}
+
 module.exports = {
   signup,
-  login
+  login,
+  checkAuth
 }

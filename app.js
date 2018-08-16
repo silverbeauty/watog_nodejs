@@ -13,6 +13,13 @@ var app = express();
 
 var dbConfig = require('./config/database');
 
+// Check requried envs
+
+if (!process.env.JWT_SECRET) { 
+	console.eror('Please set JWT_SECRET env!')
+	process.exit()
+}
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
