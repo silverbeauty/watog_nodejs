@@ -41,6 +41,7 @@
 
    Response:
 
+   HTTP Status: 200  
    ```
     {
         "status": true,
@@ -58,6 +59,14 @@
                 "updatedAt": "2018-08-16T14:27:19.854Z"
             }
         }
+    }
+   ```
+   HTTP Status: 401  
+
+   ```
+    {
+      "status": false,
+      "error": "Invalid email or password!"
     }
    ```
 
