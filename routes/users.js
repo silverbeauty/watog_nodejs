@@ -17,4 +17,9 @@ router.post('/', [
   check('cell_phone').isLength({ min: 9 }).matches(/^[0-9]+$/).withMessage('cell_phone must be at least 9 chars long and only numbers!')
 ], Users.signup)
 
+router.post('/login', [
+	check('email').isEmail(),
+  check('password').isLength({ min: 1 })
+], Users.login)
+
 module.exports = router

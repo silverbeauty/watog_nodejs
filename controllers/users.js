@@ -1,4 +1,5 @@
 const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
 const { validationResult } = require('express-validator/check')
 
 const User = require('../models/user')
@@ -37,6 +38,51 @@ const signup = async (req, res) => {
   })
 }
 
+const login = async (req, res) => {
+  const errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    return res.status(401).json({
+      status: false,
+      error: 'Invalid email or password!'
+    })
+  }
+
+  const { email, password } = req.body
+
+  const _user = await User.findOne({ where: { email } })
+
+  if (!_user) {
+    return res.status(401).json({
+      status: false,
+      error: 'Invalid email or password!'
+    })
+  }
+
+  const user = _user.get({plain:true})
+
+  // Check password
+  if (!bcrypt.compareSync(password, user.password)) {
+    return res.status(401).json({
+      status: false,
+      error: 'Invalid email or password!'
+    })
+  }
+
+  //TODO: Include only email for now
+  const token =  jwt.sign({email}, process.env.JWT_SECRET)
+
+  // prevent user's password to be returned
+  delete user.password
+  res.send({
+    status: true,
+    data: {
+      token,
+      user
+    }
+  })
+}
+
 module.exports = {
-  signup
+  signup,
+  login
 }
