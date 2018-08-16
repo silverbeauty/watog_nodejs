@@ -9,7 +9,7 @@ var User = sequelize.define('User', {
         autoIncrement: true,
         primaryKey: true,
     },
-    first_name:{
+    first_name: {
         type: Sequelize.STRING,
         allowNull: false,
     },
@@ -39,14 +39,24 @@ var User = sequelize.define('User', {
     },
 });
 
-User.hasMany('Category',{
-    foreignKey: 'user_id',
-    constraints: false
-})
+User.associate = function (models) {
+    User.hasMany(models.Category,
+        {
+            foreignKey: 'user_id',
+            constraints: false
+        }
+    )
+};
 
-User.hasOne('Votes',{
-    foreignKey: 'voteBy',
-    constraints: false
-})
+User.associate = function (models) {
+    User.hasOne(models.Votes,
+        {
+            foreignKey: 'voteBy',
+            constraints: false
+        }
+    )
+};
+
+
 
 module.exports = User;

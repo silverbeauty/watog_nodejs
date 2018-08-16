@@ -11,11 +11,30 @@ var Category = sequelize.define('Category', {
     type: {
         type: Sequelize.STRING,
         allowNull: false
+    },
+    user_id : {
+        type: Sequelize.INTEGER,
+        allowNull: false
+    }
+},
+{
+    classMethods: {
+        associate: function (models) {
+            models.Category.belongsTo(models.User, { constraints: false })
+        }
     }
 });
 
-Category.hasMany(Uploads, { foreignKey: 'category_id', constraints: false })
-Category.belongsTo(User, { constraints: false });
+
+Category.associate = function (models) {
+    Category.hasMany(models.Uploads,
+        {
+            foreignKey: 'category_id',
+            constraints: false
+        }
+    )
+};
+
 
 
 
