@@ -1,3 +1,4 @@
+const bcrypt = require('bcrypt')
 const { validationResult } = require('express-validator/check');
 
 const User = require('../models/user')
@@ -11,10 +12,18 @@ const signup = async (req, res) => {
     })
   }
 
-	const user = User.build(req.body)
+  const hash = await bcrypt.hash(req.body.password, 8)
+
+	const user = User.build({
+		...req.body,
+		password: hash
+	})
+	let data
 	try {
 		const res = await user.save()
-		console.info('Res:', res.get({plain:true}))
+		data = res.get({plain: true})
+		// Remove password
+		delete data.password
 	} catch(e) {
 		console.error(e)
 		return res.status(500).send({
@@ -25,7 +34,7 @@ const signup = async (req, res) => {
 
 	res.send({
 		status: true, 
-		data: req.body
+		data
 	})
 }
 
