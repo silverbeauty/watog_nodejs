@@ -1,15 +1,14 @@
-const Sequelize = require('sequelize')
+var sequelize = require('../config/database');
 
-const sequelize = require('../config/database');
 
-const User = sequelize.define('User', {
+var User = sequelize.define('User', {
     id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
     },
-    first_name:{
+    first_name: {
         type: Sequelize.STRING,
         allowNull: false,
     },
@@ -24,7 +23,6 @@ const User = sequelize.define('User', {
     email: {
         type: Sequelize.STRING,
         allowNull: false,
-        unique: true
     },
     cell_phone: {
         type: Sequelize.STRING,
@@ -40,6 +38,24 @@ const User = sequelize.define('User', {
     },
 });
 
-User.sync()
+User.associate = function (models) {
+    User.hasMany(models.Category,
+        {
+            foreignKey: 'user_id',
+            constraints: false
+        }
+    )
+};
 
-module.exports = User
+User.associate = function (models) {
+    User.hasOne(models.Votes,
+        {
+            foreignKey: 'voteBy',
+            constraints: false
+        }
+    )
+};
+
+
+
+module.exports = User;
