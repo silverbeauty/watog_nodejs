@@ -24,6 +24,7 @@ const User = sequelize.define('User', {
     email: {
         type: Sequelize.STRING,
         allowNull: false,
+        unique: true
     },
     cell_phone: {
         type: Sequelize.STRING,
@@ -39,8 +40,6 @@ const User = sequelize.define('User', {
     },
 });
 
-User.sync({
-    alter: true
-})
+User.sync()
 
 module.exports = User

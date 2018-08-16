@@ -25,10 +25,9 @@ const signup = async (req, res) => {
 		// Remove password
 		delete data.password
 	} catch(e) {
-		console.error(e)
 		return res.status(500).send({
 			status: false,
-			error: 'SignUp Failed!'
+			error: e.errors
 		})
 	}
 
