@@ -37,6 +37,14 @@ const create = async (req, res) => {
 	})
 }
 
+const get = async (req, res) => {
+	const category = await Category.findById(req.params.id)
+	res.send({
+		status: true,
+		data: category.get({ plain: true} )
+	})
+}
+
 module.exports = {
 	create
 }

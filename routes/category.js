@@ -7,9 +7,13 @@ const UserCtrl = require('../controllers/user')
 
 const router = express.Router()
 
+// Create a new cateogry
 router.post('/',
 	UserCtrl.checkAuth,
  [ body('type').isLength({ min: 3 }).withMessage('type must be at least 3 chars long')]
 , CategoryCtrl.create)
+
+// Get a single category
+router.get('/:id', UserCtrl.checkAuth, CategoryCtrl.get)
 
 module.exports = router

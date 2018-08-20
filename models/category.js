@@ -1,7 +1,7 @@
-var sequelize = require('../config/database');
+const sequelize = require('../config/database')
 
-const Sequelize = require('sequelize');
-var Category = sequelize.define('Category', {
+const Sequelize = require('sequelize')
+const Category = sequelize.define('Category', {
   id: {
     type: Sequelize.INTEGER,
     allowNull: false,
