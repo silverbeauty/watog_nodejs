@@ -166,8 +166,8 @@
   ```  
 
 ### File APIs
-- GET `/api/file/:id`
-  Return file in `files/:id`
+- GET `/api/file/:name`
+  Return file in `files/:name`
 
 - POST `/api/file`
   Upload file 
