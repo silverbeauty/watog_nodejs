@@ -105,7 +105,6 @@ const getMe = async (req, res) => {
   const profile = currentUser.get({
     plain: true
   })
-
   delete profile.password
   res.send({
     status: true,
@@ -115,11 +114,7 @@ const getMe = async (req, res) => {
 
 const getUser = async (req, res) => {
   // TODO: limit access for fields: https://gitlab.com/watog-app/sql-nodejs/issues/1
-  const { id } = req.params.id
-
-  const user = await User.findOne({
-    id: id
-  })
+  const user = await User.findOne({ id: req.params.id })
 
   if (!user) {
     return res.status(400).send({
@@ -132,6 +127,8 @@ const getUser = async (req, res) => {
     plain: true
   })
 
+  console.info('Get Profile:', req.params.id)
+
   delete userObj.password
   res.send({
     status: true,
@@ -143,5 +140,6 @@ module.exports = {
   signup,
   login,
   checkAuth,
-  getMe
+  getMe,
+  getUser
 }

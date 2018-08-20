@@ -28,4 +28,7 @@ router.post('/login', [
 // Return own profile
 router.get('/me', Users.checkAuth, Users.getMe)
 
+// Return a single user profile
+router.get('/:id', Users.checkAuth, Users.getUser)
+
 module.exports = router
