@@ -9,7 +9,7 @@ var Uploads = sequelize.define('Uploads', {
     autoIncrement: true,
     primaryKey: true
   },
-  pictures: {
+  image: {
     type: Sequelize.STRING,
     allowNull: false
   },

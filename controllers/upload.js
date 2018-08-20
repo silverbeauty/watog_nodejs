@@ -2,7 +2,7 @@
 const { validationResult } = require('express-validator/check');
 
 
-const Uploads = require('../models/uploads')
+const Upload = require('../models/upload')
 
 const Upload = async (req, res) => {
 
@@ -15,13 +15,12 @@ const Upload = async (req, res) => {
     })
   }
 
-
-	const uploads = Uploads.build({
+	const upload = Upload.build({
 		...req.body
 	})
 	let data
 	try {
-		const res = await uploads.save()
+		const res = await upload.save()
 		data = res.get({plain: true})
 		// Remove password
 	} catch(e) {
