@@ -184,6 +184,18 @@
   "file": File Object
   ```
 
+  Response:
+
+  ```
+  {
+    "status": true,
+    "data": {
+        "file_name": "949b4d70-a48d-11e8-a12f-dd03f72627a4.png",
+        "url": "http://localhost:3000/api/file/949b4d70-a48d-11e8-a12f-dd03f72627a4.png"
+    }
+  }
+  ```
+
 - GET `/api/file/verify/:id`
   Return proof of status doc in `files/:id`
 
