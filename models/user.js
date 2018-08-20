@@ -55,6 +55,14 @@ const User = sequelize.define('User', {
     type: Sequelize.DATE,
     allowNull: true
   },
+  picture_profile: {
+    type: Sequelize.STRING,
+    allowNull: true
+  },
+  picture_cover: {
+    type: Sequelize.STRING,
+    allowNull: true
+  }
 })
 
 User.associate = function (models) {
