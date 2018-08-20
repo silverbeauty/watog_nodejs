@@ -20,4 +20,7 @@ router.post('/', Users.checkAuth, upload.single('file'), FileCtrl.create)
 // Get a file
 router.get('/:id', FileCtrl.get)
 
+// Get a verify doc
+router.get('/verify/:id', FileCtrl.getVerifyDoc)
+
 module.exports = router

@@ -170,6 +170,24 @@
   "file": File Object
   ```
 
+- GET `/api/file/verify/:id`
+  Return proof of status doc in `files/:id`
+
+- POST `/api/file/verify`
+  Upload proof of status doc
+
+  Header:  
+  
+  ```
+  "Content-Type": "multipart/form-data"
+  ```
+
+  Body:  
+
+  ```
+  "file": File Object
+  ```
+
 ### Category APIs
 - POST `/api/category`
 

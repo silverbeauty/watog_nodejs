@@ -2,6 +2,8 @@ const path = require('path')
 const mime = require('mime-types')
 const fs = require('fs')
 
+const User = require('../models/user')
+
 const create = (req, res) => {
   if (req.file) {
     res.send({
@@ -32,7 +34,8 @@ const get = (req, res) => {
   }
 }
 
-const uploadVerifyDoc = (req, res) => {
+// TODO: it needs a supervisor access or own access
+const getVerifyDoc = (req, res) => {
   const filePath = path.resolve(`./docs/${req.params.id}`)
   console.info('File Path:', filePath)
   if (fs.existsSync(filePath)) {
@@ -46,8 +49,32 @@ const uploadVerifyDoc = (req, res) => {
   }
 }
 
+const uploadVerifyDoc = async (req, res) => {
+  if (req.file) {
+    const { currentUser } = req
+    currentUser.proof_of_status = process.env.ENDPOINT + '/api/file/doc/' + req.file.filename
+    await currentUser.save()
+    const data = currentUser.get({
+      plain: true
+    })
+
+    delete data.password
+
+    res.send({
+      status: true,
+      data
+    })
+  } else {
+    res.status(400).send({
+      status: false,
+      error: 'file is not passed!'
+    })
+  }
+}
+
 module.exports = {
   create,
   get,
-  uploadVerifyDoc
+  uploadVerifyDoc,
+  getVerifyDoc
 }
