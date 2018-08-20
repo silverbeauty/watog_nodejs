@@ -178,6 +178,37 @@
   { "type": String }
   ```
 
+  Response:  
+  HTTP Status: 200. 
+  ```
+  {
+    "status": true,
+    "data": {
+        "id": 1,
+        "type": "boy",
+        "user_id": 2,
+        "updatedAt": "2018-08-20T08:12:30.304Z",
+        "createdAt": "2018-08-20T08:12:30.304Z"
+    }
+  }
+  ```
+- GET `/api/category/:id`
+
+  Response:
+  HTTP Status: 200,  
+  ```
+  {
+    "status": true,
+    "data": {
+        "id": 1,
+        "type": "boy",
+        "user_id": 2,
+        "updatedAt": "2018-08-20T08:12:30.304Z",
+        "createdAt": "2018-08-20T08:12:30.304Z"
+    }
+  }
+  ```
+
 ## Installed Package Requierement
 
    sudo npm install nodemon -g
