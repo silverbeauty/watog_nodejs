@@ -28,7 +28,8 @@ const create = async (req, res) => {
   }
 
 	const post = Post.build({
-		...req.body
+		...req.body,
+		user_id: req.currentUser.id
 	})
 	let data
 	try {

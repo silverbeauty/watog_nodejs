@@ -16,6 +16,10 @@ const Post = sequelize.define('Post', {
   category_id: {
     type: Sequelize.INTEGER,
     allowNull: false
+  },
+  user_id: {
+    type: Sequelize.INTEGER,
+    allowNull: false
   }
 },
 {
@@ -29,7 +33,7 @@ const Post = sequelize.define('Post', {
 Post.associate = function (models) {
     Post.hasOne(models.Vote,
         {
-            foreignKey: 'upload_id',
+            foreignKey: 'post_id',
             constraints: false
         }
     )
