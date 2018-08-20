@@ -45,7 +45,51 @@ const get = async (req, res) => {
 	})
 }
 
+const query = async (req, res) => {
+  // TODO: query condition should be defined in route
+  // TODO: limit access to users
+  const allowed_queries = ['limit', 'offset', 'user_id']
+  const query = {...req.query}
+  const cquery = {...query}
+
+  // Check valid queries
+  for (let key of allowed_queries) {
+    delete cquery[key]
+  }
+
+  if (Object.keys(cquery).length > 0) { // Other queries 
+    console.error('Query not allowed:', cquery)
+    return res.status(400).send({
+      status: false,
+      error: {
+        msg: 'Query not allowed',
+        data: cquery
+      }
+    })
+  }
+
+  const limit = query.limit || 10000
+  const offset = query.offset || 0
+
+  // Remove offset, limit 
+  delete query.limit
+  delete query.offset  
+
+  const data = await Category.findAll({
+    where: query,
+    limit,
+    offset,
+    raw: true
+  })
+
+  res.send({
+    status: true,
+    data
+  })
+}
+
 module.exports = {
 	create,
-	get
+	get,
+	query
 }

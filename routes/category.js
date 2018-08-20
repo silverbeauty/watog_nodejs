@@ -16,4 +16,7 @@ router.post('/',
 // Get a single category
 router.get('/:id', UserCtrl.checkAuth, CategoryCtrl.get)
 
+// Get a single category
+router.get('/', UserCtrl.checkAuth, CategoryCtrl.query)
+
 module.exports = router
