@@ -25,4 +25,7 @@ router.post('/login', [
   check('password').isLength({ min: 1 })
 ], Users.login)
 
+// Return own profile
+router.get('/me', Users.checkAuth, Users.getMe)
+
 module.exports = router
