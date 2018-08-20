@@ -2,9 +2,10 @@
 const { validationResult } = require('express-validator/check');
 
 
-const Upload = require('../models/upload')
+const Post = require('../models/post')
+const Category = require('../models/category')
 
-const createUpload = async (req, res) => {
+const create = async (req, res) => {
 
 	// console.log(req.body)
  	const errors = validationResult(req);
@@ -15,12 +16,23 @@ const createUpload = async (req, res) => {
     })
   }
 
-	const upload = Upload.build({
+  // Check valid category
+
+  const { category_id } = req.body
+  const category = await Category.findById(category_id)
+  if (!category) {
+  	return res.status(400).send({
+  		status: false,
+  		error: 'no category exists:' + category_id
+  	})
+  }
+
+	const post = Post.build({
 		...req.body
 	})
 	let data
 	try {
-		const res = await upload.save()
+		const res = await post.save()
 		data = res.get({plain: true})
 		// Remove password
 	} catch(e) {
@@ -38,5 +50,5 @@ const createUpload = async (req, res) => {
 }
 
 module.exports = {
-	createUpload
+	create
 }

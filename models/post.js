@@ -1,8 +1,8 @@
-var sequelize = require('../config/database');
+const sequelize = require('../config/database')
 
-const Sequelize = require('sequelize');
+const Sequelize = require('sequelize')
 
-var Uploads = sequelize.define('Uploads', {
+const Post = sequelize.define('Post', {
   id: {
     type: Sequelize.INTEGER,
     allowNull: false,
@@ -21,13 +21,13 @@ var Uploads = sequelize.define('Uploads', {
 {
   classMethods: {
     associate: function (models) {
-      models.Uploads.belongsTo(models.Category, { constraints: false })
+      models.Post.belongsTo(models.Category, { constraints: false })
     }
   }
 })
 
-Uploads.associate = function (models) {
-    Uploads.hasOne(models.Votes,
+Post.associate = function (models) {
+    Post.hasOne(models.Votes,
         {
             foreignKey: 'upload_id',
             constraints: false
@@ -35,4 +35,4 @@ Uploads.associate = function (models) {
     )
 };
 
-module.exports = Uploads;
+module.exports = Post
