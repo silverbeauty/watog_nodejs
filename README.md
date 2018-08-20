@@ -211,6 +211,8 @@
 
 ### Post APIs
 - POST `/api/post`
+  Create a single post. 
+  `picture` should be get by `API host` + `/api/files` + returned id from POST `/api/file`. 
 
   Body: 
   ```
@@ -236,6 +238,7 @@
   }
   ```
 - GET `/api/post/:id`
+  Get a single post. 
 
   Response:
   HTTP Status: 200,  
@@ -252,6 +255,19 @@
   }
   ```
 
+- GET `/api/post?[QUERY]`
+  Query posts. valid queries are `limit`, `offset`, `user_id`, `category_id`. 
+
+
+  Response:
+  HTTP Status: 200
+  ```
+  {
+    "status": true,
+    "data": [Post Object]
+    ]
+  }
+  ```
 
 ## Installed Package Requierement
 
