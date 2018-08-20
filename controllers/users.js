@@ -140,10 +140,11 @@ const queryUsers = async (req, res) => {
   const allowed_queries = ['limit', 'offset', 'first_name', 'last_name', 'country', 'hospital']
   const query = {...req.query}
   const cquery = {...query}
+
+  // Check valid queries
   for (let key of allowed_queries) {
     delete cquery[key]
   }
-  console.info('CQuery:', query, cquery)
 
   if (Object.keys(cquery).length > 0) { // Other queries 
     console.error('Query not allowed:', cquery)
