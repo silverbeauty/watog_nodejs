@@ -46,5 +46,6 @@ const get = async (req, res) => {
 }
 
 module.exports = {
-	create
+	create,
+	get
 }
