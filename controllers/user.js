@@ -97,7 +97,16 @@ const checkAuth = async (req, res, next) => {
   }
 
   req.currentUser = await User.findOne({ where: { email: decoded.email } })
-  next()
+
+  if (req.currentUser) {
+    next()    
+  } else {
+    console.error('Valid JWT but no user:', decoded)
+    res.send({
+      status: false,
+      error: 'Invalid User'
+    })
+  }
 }
 
 const getMe = async (req, res) => {
@@ -179,11 +188,39 @@ const queryUsers = async (req, res) => {
   })
 }
 
+const editMe = async (req, res) => {
+  const user = req.currentUser
+
+  const editData = req.body
+  // TODO: should limit the editing fields here
+  delete editData.password
+  delete editData.proof_of_status_date
+  delete editData.email_verified_date
+  delete editData.sms_verified_date
+
+  for (let key in editData) {
+    user[key] = editData[key]
+  }
+
+  await user.save()
+
+  const data = user.get({
+    plain: true
+  })
+  delete data.password
+
+  res.send({
+    status: true,
+    data
+  })
+}
+
 module.exports = {
   signup,
   login,
   checkAuth,
   getMe,
+  editMe,
   getUser,
   queryUsers
 }

@@ -38,6 +38,30 @@ const User = sequelize.define('User', {
   hospital: {
     type: Sequelize.STRING,
     allowNull: false
+  },
+  proof_of_status: { // Proof of status doc URL
+    type: Sequelize.STRING,
+    allowNull: true
+  },
+  proof_of_status_date: { // When it is verified by admin
+    type: Sequelize.DATE,
+    allowNull: true
+  },
+  email_verified_date: {
+    type: Sequelize.DATE,
+    allowNull: true
+  },
+  sms_verified_date: {
+    type: Sequelize.DATE,
+    allowNull: true
+  },
+  picture_profile: {
+    type: Sequelize.STRING,
+    allowNull: true
+  },
+  picture_cover: {
+    type: Sequelize.STRING,
+    allowNull: true
   }
 })
 

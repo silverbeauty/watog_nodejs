@@ -122,7 +122,21 @@
     "status": true,
     "data": User Object
   }
+  ```
+
+- GET `/user/me`  
+  Edit own profile by JWT  
+
+  Response:  
+
+  HTTP Status: 200  
   ```  
+  {
+    "status": true,
+    "data": User Object
+  }
+  ```
+
 - GET `/user?[QUERY]`  
   Query user with [QUERY] - QUERY can be missing  
 
@@ -161,7 +175,7 @@
   Header:  
   
   ```
-  "Content-Type": "multipart/form-data"
+  "Content-Type": "application/json"
   ```
 
   Body:  
@@ -169,6 +183,26 @@
   ```
   "file": File Object
   ```
+
+- GET `/api/file/verify/:id`
+  Return proof of status doc in `files/:id`
+
+- POST `/api/file/verify`
+  Upload proof of status doc
+
+  Header:  
+  
+  ```
+  "Content-Type": "application/json"
+  ```
+
+  Body:  
+
+  ```
+  "file": File Object
+  ```
+
+  Response: the same as `/api/user`
 
 ### Category APIs
 - POST `/api/category`

@@ -8,11 +8,19 @@ const multer = require('multer')
 
 const router = express.Router()
 const upload = multer({ dest: 'files/' })
+const uploadVerify = multer({ dest: 'files/' })
+
+
+// Upload verification document: Diploma, student cardm ...
+router.post('/verify', Users.checkAuth, uploadVerify.single('file'), FileCtrl.uploadVerifyDoc)
 
 // Upload a file
-router.post('/', Users.checkAuth, upload.single('file'), FileCtrl.create)
+router.post('/', upload.single('file'), FileCtrl.create)
 
 // Get a file
 router.get('/:id', FileCtrl.get)
+
+// Get a verify doc
+router.get('/verify/:id', FileCtrl.getVerifyDoc)
 
 module.exports = router
