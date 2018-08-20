@@ -137,7 +137,25 @@ const getUser = async (req, res) => {
 const queryUsers = async (req, res) => {
   // TODO: query condition should be defined in route
   // TODO: limit access to users
+  const allowed_queries = ['limit', 'offset', 'first_name', 'last_name', 'country', 'hospital']
   const query = {...req.query}
+  const cquery = {...query}
+  for (let key of allowed_queries) {
+    delete cquery[key]
+  }
+  console.info('CQuery:', query, cquery)
+
+  if (Object.keys(cquery).length > 0) { // Other queries 
+    console.error('Query not allowed:', cquery)
+    return res.status(400).send({
+      status: false,
+      error: {
+        msg: 'Query not allowed',
+        data: cquery
+      }
+    })
+  }
+
   const limit = query.limit || 10
   const offset = query.offset || 0
 

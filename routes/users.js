@@ -1,6 +1,6 @@
 const express = require('express')
 
-const { check, validationResult } = require('express-validator/check')
+const { check, validationResult, query } = require('express-validator/check')
 
 const Users = require('../controllers/users')
 
