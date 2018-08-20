@@ -166,8 +166,8 @@
   ```  
 
 ### File APIs
-- GET `/api/file/:id`
-  Return file in `files/:id`
+- GET `/api/file/:name`
+  Return file in `files/:name`
 
 - POST `/api/file`
   Upload file 
@@ -182,6 +182,18 @@
 
   ```
   "file": File Object
+  ```
+
+  Response:
+
+  ```
+  {
+    "status": true,
+    "data": {
+        "file_name": "949b4d70-a48d-11e8-a12f-dd03f72627a4.png",
+        "url": "http://localhost:3000/api/file/949b4d70-a48d-11e8-a12f-dd03f72627a4.png"
+    }
+  }
   ```
 
 - GET `/api/file/verify/:id`

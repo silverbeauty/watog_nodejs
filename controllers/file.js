@@ -9,7 +9,8 @@ const create = (req, res) => {
     res.send({
       status: true,
       data: {
-        id: req.file.filename
+        file_name: req.file.filename,
+        url: process.env.WATOG_DOMAIN + '/api/file/' + req.file.filename
       }
     })
   } else {
@@ -24,7 +25,7 @@ const get = (req, res) => {
   const filePath = path.resolve(`./files/${req.params.id}`)
   console.info('File Path:', filePath)
   if (fs.existsSync(filePath)) {
-	  res.set('Content-Type', mime.lookup(filePath))
+	  res.set('Content-Type', mime.contentType(filePath))
     res.sendFile(filePath)
   } else {
   	res.status(404).send({
@@ -39,7 +40,7 @@ const getVerifyDoc = (req, res) => {
   const filePath = path.resolve(`./docs/${req.params.id}`)
   console.info('File Path:', filePath)
   if (fs.existsSync(filePath)) {
-    res.set('Content-Type', mime.lookup(filePath))
+    res.set('Content-Type', mime.contentType(filePath))
     res.sendFile(filePath)
   } else {
     res.status(404).send({
