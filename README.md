@@ -161,7 +161,7 @@
   Header:  
   
   ```
-  "Content-Type": "multipart/form-data"
+  "Content-Type": "application/json"
   ```
 
   Body:  
@@ -179,7 +179,7 @@
   Header:  
   
   ```
-  "Content-Type": "multipart/form-data"
+  "Content-Type": "application/json"
   ```
 
   Body:  
@@ -187,6 +187,8 @@
   ```
   "file": File Object
   ```
+
+  Response: the same as `/api/user`
 
 ### Category APIs
 - POST `/api/category`
