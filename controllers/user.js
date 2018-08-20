@@ -188,11 +188,34 @@ const queryUsers = async (req, res) => {
   })
 }
 
+const editMe = async (req, res) => {
+  const user = req.currentUser
+
+  const editData = req.body
+
+  for (let key in editData) {
+    user[key] = editData[key]
+  }
+
+  await user.save()
+
+  const data = user.get({
+    plain: true
+  })
+  delete data.password
+
+  res.send({
+    status: true,
+    data
+  })
+}
+
 module.exports = {
   signup,
   login,
   checkAuth,
   getMe,
+  editMe,
   getUser,
   queryUsers
 }

@@ -26,6 +26,9 @@ router.post('/login', [
 ], UserCtrl.login)
 
 // Return own profile
+router.put('/me', UserCtrl.checkAuth, UserCtrl.editMe)
+
+// Return own profile
 router.get('/me', UserCtrl.checkAuth, UserCtrl.getMe)
 
 // Return a single user profile
