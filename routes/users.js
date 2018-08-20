@@ -1,6 +1,6 @@
 const express = require('express')
 
-const { check, validationResult } = require('express-validator/check')
+const { check, validationResult, query } = require('express-validator/check')
 
 const Users = require('../controllers/users')
 
@@ -24,5 +24,14 @@ router.post('/login', [
   check('email').isEmail(),
   check('password').isLength({ min: 1 })
 ], Users.login)
+
+// Return own profile
+router.get('/me', Users.checkAuth, Users.getMe)
+
+// Return a single user profile
+router.get('/:id', Users.checkAuth, Users.getUser)
+
+// Query users
+router.get('/', Users.checkAuth, Users.queryUsers)
 
 module.exports = router

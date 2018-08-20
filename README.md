@@ -108,7 +108,48 @@
       "status": false,
       "error": "Invalid email or password!"
     }
-   ```
+   ``` 
+
+### User APIs
+- GET `/users/me`  
+  Return own profile by JWT  
+
+  Response:  
+
+  HTTP Status: 200  
+  ```  
+  {
+    "status": true,
+    "data": User Object
+  }
+  ```  
+- GET `/users?[QUERY]`  
+  Query users with [QUERY] - QUERY can be missing  
+
+  Query:  
+  ['limit', 'offset', 'first_name', 'last_name', 'country', 'hospital']  
+
+  Response:  
+
+  HTTP Status: 200  
+  ```  
+  {
+    "status": true,
+    "data": [User Object]
+  }
+  ``` 
+- GET `/users/:id`
+  Return a user with id  
+
+  Response:  
+
+  HTTP Status: 200  
+  ```  
+  {
+    "status": true,
+    "data": User Object
+  }
+  ```  
 
 ## Installed Package Requierement
 
