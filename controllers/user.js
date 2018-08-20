@@ -194,6 +194,9 @@ const editMe = async (req, res) => {
   const editData = req.body
   // TODO: should limit the editing fields here
   delete editData.password
+  delete editData.proof_of_status_date
+  delete editData.email_verified_date
+  delete editData.sms_verified_date
 
   for (let key in editData) {
     user[key] = editData[key]
