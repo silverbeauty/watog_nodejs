@@ -170,6 +170,14 @@
   "file": File Object
   ```
 
+### Category APIs
+- POST `/api/category`
+
+  Body: 
+  ```
+  { "type": String }
+  ```
+
 ## Installed Package Requierement
 
    sudo npm install nodemon -g
