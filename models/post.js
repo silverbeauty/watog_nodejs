@@ -27,12 +27,14 @@ const Post = sequelize.define('Post', {
 })
 
 Post.associate = function (models) {
-    Post.hasOne(models.Votes,
+    Post.hasOne(models.Vote,
         {
             foreignKey: 'upload_id',
             constraints: false
         }
     )
 };
+
+Post.sync()
 
 module.exports = Post

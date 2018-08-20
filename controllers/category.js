@@ -3,7 +3,7 @@ const { validationResult } = require('express-validator/check');
 
 const Category = require('../models/category')
 
-const addNew = async (req, res) => {
+const create = async (req, res) => {
 
  	const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -13,10 +13,11 @@ const addNew = async (req, res) => {
     })
   }
 
-
-	const category = Category.build({
-		...req.body
+  const category = Category.build({
+		type: req.body.type,
+		user_id: req.currentUser.id
 	})
+
 	let data
 	try {
 		const res = await category.save()
@@ -37,5 +38,5 @@ const addNew = async (req, res) => {
 }
 
 module.exports = {
-	addNew
+	create
 }

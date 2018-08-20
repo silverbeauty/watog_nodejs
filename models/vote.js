@@ -1,6 +1,6 @@
 var sequelize = require('../config/database')
 
-var Votes = sequelize.define('Votes', {
+var Vote = sequelize.define('Votes', {
   id: {
     type: Sequelize.INTEGER,
     allowNull: false,
@@ -31,4 +31,6 @@ var Votes = sequelize.define('Votes', {
   }
 })
 
-module.exports = Votes
+Vote.sync()
+
+module.exports = Vote

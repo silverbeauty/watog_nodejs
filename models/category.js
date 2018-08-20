@@ -34,4 +34,6 @@ Category.associate = function (models) {
   )
 }
 
+Category.sync()
+
 module.exports = Category

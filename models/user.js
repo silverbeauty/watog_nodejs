@@ -50,7 +50,7 @@ User.associate = function (models) {
 }
 
 User.associate = function (models) {
-  User.hasOne(models.Votes,
+  User.hasOne(models.Vote,
     {
       foreignKey: 'voteBy',
       constraints: false
