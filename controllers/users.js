@@ -83,7 +83,7 @@ const login = async (req, res) => {
 }
 
 const checkAuth = async (req, res, next) => {
-  const authorization = req.getHeader('Authorization')
+  const token = req.get('Authorization')
   let decoded
   try {
      decoded = jwt.verify(token, process.env.JWT_SECRET)
