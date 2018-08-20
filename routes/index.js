@@ -1,8 +1,9 @@
 const express = require('express')
 
-const users = require('./users')
+const user = require('./user')
 const category = require('./category')
-const upload = require('./upload')
+const post = require('./post')
+const file = require('./file')
 
 const router = express.Router()
 
@@ -10,8 +11,9 @@ router.get('/health', (req, res) => {
   res.send('OK')
 })
 
-router.use('/users', users)
+router.use('/user', user)
 router.use('/category', category)
-router.use('/upload', upload)
+router.use('/post', post)
+router.use('/file', file)
 
 module.exports = router

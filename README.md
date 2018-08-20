@@ -12,7 +12,7 @@
 
 ### Sign Up. 
    
-  POST `/api/users`  
+  POST `/api/user`  
    
   Body: 
   ```
@@ -69,7 +69,7 @@
 
 ### Login.
    
-   POST `/api/users/login`  
+   POST `/api/user/login`  
    
    Body: 
    ```
@@ -111,7 +111,7 @@
    ``` 
 
 ### User APIs
-- GET `/users/me`  
+- GET `/user/me`  
   Return own profile by JWT  
 
   Response:  
@@ -123,8 +123,8 @@
     "data": User Object
   }
   ```  
-- GET `/users?[QUERY]`  
-  Query users with [QUERY] - QUERY can be missing  
+- GET `/user?[QUERY]`  
+  Query user with [QUERY] - QUERY can be missing  
 
   Query:  
   ['limit', 'offset', 'first_name', 'last_name', 'country', 'hospital']  
@@ -138,7 +138,7 @@
     "data": [User Object]
   }
   ``` 
-- GET `/users/:id`
+- GET `/user/:id`
   Return a user with id  
 
   Response:  
@@ -150,6 +150,138 @@
     "data": User Object
   }
   ```  
+
+### File APIs
+- GET `/api/file/:id`
+  Return file in `files/:id`
+
+- POST `/api/file`
+  Upload file 
+
+  Header:  
+  
+  ```
+  "Content-Type": "multipart/form-data"
+  ```
+
+  Body:  
+
+  ```
+  "file": File Object
+  ```
+
+### Category APIs
+- POST `/api/category`
+
+  Body: 
+  ```
+  { "type": String }
+  ```
+
+  Response:  
+  HTTP Status: 200. 
+  ```
+  {
+    "status": true,
+    "data": {
+        "id": 1,
+        "type": "boy",
+        "user_id": 2,
+        "updatedAt": "2018-08-20T08:12:30.304Z",
+        "createdAt": "2018-08-20T08:12:30.304Z"
+    }
+  }
+  ```
+- GET `/api/category/:id`
+
+  Response:
+  HTTP Status: 200,  
+  ```
+  {
+    "status": true,
+    "data": {
+        "id": 1,
+        "type": "boy",
+        "user_id": 2,
+        "updatedAt": "2018-08-20T08:12:30.304Z",
+        "createdAt": "2018-08-20T08:12:30.304Z"
+    }
+  }
+  ```
+
+- GET `/api/category?[QUERY]`
+  Query categories
+  QUERY can be `limit`, `offset`, `user_id`
+
+
+  Response:
+  HTTP Status: 200,  
+  ```
+  {
+    "status": true,
+    "data": [Category Object]
+  }
+  ```
+
+### Post APIs
+- POST `/api/post`
+  Create a single post. 
+  `picture` should be get by `API host` + `/api/files` + returned id from POST `/api/file`. 
+
+  Body: 
+  ```
+  {
+    "category_id": 1,
+    "picture": "localhost:3000/api/files/44230068adab9f01e680c25c26b08bc5.png"
+  }
+  ```
+
+  Response:  
+  HTTP Status: 200. 
+  ```
+  {
+    "status": true,
+    "data": {
+        "id": 2,
+        "category_id": 1,
+        "picture": "localhost:3000/api/files/44230068adab9f01e680c25c26b08bc5.png",
+        "user_id": 2,
+        "updatedAt": "2018-08-20T08:37:12.218Z",
+        "createdAt": "2018-08-20T08:37:12.218Z"
+    }
+  }
+  ```
+- GET `/api/post/:id`
+  Get a single post. 
+
+  Response:
+  HTTP Status: 200,  
+  ```
+  {
+    "status": true,
+    "data": {
+        "id": 1,
+        "type": "boy",
+        "user_id": 2,
+        "updatedAt": "2018-08-20T08:12:30.304Z",
+        "createdAt": "2018-08-20T08:12:30.304Z"
+    }
+  }
+  ```
+
+- GET `/api/post?[QUERY]`
+  Query posts. valid queries are `limit`, `offset`, `user_id`, `category_id`. 
+
+
+  Response:
+  HTTP Status: 200
+  ```
+  {
+    "status": true,
+    "data": [Post Object]
+    ]
+  }
+  ```
 
 ## Installed Package Requierement
 

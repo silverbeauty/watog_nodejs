@@ -2,7 +2,7 @@ const express = require('express')
 
 const { check, validationResult, query } = require('express-validator/check')
 
-const Users = require('../controllers/users')
+const UserCtrl = require('../controllers/user')
 
 const router = express.Router()
 
@@ -18,20 +18,20 @@ router.post('/'
   //:TODO phone number regexp should be used
   check('cell_phone').isLength({ min: 9 }).matches(/^[0-9]+$/).withMessage('cell_phone must be at least 9 chars long and only numbers!'),
 ]
-, Users.signup)
+, UserCtrl.signup)
 
 router.post('/login', [
   check('email').isEmail(),
   check('password').isLength({ min: 1 })
-], Users.login)
+], UserCtrl.login)
 
 // Return own profile
-router.get('/me', Users.checkAuth, Users.getMe)
+router.get('/me', UserCtrl.checkAuth, UserCtrl.getMe)
 
 // Return a single user profile
-router.get('/:id', Users.checkAuth, Users.getUser)
+router.get('/:id', UserCtrl.checkAuth, UserCtrl.getUser)
 
 // Query users
-router.get('/', Users.checkAuth, Users.queryUsers)
+router.get('/', UserCtrl.checkAuth, UserCtrl.queryUsers)
 
 module.exports = router

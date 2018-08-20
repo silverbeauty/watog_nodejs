@@ -1,15 +1,20 @@
 const sequelize = require('../config/database')
 
 const Sequelize = require('sequelize')
-const Category = sequelize.define('Category', {
+
+const Post = sequelize.define('Post', {
   id: {
     type: Sequelize.INTEGER,
     allowNull: false,
     autoIncrement: true,
     primaryKey: true
   },
-  type: {
+  picture: {
     type: Sequelize.STRING,
+    allowNull: false
+  },
+  category_id: {
+    type: Sequelize.INTEGER,
     allowNull: false
   },
   user_id: {
@@ -20,20 +25,20 @@ const Category = sequelize.define('Category', {
 {
   classMethods: {
     associate: function (models) {
-      models.Category.belongsTo(models.User, { constraints: false })
+      models.Post.belongsTo(models.Category, { constraints: false })
     }
   }
 })
 
-Category.associate = function (models) {
-  Category.hasMany(models.Uploads,
-    {
-      foreignKey: 'category_id',
-      constraints: false
-    }
-  )
-}
+Post.associate = function (models) {
+    Post.hasOne(models.Vote,
+        {
+            foreignKey: 'post_id',
+            constraints: false
+        }
+    )
+};
 
-Category.sync()
+Post.sync()
 
-module.exports = Category
+module.exports = Post
