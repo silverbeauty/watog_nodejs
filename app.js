@@ -18,7 +18,12 @@ const dbConfig = require('./config/database')
 
 if (!process.env.JWT_SECRET) { 
 	console.error('Please set JWT_SECRET env!')
-	process.exit()
+	process.exit(1)
+}
+
+if (!process.env.WATOG_DOMAIN) { 
+  console.error('Please set WATOG_DOMAIN env! eg: WATOG_DOMAIN=http://x.x.x.x:3000')
+  process.exit(1)
 }
 
 const fileDir = path.resolve('files/')
