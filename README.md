@@ -151,6 +151,25 @@
   }
   ```  
 
+### File APIs
+- GET `/api/file/:id`
+  Return file in `files/:id`
+
+- POST `/api/file`
+  Upload file 
+
+  Header:  
+  
+  ```
+  "Content-Type": "multipart/form-data"
+  ```
+
+  Body:  
+
+  ```
+  "file": File Object
+  ```
+
 ## Installed Package Requierement
 
    sudo npm install nodemon -g

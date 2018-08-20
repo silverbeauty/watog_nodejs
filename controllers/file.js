@@ -6,7 +6,9 @@ const create = (req, res) => {
 	if (req.file) {
 		res.send({
 			status: true,
-			data: req.file.filename
+			data: {
+				id: req.file.filename
+			}
 		})		
 	} else {
 		res.status(400).send({
