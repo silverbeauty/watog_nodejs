@@ -2,7 +2,7 @@ const express = require('express')
 
 const { check, validationResult, query } = require('express-validator/check')
 
-const Users = require('../controllers/users')
+const Users = require('../controllers/user')
 
 const router = express.Router()
 

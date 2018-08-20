@@ -12,7 +12,7 @@
 
 ### Sign Up. 
    
-  POST `/api/users`  
+  POST `/api/user`  
    
   Body: 
   ```
@@ -69,7 +69,7 @@
 
 ### Login.
    
-   POST `/api/users/login`  
+   POST `/api/user/login`  
    
    Body: 
    ```
@@ -111,7 +111,7 @@
    ``` 
 
 ### User APIs
-- GET `/users/me`  
+- GET `/user/me`  
   Return own profile by JWT  
 
   Response:  
@@ -123,8 +123,8 @@
     "data": User Object
   }
   ```  
-- GET `/users?[QUERY]`  
-  Query users with [QUERY] - QUERY can be missing  
+- GET `/user?[QUERY]`  
+  Query user with [QUERY] - QUERY can be missing  
 
   Query:  
   ['limit', 'offset', 'first_name', 'last_name', 'country', 'hospital']  
@@ -138,7 +138,7 @@
     "data": [User Object]
   }
   ``` 
-- GET `/users/:id`
+- GET `/user/:id`
   Return a user with id  
 
   Response:  

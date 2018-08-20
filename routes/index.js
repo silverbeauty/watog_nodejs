@@ -1,8 +1,8 @@
 const express = require('express')
 
-const users = require('./users')
+const user = require('./user')
 const category = require('./category')
-const posts = require('./post')
+const post = require('./post')
 
 const router = express.Router()
 
@@ -10,8 +10,8 @@ router.get('/health', (req, res) => {
   res.send('OK')
 })
 
-router.use('/users', users)
+router.use('/user', user)
 router.use('/category', category)
-router.use('/posts', posts)
+router.use('/post', post)
 
 module.exports = router
