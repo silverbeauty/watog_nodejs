@@ -31,4 +31,7 @@ router.get('/me', Users.checkAuth, Users.getMe)
 // Return a single user profile
 router.get('/:id', Users.checkAuth, Users.getUser)
 
+// Query users
+router.get('/', Users.checkAuth, Users.queryUsers)
+
 module.exports = router

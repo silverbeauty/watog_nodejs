@@ -137,10 +137,19 @@ const getUser = async (req, res) => {
 const queryUsers = async (req, res) => {
   // TODO: query condition should be defined in route
   // TODO: limit access to users
+  const query = {...req.query}
+  const limit = query.limit || 10
+  const offset = query.offset || 0
 
-  const users = await User.find({
-    where: req.body,
+  // Remove offset, limit 
+  delete query.limit
+  delete query.offset  
+
+  const users = await User.findAll({
+    where: query,
     attributes: ['id', 'first_name', 'last_name', 'country', 'hospital', 'cell_phone'],
+    limit,
+    offset,
     raw: true
   })
 
