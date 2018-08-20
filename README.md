@@ -122,7 +122,21 @@
     "status": true,
     "data": User Object
   }
+  ```
+
+- GET `/user/me`  
+  Edit own profile by JWT  
+
+  Response:  
+
+  HTTP Status: 200  
   ```  
+  {
+    "status": true,
+    "data": User Object
+  }
+  ```
+
 - GET `/user?[QUERY]`  
   Query user with [QUERY] - QUERY can be missing  
 
