@@ -50,6 +50,15 @@ const create = async (req, res) => {
 	})
 }
 
+const get = async (req, res) => {
+	const post = await Post.findById(req.params.id)
+	res.send({
+		status: true,
+		data: post.get({ plain: true} )
+	})
+}
+
 module.exports = {
-	create
+	create,
+	get
 }

@@ -209,6 +209,50 @@
   }
   ```
 
+### Post APIs
+- POST `/api/post`
+
+  Body: 
+  ```
+  {
+    "category_id": 1,
+    "picture": "localhost:3000/api/files/44230068adab9f01e680c25c26b08bc5.png"
+  }
+  ```
+
+  Response:  
+  HTTP Status: 200. 
+  ```
+  {
+    "status": true,
+    "data": {
+        "id": 2,
+        "category_id": 1,
+        "picture": "localhost:3000/api/files/44230068adab9f01e680c25c26b08bc5.png",
+        "user_id": 2,
+        "updatedAt": "2018-08-20T08:37:12.218Z",
+        "createdAt": "2018-08-20T08:37:12.218Z"
+    }
+  }
+  ```
+- GET `/api/post/:id`
+
+  Response:
+  HTTP Status: 200,  
+  ```
+  {
+    "status": true,
+    "data": {
+        "id": 1,
+        "type": "boy",
+        "user_id": 2,
+        "updatedAt": "2018-08-20T08:12:30.304Z",
+        "createdAt": "2018-08-20T08:12:30.304Z"
+    }
+  }
+  ```
+
+
 ## Installed Package Requierement
 
    sudo npm install nodemon -g

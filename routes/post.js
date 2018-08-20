@@ -10,4 +10,6 @@ const router = express.Router()
 // TODO: should check parameters here
 router.post('/', UserCtrl.checkAuth, PostCtrl.create)
 
+router.get('/:id', UserCtrl.checkAuth, PostCtrl.get)
+
 module.exports = router
