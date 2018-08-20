@@ -4,6 +4,7 @@ const path = require('path')
 const cookieParser = require('cookie-parser')
 const logger = require('morgan')
 const cors = require('cors')
+const fs = require('fs')
 
 const indexRouter = require('./routes/index')
 
@@ -18,6 +19,11 @@ const dbConfig = require('./config/database')
 if (!process.env.JWT_SECRET) { 
 	console.error('Please set JWT_SECRET env!')
 	process.exit()
+}
+
+const fileDir = path.resolve('files/')
+if (!fs.existsSync(fileDir)){
+    fs.mkdirSync(fileDir)
 }
 
 // view engine setup

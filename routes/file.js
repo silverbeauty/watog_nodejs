@@ -7,7 +7,8 @@ const FileCtrl = require('../controllers/file')
 const multer = require('multer')
 
 const router = express.Router()
+const upload = multer({ dest: 'files/' })
 
-router.post('/', FileCtrl.create)
+router.post('/', upload.single('file'), FileCtrl.create)
 
 module.exports = router
