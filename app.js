@@ -22,8 +22,14 @@ if (!process.env.JWT_SECRET) {
 }
 
 const fileDir = path.resolve('files/')
+const docsDir = path.resolve('docs/')
+
 if (!fs.existsSync(fileDir)){
     fs.mkdirSync(fileDir)
+}
+
+if (!fs.existsSync(docsDir)){
+    fs.mkdirSync(docsDir)
 }
 
 // view engine setup
