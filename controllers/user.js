@@ -192,6 +192,8 @@ const editMe = async (req, res) => {
   const user = req.currentUser
 
   const editData = req.body
+  // TODO: should limit the editing fields here
+  delete editData.password
 
   for (let key in editData) {
     user[key] = editData[key]
