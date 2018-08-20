@@ -127,8 +127,6 @@ const getUser = async (req, res) => {
     plain: true
   })
 
-  console.info('Get Profile:', req.params.id)
-
   delete userObj.password
   res.send({
     status: true,
