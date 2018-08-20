@@ -1,14 +1,12 @@
 
-const { validationResult } = require('express-validator/check');
-
+const { validationResult } = require('express-validator/check')
 
 const Post = require('../models/post')
 const Category = require('../models/category')
 
 const create = async (req, res) => {
-
-	// console.log(req.body)
- 	const errors = validationResult(req);
+  // console.log(req.body)
+ 	const errors = validationResult(req)
   if (!errors.isEmpty()) {
     return res.status(400).json({
     	status: false,
@@ -27,35 +25,35 @@ const create = async (req, res) => {
   	})
   }
 
-	const post = Post.build({
-		...req.body,
-		user_id: req.currentUser.id
-	})
-	let data
-	try {
-		const res = await post.save()
-		data = res.get({plain: true})
-		// Remove password
-	} catch(e) {
-		console.log(e)
-		return res.status(500).send({
-			status: false,
-			error: e.errors
-		})
-	}
+  const post = Post.build({
+    ...req.body,
+    user_id: req.currentUser.id
+  })
+  let data
+  try {
+    const res = await post.save()
+    data = res.get({plain: true})
+    // Remove password
+  } catch (e) {
+    console.log(e)
+    return res.status(500).send({
+      status: false,
+      error: e.errors
+    })
+  }
 
-	res.send({
-		status: true, 
-		data
-	})
+  res.send({
+    status: true,
+    data
+  })
 }
 
 const get = async (req, res) => {
-	const post = await Post.findById(req.params.id)
-	res.send({
-		status: true,
-		data: post.get({ plain: true} )
-	})
+  const post = await Post.findById(req.params.id)
+  res.send({
+    status: true,
+    data: post.get({ plain: true})
+  })
 }
 
 const query = async (req, res) => {
@@ -70,7 +68,7 @@ const query = async (req, res) => {
     delete cquery[key]
   }
 
-  if (Object.keys(cquery).length > 0) { // Other queries 
+  if (Object.keys(cquery).length > 0) { // Other queries
     console.error('Query not allowed:', cquery)
     return res.status(400).send({
       status: false,
@@ -84,9 +82,9 @@ const query = async (req, res) => {
   const limit = query.limit || 10
   const offset = query.offset || 0
 
-  // Remove offset, limit 
+  // Remove offset, limit
   delete query.limit
-  delete query.offset  
+  delete query.offset
 
   const data = await Post.findAll({
     where: query,
@@ -102,7 +100,7 @@ const query = async (req, res) => {
 }
 
 module.exports = {
-	create,
-	get,
-	query
+  create,
+  get,
+  query
 }

@@ -31,13 +31,13 @@ const Post = sequelize.define('Post', {
 })
 
 Post.associate = function (models) {
-    Post.hasOne(models.Vote,
-        {
-            foreignKey: 'post_id',
-            constraints: false
-        }
-    )
-};
+  Post.hasOne(models.Vote,
+    {
+      foreignKey: 'post_id',
+      constraints: false
+    }
+  )
+}
 
 Post.sync()
 
