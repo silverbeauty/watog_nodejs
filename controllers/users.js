@@ -100,8 +100,22 @@ const checkAuth = async (req, res, next) => {
   next()
 }
 
+const getMe = async (req, res, next) => {
+  const { currentUser } = req
+  const profile = currentUser.get({
+    plain: true
+  })
+
+  delete profile.password
+  res.send({
+    status: true,
+    data: profile
+  })
+}
+
 module.exports = {
   signup,
   login,
-  checkAuth
+  checkAuth,
+  getMe
 }
