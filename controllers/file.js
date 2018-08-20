@@ -3,14 +3,22 @@ const mime = require('mime-types')
 const fs = require('fs')
 
 const create = (req, res) => {
-	res.send({
-		status: true
-	})
+	if (req.file) {
+		res.send({
+			status: true,
+			data: req.file.filename
+		})		
+	} else {
+		res.status(400).send({
+			status: false,
+			error: 'file is not passed!'
+		})
+	}
 }
 
 const get = (req, res) => {
-	const filePath = path.resolve(`files/${path.resolve(req.params.id)}`)
-
+	const filePath = path.resolve(`./files/${req.params.id}`)
+	console.info('File Path:', filePath)
 	if (fs.existsSync(filePath)) {
 	  res.set('Content-Type', mime.lookup(filePath))
 		res.sendFile(filePath)

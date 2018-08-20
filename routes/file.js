@@ -13,6 +13,6 @@ const upload = multer({ dest: 'files/' })
 router.post('/' , Users.checkAuth, upload.single('file'), FileCtrl.create)
 
 // Get a file
-router.get('/:id', FileCtrl.create)
+router.get('/:id', FileCtrl.get)
 
 module.exports = router
