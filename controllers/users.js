@@ -114,12 +114,12 @@ const getMe = async (req, res) => {
 
 const getUser = async (req, res) => {
   // TODO: limit access for fields: https://gitlab.com/watog-app/sql-nodejs/issues/1
-  const user = await User.findOne({ id: req.params.id })
+  const user = await User.findById(req.params.id)
 
   if (!user) {
     return res.status(400).send({
       status: false,
-      error: 'No such user with id:' + id
+      error: 'No such user with id:' + req.params.id
     })
   }
 
