@@ -82,10 +82,22 @@ const login = async (req, res) => {
   })
 }
 
-const checkAuth = (req, res, next) => {
+const checkAuth = async (req, res, next) => {
   const authorization = req.getHeader('Authorization')
+  let decoded
+  try {
+     decoded = jwt.verify(token, process.env.JWT_SECRET)
+  } catch(err) {
+    console.error(err)
+    return res.status(401).send({
+      status: false,
+      error: 'Invalid Authorization'
+    })
+    // err
+  }
 
-  
+  req.currentUser = await User.findOne({ where: { decoded.email } })
+  next()
 }
 
 module.exports = {
