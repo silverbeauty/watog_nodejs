@@ -209,6 +209,20 @@
   }
   ```
 
+- GET `/api/category?[QUERY]`
+  Query categories
+  QUERY can be `limit`, `offset`, `user_id`
+
+
+  Response:
+  HTTP Status: 200,  
+  ```
+  {
+    "status": true,
+    "data": [Category Object]
+  }
+  ```
+
 ### Post APIs
 - POST `/api/post`
   Create a single post. 
