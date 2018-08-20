@@ -52,7 +52,7 @@ const getVerifyDoc = (req, res) => {
 const uploadVerifyDoc = async (req, res) => {
   if (req.file) {
     const { currentUser } = req
-    currentUser.proof_of_status = process.env.ENDPOINT + '/api/file/doc/' + req.file.filename
+    currentUser.proof_of_status = process.env.WATOG_DOMAIN + '/api/file/verify/' + req.file.filename
     await currentUser.save()
     const data = currentUser.get({
       plain: true
