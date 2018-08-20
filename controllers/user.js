@@ -97,7 +97,16 @@ const checkAuth = async (req, res, next) => {
   }
 
   req.currentUser = await User.findOne({ where: { email: decoded.email } })
-  next()
+
+  if (req.currentUser) {
+    next()    
+  } else {
+    console.error('Valid JWT but no user:', decoded)
+    res.send({
+      status: false,
+      error: 'Invalid User'
+    })
+  }
 }
 
 const getMe = async (req, res) => {
