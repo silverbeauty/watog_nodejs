@@ -96,7 +96,7 @@ const checkAuth = async (req, res, next) => {
     // err
   }
 
-  req.currentUser = await User.findOne({ where: { decoded.email } })
+  req.currentUser = await User.findOne({ where: { email: decoded.email } })
   next()
 }
 
