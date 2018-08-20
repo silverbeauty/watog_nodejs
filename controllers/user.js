@@ -86,8 +86,8 @@ const checkAuth = async (req, res, next) => {
   const token = req.get('Authorization')
   let decoded
   try {
-     decoded = jwt.verify(token, process.env.JWT_SECRET)
-  } catch(err) {
+    decoded = jwt.verify(token, process.env.JWT_SECRET)
+  } catch (err) {
     console.error(err)
     return res.status(401).send({
       status: false,
@@ -147,7 +147,7 @@ const queryUsers = async (req, res) => {
     delete cquery[key]
   }
 
-  if (Object.keys(cquery).length > 0) { // Other queries 
+  if (Object.keys(cquery).length > 0) { // Other queries
     console.error('Query not allowed:', cquery)
     return res.status(400).send({
       status: false,
@@ -161,9 +161,9 @@ const queryUsers = async (req, res) => {
   const limit = query.limit || 10
   const offset = query.offset || 0
 
-  // Remove offset, limit 
+  // Remove offset, limit
   delete query.limit
-  delete query.offset  
+  delete query.offset
 
   const users = await User.findAll({
     where: query,

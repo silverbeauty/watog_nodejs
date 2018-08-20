@@ -10,7 +10,7 @@ const router = express.Router()
 const upload = multer({ dest: 'files/' })
 
 // Upload a file
-router.post('/' , Users.checkAuth, upload.single('file'), FileCtrl.create)
+router.post('/', Users.checkAuth, upload.single('file'), FileCtrl.create)
 
 // Get a file
 router.get('/:id', FileCtrl.get)
