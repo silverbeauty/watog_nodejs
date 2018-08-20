@@ -28,7 +28,8 @@ const User = sequelize.define('User', {
   },
   cell_phone: {
     type: Sequelize.STRING,
-    allowNull: false
+    allowNull: false,
+    unique: true
   },
   country: {
     type: Sequelize.STRING,
