@@ -4,7 +4,7 @@ const { validationResult } = require('express-validator/check');
 
 const Upload = require('../models/upload')
 
-const Upload = async (req, res) => {
+const createUpload = async (req, res) => {
 
 	// console.log(req.body)
  	const errors = validationResult(req);
@@ -38,5 +38,5 @@ const Upload = async (req, res) => {
 }
 
 module.exports = {
-	Upload
+	createUpload
 }
