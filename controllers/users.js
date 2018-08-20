@@ -134,10 +134,27 @@ const getUser = async (req, res) => {
   })
 }
 
+const queryUsers = async (req, res) => {
+  // TODO: query condition should be defined in route
+  // TODO: limit access to users
+
+  const users = await User.find({
+    where: req.body,
+    attributes: ['id', 'first_name', 'last_name', 'country', 'hospital', 'cell_phone'],
+    raw: true
+  })
+
+  res.send({
+    status: true,
+    data: users
+  })
+}
+
 module.exports = {
   signup,
   login,
   checkAuth,
   getMe,
-  getUser
+  getUser,
+  queryUsers
 }
