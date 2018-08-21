@@ -2,11 +2,14 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const { validationResult } = require('express-validator/check')
 const randomstring = require('randomstring')
+const Sequelize = require('sequelize')
 
 const User = require('../models/user')
 const Verify = require('../models/verify')
 const EmailCtrl = require('./email')
 const SmsCtrl = require('./sms')
+
+const Op = Sequelize.Op
 
 const signup = async (req, res) => {
   const errors = validationResult(req)
@@ -151,7 +154,7 @@ const queryUsers = async (req, res) => {
   // TODO: query condition should be defined in route
   // TODO: limit access to users
   // TODO: should add sort option
-  const allowed_queries = ['limit', 'offset', 'first_name', 'last_name', 'country', 'hospital']
+  const allowed_queries = ['limit', 'offset', 'first_name', 'last_name', 'country', 'hospital', 'name']
   const query = {...req.query}
   const cquery = {...query}
 
@@ -174,9 +177,23 @@ const queryUsers = async (req, res) => {
   const limit = query.limit || 10
   const offset = query.offset || 0
 
-  // Remove offset, limit
+  if (query.name) { // name query
+    // TODO: we should use MySQL or PostgreSQL to use regexp operator
+    // SQLite only supports like
+    const likeQuery = {
+      [Op.like]: '%' + query.name
+    }
+    query[Op.or] = [{
+      'first_name': likeQuery
+    }, {
+      'last_name': likeQuery
+    }]
+  }
+
+  // Remove offset, limit, name
   delete query.limit
   delete query.offset
+  delete query.name
 
   const users = await User.findAll({
     where: query,

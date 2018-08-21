@@ -138,10 +138,10 @@
   ```
 
 - GET `/user?[QUERY]`  
-  Query user with [QUERY] - QUERY can be missing  
+  Query users with [QUERY] - QUERY can be missing  
 
   Query:  
-  ['limit', 'offset', 'first_name', 'last_name', 'country', 'hospital']  
+  `limit`, `offset`, `first_name`, `last_name`, `country`, `hospital`, `name`  
 
   Response:  
 
