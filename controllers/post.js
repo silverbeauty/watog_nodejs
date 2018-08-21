@@ -2,7 +2,9 @@
 const { validationResult } = require('express-validator/check')
 
 const Post = require('../models/post')
+const User = require('../models/user')
 const Category = require('../models/category')
+const Vote = require('../models/vote')
 
 const create = async (req, res) => {
   // console.log(req.body)
@@ -49,10 +51,25 @@ const create = async (req, res) => {
 }
 
 const get = async (req, res) => {
-  const post = await Post.findById(req.params.id)
+  const { post } = req
+  const data = post.get({ plain: true})
+
+  if (req.query.vote) { // include vote
+    const votes = await Vote.findAll({
+      where: {
+        post_id: post.id,
+      },
+      include: [{
+        model: User,
+        attributes: ['id', 'first_name', 'last_name', 'hospital', 'picture_profile']
+      }]
+    })
+    data.votes = votes.map(v => v.get({plain: true}))
+  }
+
   res.send({
     status: true,
-    data: post.get({ plain: true})
+    data
   })
 }
 
@@ -99,8 +116,101 @@ const query = async (req, res) => {
   })
 }
 
+const load = async (req, res, next) => {
+  const { id } = req.params
+  try {
+    const post = await Post.findById(id)
+    if (post) {
+      req.post = post
+      next()
+    } else {
+      res.send({
+        status: false,
+        error: 'no_post'
+      })
+    }    
+  } catch (e) {
+    console.error('Failed to load post:', e)
+  }
+}
+
+const vote = async (req, res) => {
+  const { post, currentUser } = req
+  let { commend } = req.body
+  if (commend === undefined) {
+    commend = true
+  } else {
+    commend = !!commend
+  }
+
+  // Check if already voted
+  const vote = await Vote.findOne({
+    where: {
+      post_id: post.id,
+      user_id: currentUser.id
+    }
+  })
+
+  if (vote && vote.commend === commend) {
+    return res.send({
+      status: false,
+      error: 'already_voted'
+    })
+  } else if (vote) {
+    vote.commend = commend
+    await vote.save()
+  } else {
+    const newVote = new Vote({
+      post_id: post.id,
+      user_id: currentUser.id,
+      category_id: post.category_id,
+
+    })
+
+    await newVote.save()
+  }
+
+  const userFields = ['id', 'first_name', 'last_name', 'hospital', 'picture_profile']
+
+  const downVotes = await Vote.findAll({
+    where: {
+      post_id: post.id,
+      commend: false
+    },
+    include: [{
+      model: User,
+      attributes: userFields
+    }]
+  })
+
+  const upVotes = await Vote.findAll({
+    where: {
+      post_id: post.id,
+      commend: true
+    },
+    include: [{
+      model: User,
+      attributes: userFields
+    }]
+  })
+
+  const data = post.get({
+    plain: true
+  })
+
+  data.downVotes = downVotes.map(v => v.get({plain: true}))
+  data.upVotes = upVotes.map(v => v.get({plain: true}))
+
+  res.send({
+    status: true,
+    data
+  })
+}
+
 module.exports = {
   create,
+  load,
   get,
-  query
+  query,
+  vote
 }

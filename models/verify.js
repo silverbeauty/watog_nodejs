@@ -23,6 +23,4 @@ const Verify = sequelize.define('Verify', {
   }
 })
 
-Verify.sync()
-
 module.exports = Verify

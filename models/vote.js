@@ -1,3 +1,5 @@
+const Sequelize = require('sequelize')
+
 const sequelize = require('../config/database')
 
 const Vote = sequelize.define('Votes', {
@@ -15,30 +17,11 @@ const Vote = sequelize.define('Votes', {
     type: Sequelize.INTEGER,
     allowNull: false
   },
-  voteBy: {
+  user_id: {
     type: Sequelize.INTEGER,
     allowNull: false
-  }
-}, {
-  classMethods: {
-    associate: function (models) {
-      models.Votes.belongsTo(models.Category, { constraints: false })
-    }
-  }
-}, {
-  classMethods: {
-    associate: function (models) {
-      models.Votes.belongsTo(models.User, { constraints: false })
-    }
-  }
-}, {
-  classMethods: {
-    associate: function (models) {
-      models.Votes.belongsTo(models.User, { constraints: false })
-    }
-  }
+  },
+  commend: { type: Sequelize.BOOLEAN, allowNull: false, defaultValue: true }
 })
-
-Vote.sync()
 
 module.exports = Vote

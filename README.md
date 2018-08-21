@@ -330,8 +330,9 @@
     }
   }
   ```
-- GET `/api/post/:id`
+- GET `/api/post/:id[?vote=1]`
   Get a single post. 
+  If `?vote=1`: return posts with votes
 
   Response:
   HTTP Status: 200,  
@@ -339,11 +340,29 @@
   {
     "status": true,
     "data": {
-        "id": 1,
-        "type": "boy",
+        "id": 2,
+        "picture": "localhost:3000/api/files/44230068adab9f01e680c25c26b08bc5.png",
+        "category_id": 1,
         "user_id": 2,
-        "updatedAt": "2018-08-20T08:12:30.304Z",
-        "createdAt": "2018-08-20T08:12:30.304Z"
+        "createdAt": "2018-08-20T08:37:12.218Z",
+        "updatedAt": "2018-08-20T08:37:12.218Z",
+        "votes": [
+            {
+                "id": 1,
+                "category_id": 1,
+                "post_id": 2,
+                "user_id": 1,
+                "createdAt": "2018-08-21T08:27:52.270Z",
+                "updatedAt": "2018-08-21T08:27:52.270Z",
+                "User": {
+                    "id": 1,
+                    "first_name": "John",
+                    "last_name": "test",
+                    "hospital": "a",
+                    "picture_profile": null
+                }
+            }
+        ]
     }
   }
   ```
@@ -359,6 +378,63 @@
     "status": true,
     "data": [Post Object]
     ]
+  }
+  ```
+
+### Vote API
+
+- POST `/api/post/:id/vote`
+  Place a vote to a post: up or down. 
+
+  Body  
+  ```
+  {
+    "commend": true or false
+  }
+  ```
+
+  Response:  
+
+  Http Status: 200. 
+  ```
+  {
+    "status": true,
+    "data": {
+        "id": 2,
+        "picture": "localhost:3000/api/files/44230068adab9f01e680c25c26b08bc5.png",
+        "category_id": 1,
+        "user_id": 2,
+        "createdAt": "2018-08-20T08:37:12.218Z",
+        "updatedAt": "2018-08-20T08:37:12.218Z",
+        "downVotes": [],
+        "upVotes": [
+            {
+                "id": 1,
+                "category_id": 1,
+                "post_id": 2,
+                "user_id": 1,
+                "commend": true,
+                "createdAt": "2018-08-21T08:50:18.309Z",
+                "updatedAt": "2018-08-21T08:50:39.030Z",
+                "User": {
+                    "id": 1,
+                    "first_name": "John",
+                    "last_name": "test",
+                    "hospital": "a",
+                    "picture_profile": null
+                }
+            }
+        ]
+    }
+  }
+  ```
+
+  Http Status: 400. 
+
+  ```
+  {
+    "status": false,
+    "error": `already_voted`
   }
   ```
 

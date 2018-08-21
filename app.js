@@ -11,8 +11,8 @@ const indexRouter = require('./routes/index')
 const app = express()
 
 // SQLite db connection
-
-const dbConfig = require('./config/database')
+// Sync DB models
+require('./models')
 
 // Check requried envs
 
