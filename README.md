@@ -169,12 +169,13 @@
 - POST `/user/verify/email`  
   Send Verification Email (Requires JWT set in `Authorization` header)  
 
-- POST `/user/verify/sms`
+- POST `/user/verify/sms`. 
   Send Verification SMS to `cell_phone` (Requires JWT set in `Authorization` header)
 
-- GET `/user/verify/email/:code`
-  Link sent in the verify email.
-  Response: normal HTTP response
+- GET `/user/verify/email/:code`. 
+  Link sent in the verify email.  
+  User will click this link.   
+  Response: normal HTTP response. 
 
 - GET `/user/verify/sms/:code`
   User should make a GET request with the codes sent by SMS.  
