@@ -3,6 +3,7 @@ const { validationResult } = require('express-validator/check')
 
 const Post = require('../models/post')
 const Category = require('../models/category')
+const Vote = require('../models/post')
 
 const create = async (req, res) => {
   // console.log(req.body)
@@ -49,7 +50,7 @@ const create = async (req, res) => {
 }
 
 const get = async (req, res) => {
-  const post = await Post.findById(req.params.id)
+  const { post } = req
   res.send({
     status: true,
     data: post.get({ plain: true})
@@ -99,8 +100,33 @@ const query = async (req, res) => {
   })
 }
 
+const load = async (req, res, next) => {
+  const { id } = req.params
+  const post = await Post.findById(id)
+  if (post) {
+    req.post = post
+    next()
+  } else {
+    res.send({
+      status: false,
+      error: 'no_post'
+    })
+  }
+}
+
+const vote = async (req, res) => {
+  // Check if already voted
+  const vote = Vote.findOne({
+    where: {
+
+    }
+  })
+
+}
+
 module.exports = {
   create,
+  load,
   get,
   query
 }

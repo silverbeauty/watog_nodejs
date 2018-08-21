@@ -11,7 +11,7 @@ const router = express.Router()
 router.post('/', UserCtrl.checkAuth, PostCtrl.create)
 
 // Get a single post
-router.get('/:id', UserCtrl.checkAuth, PostCtrl.get)
+router.get('/:id', UserCtrl.checkAuth, PostCtrl.load, PostCtrl.get)
 
 // Query post
 router.get('/', UserCtrl.checkAuth, PostCtrl.query)
