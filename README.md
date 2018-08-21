@@ -330,8 +330,9 @@
     }
   }
   ```
-- GET `/api/post/:id`
+- GET `/api/post/:id[?vote=1]`
   Get a single post. 
+  If `?vote=1`: return posts with votes
 
   Response:
   HTTP Status: 200,  

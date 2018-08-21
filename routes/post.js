@@ -10,11 +10,11 @@ const router = express.Router()
 // TODO: should check parameters here
 router.post('/', UserCtrl.checkAuth, PostCtrl.create)
 
-// Get a single post
-router.get('/:id', UserCtrl.checkAuth, PostCtrl.load, PostCtrl.get)
-
 // Create a new vote
 router.post('/:id/vote', UserCtrl.checkAuth, PostCtrl.load, PostCtrl.vote)
+
+// Get a single post
+router.get('/:id', UserCtrl.checkAuth, PostCtrl.load, PostCtrl.get)
 
 // Query post
 router.get('/', UserCtrl.checkAuth, PostCtrl.query)

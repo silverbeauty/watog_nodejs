@@ -17,7 +17,7 @@ const Vote = sequelize.define('Votes', {
     type: Sequelize.INTEGER,
     allowNull: false
   },
-  voteBy: {
+  user_id: {
     type: Sequelize.INTEGER,
     allowNull: false
   }

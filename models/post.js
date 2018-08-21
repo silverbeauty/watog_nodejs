@@ -27,6 +27,4 @@ const Post = sequelize.define('Post', {
 Post.hasMany(Vote, { foreignKey: 'post_id', sourceKey: 'id' })
 Vote.belongsTo(Post, { foreignKey: 'post_id', sourceKey: 'id' })
 
-Post.sync()
-
 module.exports = Post

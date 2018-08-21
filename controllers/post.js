@@ -4,7 +4,7 @@ const { validationResult } = require('express-validator/check')
 const Post = require('../models/post')
 const User = require('../models/user')
 const Category = require('../models/category')
-const Vote = require('../models/post')
+const Vote = require('../models/vote')
 
 const create = async (req, res) => {
   // console.log(req.body)
@@ -52,9 +52,24 @@ const create = async (req, res) => {
 
 const get = async (req, res) => {
   const { post } = req
+  const data = post.get({ plain: true})
+
+  if (req.query.vote) { // include vote
+    const votes = await Vote.findAll({
+      where: {
+        post_id: post.id,
+      },
+      include: [{
+        model: User,
+        attributes: ['id', 'first_name', 'last_name', 'hospital', 'picture_profile']
+      }]
+    })
+    data.votes = votes.map(v => v.get({plain: true}))
+  }
+
   res.send({
     status: true,
-    data: post.get({ plain: true})
+    data
   })
 }
 
@@ -103,23 +118,26 @@ const query = async (req, res) => {
 
 const load = async (req, res, next) => {
   const { id } = req.params
-  const post = await Post.findById(id)
-  if (post) {
-    req.post = post
-    next()
-  } else {
-    res.send({
-      status: false,
-      error: 'no_post'
-    })
+  try {
+    const post = await Post.findById(id)
+    if (post) {
+      req.post = post
+      next()
+    } else {
+      res.send({
+        status: false,
+        error: 'no_post'
+      })
+    }    
+  } catch (e) {
+    console.error('Failed to load post:', e)
   }
 }
 
 const vote = async (req, res) => {
   const { post, currentUser } = req
-  
   // Check if already voted
-  const vote = Vote.findOne({
+  const vote = await Vote.findOne({
     where: {
       post_id: post.id,
       user_id: currentUser.id
@@ -141,6 +159,7 @@ const vote = async (req, res) => {
 
   await newVote.save()
   
+  console.info('Vote Saved!')
 // TODO: load all votes
 // TODO: load all voters
 
