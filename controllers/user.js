@@ -294,6 +294,12 @@ const verifyEmail = async (req, res) => {
     return res.status(400).send(`<h2>Expired Link!</h2>`)
   }
 
+  const currentUser = await User.findById(verify.user_id)
+
+  if (!currentUser) {
+    return res.status(400).send(`<h2>Expired Link!</h2>`)
+  }
+
   if (currentUser.email_verified_date) { // already verified
     return res.status(400).send('Your email address is already verified!')
   }
@@ -303,13 +309,62 @@ const verifyEmail = async (req, res) => {
   const { first_name, last_name, email } = currentUser
 
   res.send(`
-    <h2>Welcome ${first_name} ${last_name}</h2>
-    <p>Your email: ${email} is now verified!</p>
+    <h2>Welcome ${first_name} ${last_name}!</h2>
+    <p>Your email: <b> ${email} </b> is now verified!</p>
     `)
 }
 
 const verifySms = async (req, res) => {
+  const { code } = req.params
+  const verify = await Verify.findOne({
+    where: {
+      code: code,
+      type: 'sms'
+    }
+  })
 
+  if (!verify) {
+    return res.status(400).send(`<h2>Invalid Link!</h2>`)
+  }
+
+  const created = verify.createdAt.getTime()
+  const now = new Date().getTime()
+
+  if (now - created > 1000 * 60 * 60) { // 1 hr expire
+    return res.status(400).send({
+      status: false,
+      error: 'expired_code'
+    })
+  }
+
+  const { currentUser } = req
+
+  if (currentUser.id !== verify.user_id) { // user_id is not matched
+    return res.status(400).send({
+      status: false,
+      error: 'invalid_code'
+    })
+  }
+
+  if (currentUser.sms_verified_date) { // already verified
+    return res.status(400).send({
+      status: false,
+      error: 'already_verified'
+    })
+  }
+
+  currentUser.sms_verified_date = new Date()
+  await currentUser.save()
+
+  const data = currentUser.get({
+    plain: true
+  })
+  delete data.password
+
+  res.send({
+    status: true,
+    data
+  })
 }
 
 module.exports = {
