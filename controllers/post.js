@@ -136,6 +136,13 @@ const load = async (req, res, next) => {
 
 const vote = async (req, res) => {
   const { post, currentUser } = req
+  let { commend } = req.body
+  if (commend === undefined) {
+    commend = true
+  } else {
+    commend = !!commend
+  }
+
   // Check if already voted
   const vote = await Vote.findOne({
     where: {
@@ -144,32 +151,46 @@ const vote = async (req, res) => {
     }
   })
 
-  if (vote) {
+  if (vote && vote.commend === commend) {
     return res.send({
       status: false,
       error: 'already_voted'
     })
+  } else if (vote) {
+    vote.commend = commend
+    await vote.save()
+  } else {
+    const newVote = new Vote({
+      post_id: post.id,
+      user_id: currentUser.id,
+      category_id: post.category_id,
+
+    })
+
+    await newVote.save()
   }
 
-  const newVote = new Vote({
-    post_id: post.id,
-    user_id: currentUser.id,
-    category_id: post.category_id
-  })
+  const userFields = ['id', 'first_name', 'last_name', 'hospital', 'picture_profile']
 
-  await newVote.save()
-  
-  console.info('Vote Saved!')
-// TODO: load all votes
-// TODO: load all voters
-
-  const votes = await Vote.findAll({
+  const downVotes = await Vote.findAll({
     where: {
       post_id: post.id,
+      commend: false
     },
     include: [{
       model: User,
-      attributes: ['id', 'first_name', 'last_name', 'hospital', 'picture_profile']
+      attributes: userFields
+    }]
+  })
+
+  const upVotes = await Vote.findAll({
+    where: {
+      post_id: post.id,
+      commend: true
+    },
+    include: [{
+      model: User,
+      attributes: userFields
     }]
   })
 
@@ -177,7 +198,8 @@ const vote = async (req, res) => {
     plain: true
   })
 
-  data.votes = votes.map(v => v.get({plain: true}))
+  data.downVotes = downVotes.map(v => v.get({plain: true}))
+  data.upVotes = upVotes.map(v => v.get({plain: true}))
 
   res.send({
     status: true,

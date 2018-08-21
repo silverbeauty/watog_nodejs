@@ -389,7 +389,7 @@
   Body  
   ```
   {
-    "up": true or false
+    "commend": true or false
   }
   ```
 

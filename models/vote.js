@@ -20,7 +20,8 @@ const Vote = sequelize.define('Votes', {
   user_id: {
     type: Sequelize.INTEGER,
     allowNull: false
-  }
+  },
+  commend: { type: Sequelize.BOOLEAN, allowNull: false, defaultValue: true }
 })
 
 module.exports = Vote
