@@ -2,6 +2,10 @@ const Sequelize = require('sequelize')
 
 const sequelize = require('../config/database')
 
+const Post = require('./post')
+const Category = require('./category')
+const Vote = require('./vote')
+
 const User = sequelize.define('User', {
   id: {
     type: Sequelize.INTEGER,
@@ -65,24 +69,12 @@ const User = sequelize.define('User', {
   }
 })
 
-User.associate = function (models) {
-  User.hasMany(models.Category,
-    {
-      foreignKey: 'user_id',
-      constraints: false
-    }
-  )
-}
+User.hasMany(Post, { foreignKey: 'user_id', sourceKey: 'id' })
+User.hasMany(Category, { foreignKey: 'user_id', sourceKey: 'id' })
+User.hasMany(Vote, { foreignKey: 'user_id', sourceKey: 'id' })
 
-User.associate = function (models) {
-  User.hasOne(models.Vote,
-    {
-      foreignKey: 'voteBy',
-      constraints: false
-    }
-  )
-}
-
-User.sync()
+Post.belongsTo(User, { foreignKey: 'user_id', sourceKey: 'id' })
+Category.belongsTo(User, { foreignKey: 'user_id', sourceKey: 'id' })
+Vote.belongsTo(User, { foreignKey: 'user_id', sourceKey: 'id' })
 
 module.exports = User

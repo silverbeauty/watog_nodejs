@@ -115,13 +115,44 @@ const load = async (req, res, next) => {
 }
 
 const vote = async (req, res) => {
+  const { post, currentUser } = req
+  
   // Check if already voted
   const vote = Vote.findOne({
     where: {
-
+      post_id: post.id,
+      user_id: currentUser.id
     }
   })
 
+  if (vote) {
+    return res.send({
+      status: false,
+      error: 'already_voted'
+    })
+  }
+
+  const newVote = new Vote({
+    post_id: post.id,
+    user_id: currentUser.id,
+    category_id: post.category_id
+  })
+
+  await newVote.save()
+  
+// TODO: load all votes
+// TODO: load all voters
+
+  
+
+  const data = post.get({
+    plain: true
+  })
+
+  res.send({
+    status: true,
+    data
+  })
 }
 
 module.exports = {
