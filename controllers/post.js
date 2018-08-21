@@ -109,7 +109,6 @@ const query = async (req, res) => {
     where: query,
     limit,
     offset,
-    raw: true,
     include: [{
       model: User,
       attributes: userFields
