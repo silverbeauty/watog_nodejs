@@ -37,4 +37,16 @@ router.get('/:id', UserCtrl.checkAuth, UserCtrl.getUser)
 // Query users
 router.get('/', UserCtrl.checkAuth, UserCtrl.queryUsers)
 
+// Send Verify Email
+router.post('/verify/email', UserCtrl.sendVerifyEmail)
+
+// Send Verify SMS
+router.post('/verify/sms', UserCtrl.sendVerifySms)
+
+// Send Verify Email
+router.get('/verify/email/:code', UserCtrl.sendVerifyEmail)
+
+// Send Verify SMS
+router.get('/verify/sms/:code', UserCtrl.checkAuth, UserCtrl.sendVerifySms)
+
 module.exports = router
