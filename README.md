@@ -163,7 +163,14 @@
     "status": true,
     "data": User Object
   }
-  ```  
+  ```
+
+### Verify APIs  
+- POST `/user/verify/email`  
+  Send Verification Email (Requires JWT set in `Authorization` header)  
+- POST `/user/verify/sms`
+  Send Verification SMS (Requires JWT set in `Authorization` header)
+
 
 ### File APIs
 - GET `/api/file/:name`
