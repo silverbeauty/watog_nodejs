@@ -215,6 +215,22 @@ const editMe = async (req, res) => {
   })
 }
 
+const sendVerifyEmail = async (req, res) => {
+
+}
+
+const sendVerifySms = async (req, res) => {
+
+}
+
+const verifyEmail = async (req, res) => {
+
+}
+
+const verifySms = async (req, res) => {
+
+}
+
 module.exports = {
   signup,
   login,
@@ -222,5 +238,9 @@ module.exports = {
   getMe,
   editMe,
   getUser,
-  queryUsers
+  queryUsers,
+  sendVerifyEmail,
+  sendVerifySms,
+  verifyEmail,
+  verifySms
 }
