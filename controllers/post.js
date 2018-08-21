@@ -103,11 +103,17 @@ const query = async (req, res) => {
   delete query.limit
   delete query.offset
 
+  const userFields = ['id', 'first_name', 'last_name', 'hospital', 'picture_profile']
+
   const data = await Post.findAll({
     where: query,
     limit,
     offset,
-    raw: true
+    raw: true,
+    include: [{
+      model: User,
+      attributes: userFields
+    }]
   })
 
   res.send({
