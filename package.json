@@ -25,6 +25,7 @@
     "nodemon": "^1.18.3",
     "package.json": "^2.0.1",
     "pug": "2.0.0-beta11",
+    "randomstring": "^1.1.5",
     "sequelize": "^4.38.0",
     "sqlite3": "^4.0.2",
     "uuid": "^3.3.2"

@@ -1,8 +1,11 @@
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const { validationResult } = require('express-validator/check')
-
+const randomstring = require('randomstring')
+ 
 const User = require('../models/user')
+const Verify = require('../models/verify')
+const EmailCtrl = require('./email')
 
 const signup = async (req, res) => {
  	const errors = validationResult(req)
@@ -216,7 +219,29 @@ const editMe = async (req, res) => {
 }
 
 const sendVerifyEmail = async (req, res) => {
+  const { currentUser } = req
+  const { email } = currentUser
+  const subject = 'Please confirm your email address in Watog'
+  const code = randomstring.generate(12)
+  const link = process.env.WATOG_DOMAIN + '/api/user/verify/email/' + code
+  const text = `<html>
+    <head></head>
+    <body style="font-family:sans-serif;">
+      <h1 style="text-align:center">Please confirm your email address</h1>
+      <p>
+        We here at Watog are happy to have you on 
+        board! Just click the following
+        link to verify your email address. 
+        <a href="${link}">Verify</a>
+        ${link}
+      </p>
+    </body>
+    </html>`
 
+  await EmailCtrl.send('support@watog.com', email, subject, text)
+  res.send({
+    status: true
+  })
 }
 
 const sendVerifySms = async (req, res) => {
