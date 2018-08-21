@@ -13,6 +13,9 @@ router.post('/', UserCtrl.checkAuth, PostCtrl.create)
 // Get a single post
 router.get('/:id', UserCtrl.checkAuth, PostCtrl.load, PostCtrl.get)
 
+// Create a new vote
+router.post('/:id/vote', UserCtrl.checkAuth, PostCtrl.load, PostCtrl.vote)
+
 // Query post
 router.get('/', UserCtrl.checkAuth, PostCtrl.query)
 

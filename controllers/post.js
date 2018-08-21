@@ -170,5 +170,6 @@ module.exports = {
   create,
   load,
   get,
-  query
+  query,
+  vote
 }
