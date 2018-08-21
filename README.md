@@ -168,9 +168,15 @@
 ### Verify APIs  
 - POST `/user/verify/email`  
   Send Verification Email (Requires JWT set in `Authorization` header)  
-- POST `/user/verify/sms`
-  Send Verification SMS (Requires JWT set in `Authorization` header)
 
+- POST `/user/verify/sms`
+  Send Verification SMS to `cell_phone` (Requires JWT set in `Authorization` header)
+
+- GET `/user/verify/email/:code`
+  Link sent in the verify email.
+
+- GET `/user/verify/sms/:code`
+  User should make a GET request with the codes sent by SMS.  
 
 ### File APIs
 - GET `/api/file/:name`
