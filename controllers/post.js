@@ -2,6 +2,7 @@
 const { validationResult } = require('express-validator/check')
 
 const Post = require('../models/post')
+const User = require('../models/user')
 const Category = require('../models/category')
 const Vote = require('../models/post')
 
@@ -143,11 +144,21 @@ const vote = async (req, res) => {
 // TODO: load all votes
 // TODO: load all voters
 
-  
+  const votes = await Vote.findAll({
+    where: {
+      post_id: post.id,
+    },
+    include: [{
+      model: User,
+      attributes: ['id', 'first_name', 'last_name', 'hospital', 'picture_profile']
+    }]
+  })
 
   const data = post.get({
     plain: true
   })
+
+  data.votes = votes.map(v => v.get({plain: true}))
 
   res.send({
     status: true,
