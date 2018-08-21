@@ -11,7 +11,7 @@ const router = express.Router()
 router.post('/', UserCtrl.checkAuth, PostCtrl.create)
 
 // Create a new vote
-router.post('/:id/vote', UserCtrl.checkAuth, [ body('commend').isBoolean() ],PostCtrl.load, PostCtrl.vote)
+router.post('/:id/vote', UserCtrl.checkAuth, [ body('commend').isBoolean() ], PostCtrl.load, PostCtrl.vote)
 
 // Get a single post
 router.get('/:id', UserCtrl.checkAuth, PostCtrl.load, PostCtrl.get)

@@ -57,7 +57,7 @@ const get = async (req, res) => {
   if (req.query.vote) { // include vote
     const votes = await Vote.findAll({
       where: {
-        post_id: post.id,
+        post_id: post.id
       },
       include: [{
         model: User,
@@ -133,7 +133,7 @@ const load = async (req, res, next) => {
         status: false,
         error: 'no_post'
       })
-    }    
+    }
   } catch (e) {
     console.error('Failed to load post:', e)
   }
@@ -168,7 +168,7 @@ const vote = async (req, res) => {
     const newVote = new Vote({
       post_id: post.id,
       user_id: currentUser.id,
-      category_id: post.category_id,
+      category_id: post.category_id
 
     })
 

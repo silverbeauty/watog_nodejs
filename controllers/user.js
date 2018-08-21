@@ -190,11 +190,10 @@ const queryUsers = async (req, res) => {
     }]
   }
 
-  // Remove offset, limit, name 
+  // Remove offset, limit, name
   delete query.limit
   delete query.offset
   delete query.name
-
 
   const users = await User.findAll({
     where: query,
