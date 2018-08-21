@@ -174,9 +174,28 @@
 
 - GET `/user/verify/email/:code`
   Link sent in the verify email.
+  Response: normal HTTP response
 
 - GET `/user/verify/sms/:code`
   User should make a GET request with the codes sent by SMS.  
+
+  Response:  
+
+  HTTP Status: 200
+  ```
+  {
+    status: true,
+    data: User Profile
+  }
+  ```
+
+  HTTP Status: 400
+  ```
+  {
+    status: false,
+    error: one of `expired_code`, `invalid_code`, `already_verified`
+  }
+  ```
 
 ### File APIs
 - GET `/api/file/:name`
