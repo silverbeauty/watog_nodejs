@@ -6,6 +6,7 @@ const randomstring = require('randomstring')
 const User = require('../models/user')
 const Verify = require('../models/verify')
 const EmailCtrl = require('./email')
+const SmsCtrl = require('./sms')
 
 const signup = async (req, res) => {
  	const errors = validationResult(req)
@@ -220,7 +221,7 @@ const editMe = async (req, res) => {
 
 const sendVerifyEmail = async (req, res) => {
   const { currentUser } = req
-  const { email } = currentUser
+  const { email, id } = currentUser
   const subject = 'Please confirm your email address in Watog'
   const code = randomstring.generate(12)
   const link = process.env.WATOG_DOMAIN + '/api/user/verify/email/' + code
@@ -238,6 +239,14 @@ const sendVerifyEmail = async (req, res) => {
     </body>
     </html>`
 
+  const verify = new Verify({
+    user_id: id,
+    type: 'email',
+    code,
+  })
+
+  // Save Verification Object
+  await verify.save()
   await EmailCtrl.send('support@watog.com', email, subject, text)
   res.send({
     status: true
@@ -245,11 +254,58 @@ const sendVerifyEmail = async (req, res) => {
 }
 
 const sendVerifySms = async (req, res) => {
+  const { currentUser } = req
+  const { cell_phone, id } = currentUser
+  const subject = 'Please confirm your email address in Watog'
+  const code = randomstring.generate(4)
+  const link = process.env.WATOG_DOMAIN + '/api/user/verify/email/' + code
+  
+  const verify = new Verify({
+    user_id: id,
+    type: 'sms',
+    code,
+  })
 
+  // Save Verification Object
+  await verify.save()
+  await SmsCtrl.send(cell_phone, code)
+  res.send({
+    status: true
+  })
 }
 
 const verifyEmail = async (req, res) => {
+  const { code } = req.params
+  const verify = await Verify.findOne({
+    where: {
+      code: code,
+      type: 'email'
+    }
+  })
 
+  if (!verify) {
+    return res.status(400).send(`<h2>Invalid Link!</h2>`)
+  }
+
+  const created = verify.createdAt.getTime()
+  const now = new Date().getTime()
+
+  if (now - created > 1000 * 60 * 60) { // 1 hr expire
+    return res.status(400).send(`<h2>Expired Link!</h2>`)
+  }
+
+  if (currentUser.email_verified_date) { // already verified
+    return res.status(400).send('Your email address is already verified!')
+  }
+
+  currentUser.email_verified_date = new Date()
+  await currentUser.save()
+  const { first_name, last_name, email } = currentUser
+
+  res.send(`
+    <h2>Welcome ${first_name} ${last_name}</h2>
+    <p>Your email: ${email} is now verified!</p>
+    `)
 }
 
 const verifySms = async (req, res) => {
