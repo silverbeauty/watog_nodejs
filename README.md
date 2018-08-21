@@ -406,14 +406,16 @@
         "user_id": 2,
         "createdAt": "2018-08-20T08:37:12.218Z",
         "updatedAt": "2018-08-20T08:37:12.218Z",
-        "votes": [
+        "downVotes": [],
+        "upVotes": [
             {
-                "id": 2,
+                "id": 1,
                 "category_id": 1,
                 "post_id": 2,
                 "user_id": 1,
-                "createdAt": "2018-08-21T08:40:13.922Z",
-                "updatedAt": "2018-08-21T08:40:13.922Z",
+                "commend": true,
+                "createdAt": "2018-08-21T08:50:18.309Z",
+                "updatedAt": "2018-08-21T08:50:39.030Z",
                 "User": {
                     "id": 1,
                     "first_name": "John",
