@@ -14,8 +14,8 @@ const Verify = sequelize.define('Verify', {
     allowNull: false
   },
   code: {
-    type: Sequelize.STRING, // code sent by email or sms 
-    allowNull: false,
+    type: Sequelize.STRING, // code sent by email or sms
+    allowNull: false
   },
   user_id: {
     type: Sequelize.INTEGER,

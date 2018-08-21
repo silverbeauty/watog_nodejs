@@ -2,7 +2,7 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const { validationResult } = require('express-validator/check')
 const randomstring = require('randomstring')
- 
+
 const User = require('../models/user')
 const Verify = require('../models/verify')
 const EmailCtrl = require('./email')
@@ -103,7 +103,7 @@ const checkAuth = async (req, res, next) => {
   req.currentUser = await User.findOne({ where: { email: decoded.email } })
 
   if (req.currentUser) {
-    next()    
+    next()
   } else {
     console.error('Valid JWT but no user:', decoded)
     res.send({
@@ -242,7 +242,7 @@ const sendVerifyEmail = async (req, res) => {
   const verify = new Verify({
     user_id: id,
     type: 'email',
-    code,
+    code
   })
 
   // Save Verification Object
@@ -259,11 +259,11 @@ const sendVerifySms = async (req, res) => {
   const subject = 'Please confirm your email address in Watog'
   const code = randomstring.generate(4)
   const link = process.env.WATOG_DOMAIN + '/api/user/verify/email/' + code
-  
+
   const verify = new Verify({
     user_id: id,
     type: 'sms',
-    code,
+    code
   })
 
   // Save Verification Object
