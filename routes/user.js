@@ -38,7 +38,7 @@ router.get('/:id', UserCtrl.checkAuth, UserCtrl.getUser)
 router.get('/', UserCtrl.checkAuth, UserCtrl.queryUsers)
 
 // Send Verify Email
-router.post('/verify/email', UserCtrl.sendVerifyEmail)
+router.post('/verify/email', UserCtrl.checkAuth, UserCtrl.sendVerifyEmail)
 
 // Send Verify SMS
 router.post('/verify/sms', UserCtrl.sendVerifySms)
