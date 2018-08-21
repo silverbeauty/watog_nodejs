@@ -6,11 +6,11 @@ const Category = require('../models/category')
 
 const create = async (req, res) => {
   // console.log(req.body)
- 	const errors = validationResult(req)
+  const errors = validationResult(req)
   if (!errors.isEmpty()) {
     return res.status(400).json({
-    	status: false,
-    	error: errors.array()
+      status: false,
+      error: errors.array()
     })
   }
 
@@ -19,10 +19,10 @@ const create = async (req, res) => {
   const { category_id } = req.body
   const category = await Category.findById(category_id)
   if (!category) {
-  	return res.status(400).send({
-  		status: false,
-  		error: 'no category exists:' + category_id
-  	})
+    return res.status(400).send({
+      status: false,
+      error: 'no category exists:' + category_id
+    })
   }
 
   const post = Post.build({

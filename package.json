@@ -6,7 +6,7 @@
     "start": "node ./bin/www",
     "start:dev": "JWT_SECRET=dev WATOG_DOMAIN=http://localhost:3000 nodemon ./bin/www",
     "lint": "eslint config controllers models routes",
-    "lint-fix": "eslint config controllers models routes --fix"
+    "lint-fix": "bash fixTab.sh && eslint config controllers models routes --fix"
   },
   "dependencies": {
     "ajv": "^6.5.2",

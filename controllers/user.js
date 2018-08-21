@@ -9,11 +9,11 @@ const EmailCtrl = require('./email')
 const SmsCtrl = require('./sms')
 
 const signup = async (req, res) => {
- 	const errors = validationResult(req)
+  const errors = validationResult(req)
   if (!errors.isEmpty()) {
     return res.status(400).json({
-    	status: false,
-    	error: errors.array()
+      status: false,
+      error: errors.array()
     })
   }
 

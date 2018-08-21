@@ -25,13 +25,13 @@ const get = (req, res) => {
   const filePath = path.resolve(`./files/${req.params.id}`)
   console.info('File Path:', filePath)
   if (fs.existsSync(filePath)) {
-	  res.set('Content-Type', mime.contentType(filePath))
+    res.set('Content-Type', mime.contentType(filePath))
     res.sendFile(filePath)
   } else {
-  	res.status(404).send({
-  		status: false,
-  		error: 'File does not exist'
-  	})
+    res.status(404).send({
+      status: false,
+      error: 'File does not exist'
+    })
   }
 }
 
