@@ -1,15 +1,19 @@
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const { validationResult } = require('express-validator/check')
+const randomstring = require('randomstring')
 
 const User = require('../models/user')
+const Verify = require('../models/verify')
+const EmailCtrl = require('./email')
+const SmsCtrl = require('./sms')
 
 const signup = async (req, res) => {
- 	const errors = validationResult(req)
+  const errors = validationResult(req)
   if (!errors.isEmpty()) {
     return res.status(400).json({
-    	status: false,
-    	error: errors.array()
+      status: false,
+      error: errors.array()
     })
   }
 
@@ -99,7 +103,7 @@ const checkAuth = async (req, res, next) => {
   req.currentUser = await User.findOne({ where: { email: decoded.email } })
 
   if (req.currentUser) {
-    next()    
+    next()
   } else {
     console.error('Valid JWT but no user:', decoded)
     res.send({
@@ -215,6 +219,154 @@ const editMe = async (req, res) => {
   })
 }
 
+const sendVerifyEmail = async (req, res) => {
+  const { currentUser } = req
+  const { email, id } = currentUser
+  const subject = 'Please confirm your email address in Watog'
+  const code = randomstring.generate(12)
+  const link = process.env.WATOG_DOMAIN + '/api/user/verify/email/' + code
+  const text = `<html>
+    <head></head>
+    <body style="font-family:sans-serif;">
+      <h1 style="text-align:center">Please confirm your email address</h1>
+      <p>
+        We here at Watog are happy to have you on 
+        board! Just click the following
+        link to verify your email address. 
+        <a href="${link}">Verify</a>
+        ${link}
+      </p>
+    </body>
+    </html>`
+
+  const verify = new Verify({
+    user_id: id,
+    type: 'email',
+    code
+  })
+
+  // Save Verification Object
+  await verify.save()
+  await EmailCtrl.send('support@watog.com', email, subject, text)
+  res.send({
+    status: true
+  })
+}
+
+const sendVerifySms = async (req, res) => {
+  const { currentUser } = req
+  const { cell_phone, id } = currentUser
+  const subject = 'Please confirm your email address in Watog'
+  const code = randomstring.generate(4)
+  const link = process.env.WATOG_DOMAIN + '/api/user/verify/email/' + code
+
+  const verify = new Verify({
+    user_id: id,
+    type: 'sms',
+    code
+  })
+
+  // Save Verification Object
+  await verify.save()
+  await SmsCtrl.send(cell_phone, code)
+  res.send({
+    status: true
+  })
+}
+
+const verifyEmail = async (req, res) => {
+  const { code } = req.params
+  const verify = await Verify.findOne({
+    where: {
+      code: code,
+      type: 'email'
+    }
+  })
+
+  if (!verify) {
+    return res.status(400).send(`<h2>Invalid Link!</h2>`)
+  }
+
+  const created = verify.createdAt.getTime()
+  const now = new Date().getTime()
+
+  if (now - created > 1000 * 60 * 60) { // 1 hr expire
+    return res.status(400).send(`<h2>Expired Link!</h2>`)
+  }
+
+  const currentUser = await User.findById(verify.user_id)
+
+  if (!currentUser) {
+    return res.status(400).send(`<h2>Expired Link!</h2>`)
+  }
+
+  if (currentUser.email_verified_date) { // already verified
+    return res.status(400).send('Your email address is already verified!')
+  }
+
+  currentUser.email_verified_date = new Date()
+  await currentUser.save()
+  const { first_name, last_name, email } = currentUser
+
+  res.send(`
+    <h2>Welcome ${first_name} ${last_name}!</h2>
+    <p>Your email: <b> ${email} </b> is now verified!</p>
+    `)
+}
+
+const verifySms = async (req, res) => {
+  const { code } = req.params
+  const verify = await Verify.findOne({
+    where: {
+      code: code,
+      type: 'sms'
+    }
+  })
+
+  if (!verify) {
+    return res.status(400).send(`<h2>Invalid Link!</h2>`)
+  }
+
+  const created = verify.createdAt.getTime()
+  const now = new Date().getTime()
+
+  if (now - created > 1000 * 60 * 60) { // 1 hr expire
+    return res.status(400).send({
+      status: false,
+      error: 'expired_code'
+    })
+  }
+
+  const { currentUser } = req
+
+  if (currentUser.id !== verify.user_id) { // user_id is not matched
+    return res.status(400).send({
+      status: false,
+      error: 'invalid_code'
+    })
+  }
+
+  if (currentUser.sms_verified_date) { // already verified
+    return res.status(400).send({
+      status: false,
+      error: 'already_verified'
+    })
+  }
+
+  currentUser.sms_verified_date = new Date()
+  await currentUser.save()
+
+  const data = currentUser.get({
+    plain: true
+  })
+  delete data.password
+
+  res.send({
+    status: true,
+    data
+  })
+}
+
 module.exports = {
   signup,
   login,
@@ -222,5 +374,9 @@ module.exports = {
   getMe,
   editMe,
   getUser,
-  queryUsers
+  queryUsers,
+  sendVerifyEmail,
+  sendVerifySms,
+  verifyEmail,
+  verifySms
 }

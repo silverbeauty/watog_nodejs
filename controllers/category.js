@@ -4,11 +4,11 @@ const { validationResult } = require('express-validator/check')
 const Category = require('../models/category')
 
 const create = async (req, res) => {
- 	const errors = validationResult(req)
+  const errors = validationResult(req)
   if (!errors.isEmpty()) {
     return res.status(400).json({
-    	status: false,
-    	error: errors.array()
+      status: false,
+      error: errors.array()
     })
   }
 
