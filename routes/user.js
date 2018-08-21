@@ -44,9 +44,9 @@ router.post('/verify/email', UserCtrl.checkAuth, UserCtrl.sendVerifyEmail)
 router.post('/verify/sms', UserCtrl.checkAuth, UserCtrl.sendVerifySms)
 
 // Send Verify Email
-router.get('/verify/email/:code', UserCtrl.sendVerifyEmail)
+router.get('/verify/email/:code', UserCtrl.verifyEmail)
 
 // Send Verify SMS
-router.get('/verify/sms/:code', UserCtrl.checkAuth, UserCtrl.sendVerifySms)
+router.get('/verify/sms/:code', UserCtrl.checkAuth, UserCtrl.verifySms)
 
 module.exports = router
