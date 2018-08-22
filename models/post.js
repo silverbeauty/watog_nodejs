@@ -21,6 +21,11 @@ const Post = sequelize.define('Post', {
   user_id: {
     type: Sequelize.INTEGER,
     allowNull: false
+  },
+  vote_score: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    default: 0
   }
 })
 
