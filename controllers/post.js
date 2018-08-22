@@ -54,17 +54,29 @@ const get = async (req, res) => {
   const { post } = req
   const data = post.get({ plain: true})
 
-  if (req.query.vote) { // include vote
-    const votes = await Vote.findAll({
+  if ('vote' in req.query) { // include vote
+    const userFields = ['id', 'first_name', 'last_name', 'hospital', 'picture_profile']
+    data.downVotes = await Vote.findAll({
       where: {
-        post_id: post.id
+        post_id: post.id,
+        commend: false
       },
       include: [{
         model: User,
-        attributes: ['id', 'first_name', 'last_name', 'hospital', 'picture_profile']
+        attributes: userFields
       }]
     })
-    data.votes = votes.map(v => v.get({plain: true}))
+
+    data.upVotes = await Vote.findAll({
+      where: {
+        post_id: post.id,
+        commend: true
+      },
+      include: [{
+        model: User,
+        attributes: userFields
+      }]
+    })
   }
 
   res.send({
