@@ -39,6 +39,10 @@ const User = sequelize.define('User', {
     type: Sequelize.STRING,
     allowNull: false
   },
+  state: {
+    type: Sequelize.STRING,
+    allowNull: false
+  }, 
   hospital: {
     type: Sequelize.STRING,
     allowNull: false
