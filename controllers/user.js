@@ -197,7 +197,7 @@ const queryUsers = async (req, res) => {
 
   const users = await User.findAll({
     where: query,
-    attributes: ['id', 'first_name', 'last_name', 'country', 'hospital', 'cell_phone'],
+    attributes: ['id', 'first_name', 'last_name', 'country', 'hospital', 'cell_phone', 'picture_profile', 'picture_cover'],
     limit,
     offset,
     raw: true
