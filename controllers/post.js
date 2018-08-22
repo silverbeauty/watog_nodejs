@@ -223,6 +223,33 @@ const vote = async (req, res) => {
   data.downVotes = downVotes.map(v => v.get({plain: true}))
   data.upVotes = upVotes.map(v => v.get({plain: true}))
 
+  // Load User
+  const user = await User.findOne({
+    where: {
+      id: post.user_id
+    }
+  })
+
+  // TODO: calculate user vote score
+  const up_vote_count = await Post.sum('up_vote_count', {
+    where: {
+      user_id: post.user_id
+    }
+  })
+
+// TODO: calculate user vote score
+  const down_vote_count = await Post.sum('down_vote_count', {
+    where: {
+      user_id: post.user_id
+    }
+  })
+
+  user.up_vote_count = user.up_vote_count
+  user.down_vote_count = user.down_vote_count
+  user.vote_score = up_vote_count - down_vote_count
+
+  await user.save()
+
   res.send({
     status: true,
     data

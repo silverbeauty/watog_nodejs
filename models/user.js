@@ -70,7 +70,12 @@ const User = sequelize.define('User', {
   picture_cover: {
     type: Sequelize.STRING,
     allowNull: true
-  }
+  },
+  picture_cover: {
+    type: Sequelize.STRING,
+    allowNull: true
+  },
+
 })
 
 User.hasMany(Post, { foreignKey: 'user_id', sourceKey: 'id' })
