@@ -22,9 +22,21 @@ const Post = sequelize.define('Post', {
     type: Sequelize.INTEGER,
     allowNull: false
   },
-  vote_score: {
+  vote_score: { // Upvote count - down vote count
     type: Sequelize.INTEGER,
-    allowNull: false,
+    allowNull: true,
+    default: 0
+  },
+
+  down_vote_count: {
+    type: Sequelize.INTEGER,
+    allowNull: true,
+    default: 0
+  },
+
+  upvote_count: {
+    type: Sequelize.INTEGER,
+    allowNull: true,
     default: 0
   }
 })
