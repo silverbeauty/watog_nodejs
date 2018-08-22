@@ -214,6 +214,10 @@ const vote = async (req, res) => {
   const data = post.get({
     plain: true
   })
+  // Update upvote, downvote, vote score
+  post.upvote_count = upVotes.length
+  post.downvote_count = downVotes.length
+  post.vote_score = upVotes.length - downVotes.length
 
   data.downVotes = downVotes.map(v => v.get({plain: true}))
   data.upVotes = upVotes.map(v => v.get({plain: true}))
