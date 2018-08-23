@@ -262,9 +262,23 @@ const editMe = async (req, res) => {
   delete editData.email_verified_date
   delete editData.sms_verified_date
 
+  // Check settings is valid
+
+  if ('settings' in editData) {
+    try {
+      JSON.parse(editData.settings)
+    } catch (e) {
+      return res.status(400).send({
+        status: true,
+        error: 'invalid_settings'
+      })
+    }
+  }
+
   for (let key in editData) {
     user[key] = editData[key]
   }
+
 
   await user.save()
 
