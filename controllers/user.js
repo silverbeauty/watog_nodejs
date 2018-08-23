@@ -178,7 +178,7 @@ const getUser = async (req, res) => {
   if (!user) {
     return res.status(400).send({
       status: false,
-      error: 'No such user with id:' + req.params.id
+      error: 'no_user'
     })
   }
 
@@ -438,6 +438,43 @@ const verifySms = async (req, res) => {
     status: true,
     data
   })
+}
+
+const forgotPassword = async (req, res) => {
+  const { email } = req.body
+
+  const _user = await User.findOne({ where: {
+    [Op.or]: [{
+      email
+    }, {
+      user_name: email
+    }]
+  } })
+
+  if (!_user) {
+    return res.status(401).json({
+      status: false,
+      error: 'no_user'
+    })
+  }
+
+  const token = jwt.sign({email: _user.email}, process.env.JWT_SECRET + 'FORGOT_PASSWORD')
+
+  const text = `<html>
+    <head></head>
+    <body style="font-family:sans-serif;">
+      <h1 style="text-align:center">Please confirm your email address</h1>
+      <p>
+        We here at Watog are happy to have you on 
+        board! Just click the following
+        link to verify your email address. 
+        <a href="${link}">Verify</a>
+        ${link}
+      </p>
+    </body>
+    </html>`
+
+  await EmailCtrl.send('support@watog.com', _user.email, 'Reset your Watog password', text)
 }
 
 module.exports = {
