@@ -340,42 +340,61 @@
   ```
 
 
-- GET `/api/post/:id[?vote]`
+- GET `/api/post/:id[?vote&category&user]`
   Get a single post. 
   If `?vote`: return posts with votes
+  If `?category`: return posts with `Category`
+  If `?user`: return posts with `User`
 
   Response:
   HTTP Status: 200,  
   ```
   {
-      "status": true,
-      "data": {
-          "id": 2,
-          "picture": "localhost:3000/api/files/44230068adab9f01e680c25c26b08bc5.png",
-          "category_id": 1,
-          "user_id": 2,
-          "createdAt": "2018-08-20T08:37:12.218Z",
-          "updatedAt": "2018-08-20T08:37:12.218Z",
-          "downVotes": [],
-          "upVotes": [
-              {
-                  "id": 1,
-                  "category_id": 1,
-                  "post_id": 2,
-                  "user_id": 1,
-                  "commend": true,
-                  "createdAt": "2018-08-22T13:46:51.719Z",
-                  "updatedAt": "2018-08-22T13:46:51.719Z",
-                  "User": {
-                      "id": 1,
-                      "first_name": "John",
-                      "last_name": "Test",
-                      "hospital": "a",
-                      "picture_profile": null
-                  }
-              }
-          ]
-      }
+    "status": true,
+    "data": {
+        "id": 3,
+        "picture": "localhost:3000/api/files/44230068adab9f01e680c25c26b08bc5.png",
+        "category_id": 2,
+        "user_id": 1,
+        "vote_score": -1,
+        "down_vote_count": 1,
+        "up_vote_count": 0,
+        "createdAt": "2018-08-23T05:10:48.360Z",
+        "updatedAt": "2018-08-23T05:16:23.481Z",
+        "downVotes": [
+            {
+                "id": 4,
+                "category_id": 2,
+                "post_id": 3,
+                "user_id": 1,
+                "commend": false,
+                "createdAt": "2018-08-23T05:11:04.987Z",
+                "updatedAt": "2018-08-23T05:16:23.469Z",
+                "User": {
+                    "id": 1,
+                    "first_name": "Test",
+                    "last_name": "Again",
+                    "hospital": "a",
+                    "picture_profile": null
+                }
+            }
+        ],
+        "upVotes": [],
+        "Category": {
+            "id": 2,
+            "type": "boy",
+            "user_id": 1,
+            "createdAt": "2018-08-23T05:10:41.684Z",
+            "updatedAt": "2018-08-23T05:10:41.684Z"
+        },
+        "User": {
+            "id": 1,
+            "first_name": "Test",
+            "last_name": "Again",
+            "hospital": "a",
+            "picture_profile": null
+        }
+    }
   }
   ```
 
