@@ -94,6 +94,11 @@ const User = sequelize.define('User', {
     type: Sequelize.INTEGER,
     allowNull: true,
     default: 0
+  },
+  settings: { // Should be stringified using JSON.stringify
+    type: Sequelize.STRING,
+    allowNull: true,
+    default: `{"notifications":{"vote":true,"participate":true,"spam_mark":true}}`
   }
 })
 
