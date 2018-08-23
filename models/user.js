@@ -35,6 +35,10 @@ const User = sequelize.define('User', {
     allowNull: false,
     unique: true
   },
+  job: {
+    type: Sequelize.STRING,
+    allowNull: true
+  },
   cell_phone: {
     type: Sequelize.STRING,
     allowNull: false,
@@ -47,7 +51,7 @@ const User = sequelize.define('User', {
   state: {
     type: Sequelize.STRING,
     allowNull: true
-  }, 
+  },
   hospital: {
     type: Sequelize.STRING,
     allowNull: false
@@ -76,10 +80,6 @@ const User = sequelize.define('User', {
     type: Sequelize.STRING,
     allowNull: true
   },
-  picture_cover: {
-    type: Sequelize.STRING,
-    allowNull: true
-  },
   up_vote_count: {
     type: Sequelize.INTEGER,
     allowNull: true,
@@ -94,6 +94,11 @@ const User = sequelize.define('User', {
     type: Sequelize.INTEGER,
     allowNull: true,
     default: 0
+  },
+  settings: { // Should be stringified using JSON.stringify
+    type: Sequelize.STRING,
+    allowNull: true,
+    default: `{"notifications":{"vote":true,"participate":true,"spam_mark":true}}`
   }
 })
 

@@ -189,6 +189,16 @@
   }
   ```
 
+- PUT `/user/me`
+  Edit own profile
+
+  Body:
+  ```
+  {
+    //all user fields except  `password`, `proof_of_status_date`, `email_verified_date`, `sms_verified_date`
+    // settings should be stringified using JSON.stringify, eg: "{"notifications":{"vote":true,"participate":true,"spam_mark":true}}"
+  }
+  ```
 ### Verify APIs  
 - POST `/user/verify/email`  
   Send Verification Email (Requires JWT set in `Authorization` header)  

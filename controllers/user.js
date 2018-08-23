@@ -23,9 +23,10 @@ const signup = async (req, res) => {
 
   const hash = await bcrypt.hash(req.body.password, 8)
 
-  const user = User.build({
+  const user = new User({
     ...req.body,
-    password: hash
+    password: hash,
+    settings: `{"notifications":{"vote":true,"participate":true,"spam_mark":true}}` // default setting
   })
   let data
   try {
@@ -45,7 +46,7 @@ const signup = async (req, res) => {
 
     return res.status(500).send({
       status: false,
-      error: errors ? errors : e
+      error: errors || e
     })
   }
 
@@ -67,7 +68,7 @@ const login = async (req, res) => {
   const { email, password } = req.body
 
   const _user = await User.findOne({ where: {
-    [Op.or]:[{
+    [Op.or]: [{
       email
     }, {
       user_name: email
@@ -260,6 +261,19 @@ const editMe = async (req, res) => {
   delete editData.proof_of_status_date
   delete editData.email_verified_date
   delete editData.sms_verified_date
+
+  // Check settings is valid
+
+  if ('settings' in editData) {
+    try {
+      JSON.parse(editData.settings)
+    } catch (e) {
+      return res.status(400).send({
+        status: true,
+        error: 'invalid_settings'
+      })
+    }
+  }
 
   for (let key in editData) {
     user[key] = editData[key]

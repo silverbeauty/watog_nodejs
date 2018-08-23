@@ -1,5 +1,4 @@
 const express = require('express')
-const { check, validationResult } = require('express-validator/check')
 const uuidv1 = require('uuid/v1')
 const mime = require('mime-types')
 

@@ -11,7 +11,7 @@ const Report = sequelize.define('Report', {
   },
   user_id: { // Who reported
     type: Sequelize.INTEGER,
-    allowNull: false,
+    allowNull: false
   },
   post_id: {
     type: Sequelize.INTEGER,
