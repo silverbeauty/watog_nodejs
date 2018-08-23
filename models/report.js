@@ -2,7 +2,7 @@ const Sequelize = require('sequelize')
 
 const sequelize = require('../config/database')
 
-const Report = sequelize.define('Post', {
+const Report = sequelize.define('Report', {
   id: {
     type: Sequelize.INTEGER,
     allowNull: false,
