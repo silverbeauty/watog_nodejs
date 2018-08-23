@@ -41,7 +41,7 @@ const User = sequelize.define('User', {
   },
   state: {
     type: Sequelize.STRING,
-    allowNull: false
+    allowNull: true
   }, 
   hospital: {
     type: Sequelize.STRING,
@@ -75,7 +75,21 @@ const User = sequelize.define('User', {
     type: Sequelize.STRING,
     allowNull: true
   },
-
+  up_vote_count: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    default: 0
+  },
+  down_vote_count: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    default: 0
+  },
+  vote_score: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    default: 0
+  }
 })
 
 User.hasMany(Post, { foreignKey: 'user_id', sourceKey: 'id' })
