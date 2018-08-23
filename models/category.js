@@ -13,7 +13,8 @@ const Category = sequelize.define('Category', {
   },
   type: {
     type: Sequelize.STRING,
-    allowNull: false
+    allowNull: false,
+    unique: true
   },
   user_id: {
     type: Sequelize.INTEGER,
