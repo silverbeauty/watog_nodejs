@@ -75,7 +75,7 @@
    Body: 
    ```
    {
-       "email": "user@email.com",
+       "email": // Email or user_name,
        "password": "pwd"
    }
    ```
