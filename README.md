@@ -18,6 +18,7 @@
   ```
   {
     "email": "user@email.com",
+    "user_name": "user",
     "password": "pwd"
     "first_name": ""
     "last_name": ""
@@ -74,7 +75,7 @@
    Body: 
    ```
    {
-       "email": "user@email.com",
+       "email": // Email or user_name,
        "password": "pwd"
    }
    ```
