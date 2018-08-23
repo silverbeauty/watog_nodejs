@@ -237,8 +237,17 @@
 
   Body:  
 
+
   ```
-  "file": File Object
+  "file": File Object // as Form Data
+  ```
+
+  or 
+
+  ```
+  {
+    "file": "data:image/jpeg;base64...."
+  }
   ```
 
   Response:
