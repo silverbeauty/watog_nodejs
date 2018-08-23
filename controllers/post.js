@@ -23,7 +23,7 @@ const create = async (req, res) => {
   if (!category) {
     return res.status(400).send({
       status: false,
-      error: 'no category exists:' + category_id
+      error: 'no_category'
     })
   }
 

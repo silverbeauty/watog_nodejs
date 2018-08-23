@@ -330,6 +330,16 @@
     }
   }
   ```
+  Response:
+  HTTP Status: 400. 
+  ```
+  {
+    "status": false,
+    "error": "no_category" // The passed category does not exist
+  }
+  ```
+
+
 - GET `/api/post/:id[?vote]`
   Get a single post. 
   If `?vote`: return posts with votes
