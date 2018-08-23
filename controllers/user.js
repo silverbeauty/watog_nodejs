@@ -66,7 +66,13 @@ const login = async (req, res) => {
 
   const { email, password } = req.body
 
-  const _user = await User.findOne({ where: { email } })
+  const _user = await User.findOne({ where: {
+    [Op.or]:[{
+      email
+    }, {
+      user_name: email
+    }]
+  } })
 
   if (!_user) {
     return res.status(401).json({
