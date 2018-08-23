@@ -9,6 +9,10 @@ const Report = sequelize.define('Post', {
     autoIncrement: true,
     primaryKey: true
   },
+  user_id: { // Who reported
+    type: Sequelize.INTEGER,
+    allowNull: false,
+  },
   post_id: {
     type: Sequelize.INTEGER,
     allowNull: false

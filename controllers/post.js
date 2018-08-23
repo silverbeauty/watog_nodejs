@@ -5,6 +5,7 @@ const Post = require('../models/post')
 const User = require('../models/user')
 const Category = require('../models/category')
 const Vote = require('../models/vote')
+const Report = require('../models/report')
 
 const create = async (req, res) => {
   // console.log(req.body)
@@ -273,8 +274,19 @@ const vote = async (req, res) => {
   })
 }
 
-const report = (req, res) => {
+const report = async (req, res) => {
+  const report = new Report({
+    post_id: req.post.id,
+    type: req.body.type,
+    user_id: req.currentUser.id,
+    description: req.body.description
+  })
+  await report.save()
 
+  res.send({
+    status: true,
+    data: report
+  })
 }
 
 module.exports = {
