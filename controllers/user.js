@@ -5,6 +5,7 @@ const randomstring = require('randomstring')
 const Sequelize = require('sequelize')
 
 const User = require('../models/user')
+const Post = require('../models/post')
 const Verify = require('../models/verify')
 const EmailCtrl = require('./email')
 const SmsCtrl = require('./sms')
@@ -145,6 +146,17 @@ const getMe = async (req, res) => {
   })
 
   profile.vote_rank = rank + 1
+
+  // Find Best Ranked photo
+  const good_posts = await Post.findAll({
+    where: {
+      user_id: currentUser.id
+    },
+    order: [ 'up_vote_count'],
+    limit: 5
+  })
+
+  profile.good_posts = good_posts
 
   res.send({
     status: true,

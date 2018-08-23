@@ -118,7 +118,7 @@
 
   HTTP Status: 200  
   ```  
-  {
+{
     "status": true,
     "data": {
         "id": 1,
@@ -140,9 +140,11 @@
         "vote_score": -1,
         "createdAt": "2018-08-23T04:23:48.689Z",
         "updatedAt": "2018-08-23T05:16:23.498Z",
-        "vote_rank": 1
+        "vote_rank": 1,
+        "good_posts": [Post] // up to 5, ordered by 'up_vote_count' 
+        ]
     }
-  }
+}
   ```
 
 - GET `/user/me`  
