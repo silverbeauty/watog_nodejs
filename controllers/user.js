@@ -459,22 +459,27 @@ const forgotPassword = async (req, res) => {
   }
 
   const token = jwt.sign({email: _user.email}, process.env.JWT_SECRET + 'FORGOT_PASSWORD')
+  const link = process.env.WATOG_DOMAIN + '/api/user/reset/' + token
 
   const text = `<html>
     <head></head>
     <body style="font-family:sans-serif;">
-      <h1 style="text-align:center">Please confirm your email address</h1>
+      <h1 style="text-align:center">We received a request to reset your password</h1>
       <p>
-        We here at Watog are happy to have you on 
-        board! Just click the following
-        link to verify your email address. 
-        <a href="${link}">Verify</a>
-        ${link}
+        Use this link below to set up a new password.
+        <p>
+        <a href="${link}"><b>Reset Your Password</b></a>
+        </p>
+        Or simply you can copy this link to your browser:
+        <b>${link}</b>
       </p>
     </body>
     </html>`
 
   await EmailCtrl.send('support@watog.com', _user.email, 'Reset your Watog password', text)
+  res.send({
+    status: true
+  })
 }
 
 module.exports = {
@@ -488,5 +493,6 @@ module.exports = {
   sendVerifyEmail,
   sendVerifySms,
   verifyEmail,
-  verifySms
+  verifySms,
+  forgotPassword
 }
