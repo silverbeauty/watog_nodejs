@@ -487,6 +487,38 @@ const forgotPassword = async (req, res) => {
   })
 }
 
+const resetPassword = async (req, res) => {
+  const { token }= req.params
+  const { password } = req.body
+
+  let decoded
+  try {
+    decoded = jwt.verify(token, process.env.JWT_SECRET + 'FORGOT_PASSWORD')
+  } catch (err) {
+    console.error(err)
+    return res.status(401).send({
+      status: false,
+      error: 'invalid_link'
+    })
+  }
+  const _user = await User.findOne({ where: { email: decoded.email } })
+
+  if (!_user) {
+    return res.status(401).json({
+      status: false,
+      error: 'no_user'
+    })
+  }
+
+  const hash = await bcrypt.hash(password, 8)
+  _user.password = hash
+
+  await _user.save()
+  res.send({
+    status: true
+  })
+}
+
 module.exports = {
   signup,
   login,
@@ -499,5 +531,6 @@ module.exports = {
   sendVerifySms,
   verifyEmail,
   verifySms,
-  forgotPassword
+  forgotPassword,
+  resetPassword
 }
