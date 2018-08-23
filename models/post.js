@@ -2,6 +2,7 @@ const Sequelize = require('sequelize')
 
 const sequelize = require('../config/database')
 const Vote = require('./vote')
+const Report = require('./report')
 
 const Post = sequelize.define('Post', {
   id: {
@@ -26,5 +27,8 @@ const Post = sequelize.define('Post', {
 
 Post.hasMany(Vote, { foreignKey: 'post_id', sourceKey: 'id' })
 Vote.belongsTo(Post, { foreignKey: 'post_id', sourceKey: 'id' })
+
+Post.hasMany(Report, { foreignKey: 'post_id', sourceKey: 'id' })
+Report.belongsTo(Post, { foreignKey: 'post_id', sourceKey: 'id' })
 
 module.exports = Post

@@ -224,10 +224,15 @@ const vote = async (req, res) => {
   })
 }
 
+const report = (req, res) => {
+
+}
+
 module.exports = {
   create,
   load,
   get,
   query,
-  vote
+  vote,
+  report
 }
