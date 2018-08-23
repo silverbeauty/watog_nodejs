@@ -279,7 +279,6 @@ const editMe = async (req, res) => {
     user[key] = editData[key]
   }
 
-
   await user.save()
 
   const data = user.get({
