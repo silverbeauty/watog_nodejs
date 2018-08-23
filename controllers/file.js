@@ -21,7 +21,10 @@ const create = (req, res) => {
       const filePath = base64Img.imgSync(req.body.file, path.resolve('files/'), fileName)
       res.send({
         status: true,
-        data: process.env.WATOG_DOMAIN + '/api/file/' + path.basename(filePath)
+        data: {
+          url: process.env.WATOG_DOMAIN + '/api/file/' + path.basename(filePath),
+          filename: path.basename(filePath)
+        }
       })
     } catch (e) {
       console.error(e)
