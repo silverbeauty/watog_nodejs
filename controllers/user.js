@@ -82,10 +82,8 @@ const login = async (req, res) => {
     })
   }
 
-  const user = _user.get({plain: true})
-
   // Check password
-  if (!bcrypt.compareSync(password, user.password)) {
+  if (!bcrypt.compareSync(password, user.password.split(' ')[0])) {
     return res.status(401).json({
       status: false,
       error: 'Invalid email or password!'
@@ -463,9 +461,14 @@ const forgotPassword = async (req, res) => {
     })
   }
 
-  const token = jwt.sign({email: _user.email}, process.env.JWT_SECRET + 'FORGOT_PASSWORD')
-  const link = process.env.WATOG_DOMAIN + '/api/user/reset/' + token
+  const oldPassword = _user.password.split(' ')[0]
 
+  const token = jwt.sign({email: _user.email, hash: oldPassword }, process.env.JWT_SECRET + 'FORGOT_PASSWORD')
+  const link = process.env.WATOG_DOMAIN + '/api/user/reset-password/' + token
+  const code = randomstring(4)
+  
+  user.password = oldPassword + ' ' + code
+  await user.save()
   const text = `<html>
     <head></head>
     <body style="font-family:sans-serif;">
@@ -477,6 +480,8 @@ const forgotPassword = async (req, res) => {
         </p>
         Or simply you can copy this link to your browser:
         <b>${link}</b>
+
+        Use this code in your app: <b>${code}/b>
       </p>
     </body>
     </html>`
@@ -494,6 +499,7 @@ const resetPassword = async (req, res) => {
   let decoded
   try {
     decoded = jwt.verify(token, process.env.JWT_SECRET + 'FORGOT_PASSWORD')
+    console.info('Decoded:', decoded)
   } catch (err) {
     console.error(err)
     return res.status(401).send({
@@ -507,6 +513,13 @@ const resetPassword = async (req, res) => {
     return res.status(401).json({
       status: false,
       error: 'no_user'
+    })
+  }
+
+  if (decoded.hash !== _user.password || decoded.iat - new Date().getTime() / 1000 > 60 * 15) { // 15 minutes expiry check or used link
+    return res.status(401).send({
+      status: false,
+      error: 'expired_link'
     })
   }
 
