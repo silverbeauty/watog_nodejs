@@ -10,6 +10,7 @@ router.post('/'
   , [
     body('email').isEmail(),
     body('user_name').isLength({ min: 3 }).withMessage('user_name must be at least 3 chars long'),
+    body('job').isLength({ min: 3 }).withMessage('job must be at least 3 chars long'),
     // password must be at least 5 chars long
     body('password').isLength({ min: 5 }).withMessage('password must be at least 5 chars long'),
     body('first_name').isLength({ min: 1 }).withMessage('first_name must should be at least 1 chars long'),
