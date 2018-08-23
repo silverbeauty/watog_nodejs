@@ -7,6 +7,9 @@ const Category = require('../models/category')
 const Vote = require('../models/vote')
 const Report = require('../models/report')
 
+// Common user fields
+const userFields = ['id', 'first_name', 'last_name', 'hospital', 'picture_profile', 'user_name']
+
 const create = async (req, res) => {
   // console.log(req.body)
   const errors = validationResult(req)
@@ -59,7 +62,6 @@ const get = async (req, res) => {
   const data = post.get({ plain: true})
 
   if ('vote' in req.query) { // include vote
-    const userFields = ['id', 'first_name', 'last_name', 'hospital', 'picture_profile']
     data.downVotes = await Vote.findAll({
       where: {
         post_id: post.id,
@@ -135,8 +137,6 @@ const query = async (req, res) => {
   delete query.limit
   delete query.offset
 
-  const userFields = ['id', 'first_name', 'last_name', 'hospital', 'picture_profile']
-
   const data = await Post.findAll({
     where: query,
     limit,
@@ -206,8 +206,6 @@ const vote = async (req, res) => {
 
     await newVote.save()
   }
-
-  const userFields = ['id', 'first_name', 'last_name', 'hospital', 'picture_profile']
 
   const downVotes = await Vote.findAll({
     where: {

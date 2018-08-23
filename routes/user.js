@@ -22,7 +22,7 @@ router.post('/'
   , UserCtrl.signup)
 
 router.post('/login', [
-  body('email').isEmail(),
+  body('email').isLength({ min: 3 }),
   body('password').isLength({ min: 1 })
 ], UserCtrl.login)
 
