@@ -5,6 +5,7 @@ const randomstring = require('randomstring')
 const Sequelize = require('sequelize')
 
 const User = require('../models/user')
+const Post = require('../models/post')
 const Verify = require('../models/verify')
 const EmailCtrl = require('./email')
 const SmsCtrl = require('./sms')
@@ -33,9 +34,18 @@ const signup = async (req, res) => {
     // Remove password
     delete data.password
   } catch (e) {
+    // Remove password
+    let errors
+    if (e.errors) {
+      errors = e.errors.map(err => {
+        delete err.instance
+        return err
+      })
+    }
+
     return res.status(500).send({
       status: false,
-      error: e.errors
+      error: errors ? errors : e
     })
   }
 
@@ -122,6 +132,32 @@ const getMe = async (req, res) => {
     plain: true
   })
   delete profile.password
+  // Screen - https://xd.adobe.com/view/ee55407e-335b-4af6-5267-f70e85f9b552-9864/screen/01041a99-bf7b-4e0f-a5b8-9335ee702275/WATOGApp-MyProfil
+  // TODO: https://xd.adobe.com/view/ee55407e-335b-4af6-5267-f70e85f9b552-9864/screen/01041a99-bf7b-4e0f-a5b8-9335ee702275/WATOGApp-MyProfil
+  // TODO: rank - https://stackoverflow.com/questions/33900750/sequelize-order-by-count-association
+
+  // Calculate Rank
+  const rank = await User.count({
+    where: {
+      vote_score: {
+        [Op.gt]: currentUser.vote_score
+      }
+    }
+  })
+
+  profile.vote_rank = rank + 1
+
+  // Find Best Ranked photo
+  const good_posts = await Post.findAll({
+    where: {
+      user_id: currentUser.id
+    },
+    order: [ 'up_vote_count'],
+    limit: 5
+  })
+
+  profile.good_posts = good_posts
+
   res.send({
     status: true,
     data: profile

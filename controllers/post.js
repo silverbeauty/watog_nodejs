@@ -23,13 +23,16 @@ const create = async (req, res) => {
   if (!category) {
     return res.status(400).send({
       status: false,
-      error: 'no category exists:' + category_id
+      error: 'no_category'
     })
   }
 
   const post = Post.build({
     ...req.body,
-    user_id: req.currentUser.id
+    user_id: req.currentUser.id,
+    up_vote_count: 0,
+    down_vote_count: 0,
+    vote_score: 0
   })
   let data
   try {
@@ -77,6 +80,22 @@ const get = async (req, res) => {
         attributes: userFields
       }]
     })
+  }
+
+  if ('category' in req.query) {
+    const category = await Category.findById(post.category_id)
+    if (category) {
+      data.Category =  category
+    }
+  }
+
+  if ('user' in req.query) {
+    const user = await User.findById(post.user_id, {
+      attributes: ['id', 'first_name', 'last_name', 'hospital', 'picture_profile']
+    })
+    if (user) {
+      data.User = user
+    }
   }
 
   res.send({
@@ -154,7 +173,7 @@ const load = async (req, res, next) => {
 const vote = async (req, res) => {
   const { post, currentUser } = req
   let { commend } = req.body
-  if (commend === undefined) {
+  if (commend === undefined) { // If commend is not specified: it is true by default
     commend = true
   } else {
     commend = !!commend
@@ -211,12 +230,42 @@ const vote = async (req, res) => {
     }]
   })
 
+  // Update upvote, downvote, vote score
+  post.up_vote_count = upVotes.length
+  post.down_vote_count = downVotes.length
+  post.vote_score = upVotes.length - downVotes.length
+  
+  await post.save()
+
   const data = post.get({
     plain: true
   })
 
   data.downVotes = downVotes.map(v => v.get({plain: true}))
   data.upVotes = upVotes.map(v => v.get({plain: true}))
+
+  // Load User
+  const user = await User.findById(post.user_id)
+
+  // TODO: calculate user vote score
+  const up_vote_count = await Post.sum('up_vote_count', {
+    where: {
+      user_id: post.user_id
+    }
+  })
+
+// TODO: calculate user vote score
+  const down_vote_count = await Post.sum('down_vote_count', {
+    where: {
+      user_id: post.user_id
+    }
+  })
+
+  user.up_vote_count = user.up_vote_count || 0
+  user.down_vote_count = user.down_vote_count || 0
+  user.vote_score = up_vote_count - down_vote_count || 0
+
+  await user.save()
 
   res.send({
     status: true,
