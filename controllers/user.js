@@ -33,9 +33,18 @@ const signup = async (req, res) => {
     // Remove password
     delete data.password
   } catch (e) {
+    // Remove password
+    let errors
+    if (e.errors) {
+      errors = e.errors.map(err => {
+        delete err.instance
+        return err
+      })
+    }
+
     return res.status(500).send({
       status: false,
-      error: e.errors
+      error: errors ? errors : e
     })
   }
 
