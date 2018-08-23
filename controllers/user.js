@@ -23,9 +23,10 @@ const signup = async (req, res) => {
 
   const hash = await bcrypt.hash(req.body.password, 8)
 
-  const user = User.build({
+  const user = new User({
     ...req.body,
-    password: hash
+    password: hash,
+    settings: `{"notifications":{"vote":true,"participate":true,"spam_mark":true}}` // default setting
   })
   let data
   try {
