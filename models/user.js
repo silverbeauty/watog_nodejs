@@ -39,6 +39,10 @@ const User = sequelize.define('User', {
     type: Sequelize.STRING,
     allowNull: false
   },
+  state: {
+    type: Sequelize.STRING,
+    allowNull: true
+  }, 
   hospital: {
     type: Sequelize.STRING,
     allowNull: false
@@ -66,6 +70,25 @@ const User = sequelize.define('User', {
   picture_cover: {
     type: Sequelize.STRING,
     allowNull: true
+  },
+  picture_cover: {
+    type: Sequelize.STRING,
+    allowNull: true
+  },
+  up_vote_count: {
+    type: Sequelize.INTEGER,
+    allowNull: true,
+    default: 0
+  },
+  down_vote_count: {
+    type: Sequelize.INTEGER,
+    allowNull: true,
+    default: 0
+  },
+  vote_score: {
+    type: Sequelize.INTEGER,
+    allowNull: true,
+    default: 0
   }
 })
 
