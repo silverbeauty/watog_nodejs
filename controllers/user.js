@@ -442,7 +442,12 @@ const verifySms = async (req, res) => {
 
 const forgotPassword = async (req, res) => {
   const { email } = req.body
-
+  if (!email) {
+    return res.status(400).send({
+      status: false,
+      error: 'no_email_or_user_name'
+    })
+  }
   const _user = await User.findOne({ where: {
     [Op.or]: [{
       email
