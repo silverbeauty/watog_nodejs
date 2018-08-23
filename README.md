@@ -18,6 +18,7 @@
   ```
   {
     "email": "user@email.com",
+    "user_name": "user",
     "password": "pwd"
     "first_name": ""
     "last_name": ""
