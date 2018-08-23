@@ -492,7 +492,21 @@
   }
   ```
 
-## Installed Package Requierement
+### Report API
+
+- POST `/api/post/:id/vote`
+  Place a reprot to a post with a description
+
+  Body  
+  ```
+  {
+    "type": String // One of 'spam', 'violence', 'sex', 'other',
+    "description": String// Optional
+  }
+  ```
+
+
+## Installed Package Requirements
 
    sudo npm install nodemon -g
    npm install --save sequelize 
