@@ -35,6 +35,10 @@ const User = sequelize.define('User', {
     allowNull: false,
     unique: true
   },
+  job: {
+    type: Sequelize.STRING,
+    allowNull: true
+  },
   cell_phone: {
     type: Sequelize.STRING,
     allowNull: false,
