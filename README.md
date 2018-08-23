@@ -120,7 +120,28 @@
   ```  
   {
     "status": true,
-    "data": User Object
+    "data": {
+        "id": 1,
+        "first_name": "Test",
+        "last_name": "Again",
+        "email": "test@test.com",
+        "cell_phone": "1234567890",
+        "country": "usa",
+        "state": null,
+        "hospital": "a",
+        "proof_of_status": null,
+        "proof_of_status_date": null,
+        "email_verified_date": null,
+        "sms_verified_date": null,
+        "picture_profile": null,
+        "picture_cover": null,
+        "up_vote_count": 0,
+        "down_vote_count": 0,
+        "vote_score": -1,
+        "createdAt": "2018-08-23T04:23:48.689Z",
+        "updatedAt": "2018-08-23T05:16:23.498Z",
+        "vote_rank": 1
+    }
   }
   ```
 

@@ -134,7 +134,17 @@ const getMe = async (req, res) => {
   // Screen - https://xd.adobe.com/view/ee55407e-335b-4af6-5267-f70e85f9b552-9864/screen/01041a99-bf7b-4e0f-a5b8-9335ee702275/WATOGApp-MyProfil
   // TODO: https://xd.adobe.com/view/ee55407e-335b-4af6-5267-f70e85f9b552-9864/screen/01041a99-bf7b-4e0f-a5b8-9335ee702275/WATOGApp-MyProfil
   // TODO: rank - https://stackoverflow.com/questions/33900750/sequelize-order-by-count-association
-  // TODO: number of votes
+
+  // Calculate Rank
+  const rank = await User.count({
+    where: {
+      vote_score: {
+        [Op.gt]: currentUser.vote_score
+      }
+    }
+  })
+
+  profile.vote_rank = rank + 1
 
   res.send({
     status: true,
