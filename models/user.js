@@ -77,17 +77,17 @@ const User = sequelize.define('User', {
   },
   up_vote_count: {
     type: Sequelize.INTEGER,
-    allowNull: false,
+    allowNull: true,
     default: 0
   },
   down_vote_count: {
     type: Sequelize.INTEGER,
-    allowNull: false,
+    allowNull: true,
     default: 0
   },
   vote_score: {
     type: Sequelize.INTEGER,
-    allowNull: false,
+    allowNull: true,
     default: 0
   }
 })
