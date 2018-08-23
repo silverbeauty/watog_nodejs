@@ -51,7 +51,7 @@ const User = sequelize.define('User', {
   state: {
     type: Sequelize.STRING,
     allowNull: true
-  }, 
+  },
   hospital: {
     type: Sequelize.STRING,
     allowNull: false
@@ -73,10 +73,6 @@ const User = sequelize.define('User', {
     allowNull: true
   },
   picture_profile: {
-    type: Sequelize.STRING,
-    allowNull: true
-  },
-  picture_cover: {
     type: Sequelize.STRING,
     allowNull: true
   },

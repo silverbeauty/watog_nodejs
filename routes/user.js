@@ -1,6 +1,6 @@
 const express = require('express')
 
-const { body, validationResult, query } = require('express-validator/check')
+const { body, query } = require('express-validator/check')
 
 const UserCtrl = require('../controllers/user')
 

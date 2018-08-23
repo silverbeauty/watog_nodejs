@@ -88,7 +88,7 @@ const get = async (req, res) => {
   if ('category' in req.query) {
     const category = await Category.findById(post.category_id)
     if (category) {
-      data.Category =  category
+      data.Category = category
     }
   }
 
@@ -233,7 +233,7 @@ const vote = async (req, res) => {
   post.up_vote_count = upVotes.length
   post.down_vote_count = downVotes.length
   post.vote_score = upVotes.length - downVotes.length
-  
+
   await post.save()
 
   const data = post.get({
@@ -253,7 +253,7 @@ const vote = async (req, res) => {
     }
   })
 
-// TODO: calculate user vote score
+  // TODO: calculate user vote score
   const down_vote_count = await Post.sum('down_vote_count', {
     where: {
       user_id: post.user_id

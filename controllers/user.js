@@ -45,7 +45,7 @@ const signup = async (req, res) => {
 
     return res.status(500).send({
       status: false,
-      error: errors ? errors : e
+      error: errors || e
     })
   }
 
@@ -67,7 +67,7 @@ const login = async (req, res) => {
   const { email, password } = req.body
 
   const _user = await User.findOne({ where: {
-    [Op.or]:[{
+    [Op.or]: [{
       email
     }, {
       user_name: email

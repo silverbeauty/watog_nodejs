@@ -1,6 +1,6 @@
 const express = require('express')
 
-const { body, check, validationResult } = require('express-validator/check')
+const { body } = require('express-validator/check')
 
 const PostCtrl = require('../controllers/post')
 const UserCtrl = require('../controllers/user')
@@ -15,8 +15,8 @@ router.post('/:id/vote', UserCtrl.checkAuth, [ body('commend').isBoolean() ], Po
 
 // Create a new report about a post
 router.post('/:id/report', UserCtrl.checkAuth, [
-	body('type').isIn(['spam', 'violence', 'sex', 'other'])
-	], PostCtrl.load, PostCtrl.report)
+  body('type').isIn(['spam', 'violence', 'sex', 'other'])
+], PostCtrl.load, PostCtrl.report)
 
 // Get a single post
 router.get('/:id', UserCtrl.checkAuth, PostCtrl.load, PostCtrl.get)
