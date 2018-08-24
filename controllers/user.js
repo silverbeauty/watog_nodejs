@@ -473,7 +473,7 @@ const forgotPassword = async (req, res) => {
     length: 4,
     charset: '1234567890ABCDEFHJKMNPQSTUVWXYZ'
   })
-  
+
   _user.password = oldPassword + ' ' + code
   await _user.save()
   const text = `<html>
@@ -500,7 +500,7 @@ const forgotPassword = async (req, res) => {
 }
 
 const resetPasswordByToken = async (req, res) => {
-  const { token }= req.params
+  const { token } = req.params
   const { password } = req.body
 
   let decoded
@@ -523,7 +523,10 @@ const resetPasswordByToken = async (req, res) => {
     })
   }
 
-  if (decoded.hash !== _user.password || new Date().getTime() / 1000 - decoded.iat > 60 * 15) { // 15 minutes expiry check or used link
+  const delay = new Date().getTime() / 1000 - decoded.iat
+  const oldPassword = _user.password.split(' ')[0]
+
+  if (decoded.hash !== oldPassword || delay > 60 * 15) { // 15 minutes expiry check or used link
     return res.status(401).send({
       status: false,
       error: 'expired_link'
@@ -556,7 +559,7 @@ const resetPasswordByCode = async (req, res) => {
   }
 
   const aryPassword = user.password.split(' ')
-  if (!aryPassword[1] || aryPassword[1] != code ) { // Code mismatch
+  if (!aryPassword[1] || aryPassword[1] != code) { // Code mismatch
     return res.status(401).send({
       status: false,
       error: 'invalid_code'

@@ -58,7 +58,7 @@ router.post('/reset-password/:token', [ body('password').isLength({ min: 5}) ], 
 router.post('/reset-password', [
   body('password').isLength({min: 5}),
   body('email').isEmail(),
-  body('code').isLength({ min: 4 }),
+  body('code').isLength({ min: 4 })
 ], UserCtrl.resetPasswordByCode)
 
 module.exports = router
