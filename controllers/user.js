@@ -83,7 +83,7 @@ const login = async (req, res) => {
   }
 
   // Check password
-  if (!bcrypt.compareSync(password, user.password.split(' ')[0])) {
+  if (!bcrypt.compareSync(password, _user.password.split(' ')[0])) {
     return res.status(401).json({
       status: false,
       error: 'Invalid email or password!'
@@ -92,6 +92,10 @@ const login = async (req, res) => {
 
   // TODO: Include only email for now
   const token = jwt.sign({email}, process.env.JWT_SECRET)
+
+  const user = _user.get({
+    plain: true
+  })
 
   // prevent user's password to be returned
   delete user.password
