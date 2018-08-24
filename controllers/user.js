@@ -537,7 +537,7 @@ const resetPasswordByToken = async (req, res) => {
 }
 
 const resetPasswordByCode = async (req, res) => {
-  const { code, body, email } = req.body
+  const { code, password, email } = req.body
 
   const user = await User.findOne({
     where: {
@@ -564,9 +564,19 @@ const resetPasswordByCode = async (req, res) => {
   const delay = new Date().getTime() - user.updatedAt.getTime()
 
   if (delay > 1000 * 60 * 15) { // More than 15 minutes passed
-
+    return res.status(401).send({
+      status: true,
+      error: 'expired_code'
+    })
   }
 
+  const hash = await bcrypt.hash(password, 8)
+  user.password = hash
+
+  await user.save()
+  res.send({
+    status: true
+  })
 }
 
 module.exports = {
