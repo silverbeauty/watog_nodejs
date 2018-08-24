@@ -82,10 +82,8 @@ const login = async (req, res) => {
     })
   }
 
-  const user = _user.get({plain: true})
-
   // Check password
-  if (!bcrypt.compareSync(password, user.password)) {
+  if (!bcrypt.compareSync(password, _user.password.split(' ')[0])) {
     return res.status(401).json({
       status: false,
       error: 'Invalid email or password!'
@@ -94,6 +92,10 @@ const login = async (req, res) => {
 
   // TODO: Include only email for now
   const token = jwt.sign({email}, process.env.JWT_SECRET)
+
+  const user = _user.get({
+    plain: true
+  })
 
   // prevent user's password to be returned
   delete user.password
@@ -442,7 +444,12 @@ const verifySms = async (req, res) => {
 
 const forgotPassword = async (req, res) => {
   const { email } = req.body
-
+  if (!email) {
+    return res.status(400).send({
+      status: false,
+      error: 'no_email_or_user_name'
+    })
+  }
   const _user = await User.findOne({ where: {
     [Op.or]: [{
       email
@@ -458,23 +465,124 @@ const forgotPassword = async (req, res) => {
     })
   }
 
-  const token = jwt.sign({email: _user.email}, process.env.JWT_SECRET + 'FORGOT_PASSWORD')
+  const oldPassword = _user.password.split(' ')[0]
 
+  const token = jwt.sign({email: _user.email, hash: oldPassword }, process.env.JWT_SECRET + 'FORGOT_PASSWORD')
+  const link = process.env.WATOG_DOMAIN + '/api/user/reset-password/' + token
+  const code = randomstring.generate({
+    length: 4,
+    charset: '1234567890ABCDEFHJKMNPQSTUVWXYZ'
+  })
+
+  _user.password = oldPassword + ' ' + code
+  await _user.save()
   const text = `<html>
     <head></head>
     <body style="font-family:sans-serif;">
-      <h1 style="text-align:center">Please confirm your email address</h1>
+      <h1 style="text-align:center">We received a request to reset your password</h1>
       <p>
-        We here at Watog are happy to have you on 
-        board! Just click the following
-        link to verify your email address. 
-        <a href="${link}">Verify</a>
-        ${link}
+        Use this link below to set up a new password.
+        <p>
+        <a href="${link}"><b>Reset Your Password</b></a>
+        </p>
+        Or simply you can copy this link to your browser:
+        <b>${link}</b>
+
+        Use this code in your app: <b>${code}/b>
       </p>
     </body>
     </html>`
 
   await EmailCtrl.send('support@watog.com', _user.email, 'Reset your Watog password', text)
+  res.send({
+    status: true
+  })
+}
+
+const resetPasswordByToken = async (req, res) => {
+  const { token } = req.params
+  const { password } = req.body
+
+  let decoded
+  try {
+    decoded = jwt.verify(token, process.env.JWT_SECRET + 'FORGOT_PASSWORD')
+    console.info('Decoded:', decoded)
+  } catch (err) {
+    console.error(err)
+    return res.status(401).send({
+      status: false,
+      error: 'invalid_link'
+    })
+  }
+  const _user = await User.findOne({ where: { email: decoded.email } })
+
+  if (!_user) {
+    return res.status(401).json({
+      status: false,
+      error: 'no_user'
+    })
+  }
+
+  const delay = new Date().getTime() / 1000 - decoded.iat
+  const oldPassword = _user.password.split(' ')[0]
+
+  if (decoded.hash !== oldPassword || delay > 60 * 15) { // 15 minutes expiry check or used link
+    return res.status(401).send({
+      status: false,
+      error: 'expired_link'
+    })
+  }
+
+  const hash = await bcrypt.hash(password, 8)
+  _user.password = hash
+
+  await _user.save()
+  res.send({
+    status: true
+  })
+}
+
+const resetPasswordByCode = async (req, res) => {
+  const { code, password, email } = req.body
+
+  const user = await User.findOne({
+    where: {
+      email
+    }
+  })
+
+  if (!user) {
+    return res.status(401).send({
+      status: false,
+      error: 'no_user'
+    })
+  }
+
+  const aryPassword = user.password.split(' ')
+  if (!aryPassword[1] || aryPassword[1] != code) { // Code mismatch
+    return res.status(401).send({
+      status: false,
+      error: 'invalid_code'
+    })
+  }
+
+  // Expire check
+  const delay = new Date().getTime() - user.updatedAt.getTime()
+
+  if (delay > 1000 * 60 * 15) { // More than 15 minutes passed
+    return res.status(401).send({
+      status: true,
+      error: 'expired_code'
+    })
+  }
+
+  const hash = await bcrypt.hash(password, 8)
+  user.password = hash
+
+  await user.save()
+  res.send({
+    status: true
+  })
 }
 
 module.exports = {
@@ -488,5 +596,8 @@ module.exports = {
   sendVerifyEmail,
   sendVerifySms,
   verifyEmail,
-  verifySms
+  verifySms,
+  forgotPassword,
+  resetPasswordByToken,
+  resetPasswordByCode
 }
