@@ -471,8 +471,8 @@ const forgotPassword = async (req, res) => {
   const link = process.env.WATOG_DOMAIN + '/api/user/reset-password/' + token
   const code = randomstring.generate(4)
   
-  user.password = oldPassword + ' ' + code
-  await user.save()
+  _user.password = oldPassword + ' ' + code
+  await _user.save()
   const text = `<html>
     <head></head>
     <body style="font-family:sans-serif;">
