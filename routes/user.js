@@ -52,14 +52,13 @@ router.get('/verify/email/:code', UserCtrl.verifyEmail)
 router.get('/verify/sms/:code', UserCtrl.checkAuth, UserCtrl.verifySms)
 
 router.post('/forgot-password', UserCtrl.forgotPassword)
-router.post('/reset-password/:token', [body('password').isLength(5)], UserCtrl.resetPassword)
+router.post('/reset-password/:token', [ body('password').isLength({ min: 5}) ], UserCtrl.resetPasswordByToken)
 
 // Reset password by code
 router.post('/reset-password', [
   body('password').isLength({min: 5}),
   body('email').isEmail(),
-  body('code').isLength(4),
-], UserCtrl.resetPassword)
-
+  body('code').isLength({ min: 4 }),
+], UserCtrl.resetPasswordByCode)
 
 module.exports = router
