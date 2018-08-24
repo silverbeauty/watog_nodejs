@@ -496,7 +496,7 @@ const forgotPassword = async (req, res) => {
   })
 }
 
-const resetPassword = async (req, res) => {
+const resetPasswordByToken = async (req, res) => {
   const { token }= req.params
   const { password } = req.body
 
@@ -520,7 +520,7 @@ const resetPassword = async (req, res) => {
     })
   }
 
-  if (decoded.hash !== _user.password || decoded.iat - new Date().getTime() / 1000 > 60 * 15) { // 15 minutes expiry check or used link
+  if (decoded.hash !== _user.password || new Date().getTime() / 1000 - decoded.iat > 60 * 15) { // 15 minutes expiry check or used link
     return res.status(401).send({
       status: false,
       error: 'expired_link'
@@ -536,6 +536,39 @@ const resetPassword = async (req, res) => {
   })
 }
 
+const resetPasswordByCode = async (req, res) => {
+  const { code, body, email } = req.body
+
+  const user = await User.findOne({
+    where: {
+      email
+    }
+  })
+
+  if (!user) {
+    return res.status(401).send({
+      status: false,
+      error: 'no_user'
+    })
+  }
+
+  const aryPassword = user.password.split(' ')
+  if (!aryPassword[1] || aryPassword[1] != code ) { // Code mismatch
+    return res.status(401).send({
+      status: false,
+      error: 'no_user'
+    })
+  }
+
+  // Expire check
+  const delay = new Date().getTime() - user.updatedAt.getTime()
+
+  if (delay > 1000 * 60 * 15) { // More than 15 minutes passed
+
+  }
+
+}
+
 module.exports = {
   signup,
   login,
@@ -549,5 +582,6 @@ module.exports = {
   verifyEmail,
   verifySms,
   forgotPassword,
-  resetPassword
+  resetPasswordByToken,
+  resetPasswordByCode
 }
