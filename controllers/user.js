@@ -559,7 +559,7 @@ const resetPasswordByCode = async (req, res) => {
   if (!aryPassword[1] || aryPassword[1] != code ) { // Code mismatch
     return res.status(401).send({
       status: false,
-      error: 'no_user'
+      error: 'invalid_code'
     })
   }
 
