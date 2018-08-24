@@ -469,7 +469,10 @@ const forgotPassword = async (req, res) => {
 
   const token = jwt.sign({email: _user.email, hash: oldPassword }, process.env.JWT_SECRET + 'FORGOT_PASSWORD')
   const link = process.env.WATOG_DOMAIN + '/api/user/reset-password/' + token
-  const code = randomstring.generate(4)
+  const code = randomstring.generate({
+    length: 4,
+    charset: '1234567890ABCDEFHJKMNPQSTUVWXYZ'
+  })
   
   _user.password = oldPassword + ' ' + code
   await _user.save()
