@@ -585,6 +585,50 @@ const resetPasswordByCode = async (req, res) => {
   })
 }
 
+const resetPasswordByOld = async (req, res) => {
+  const { old_password, new_password } = req.body
+
+  const errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    return res.status(401).json({
+      status: false,
+      error: 'Invalid email or password!'
+    })
+  }
+
+  const { email, password } = req.body
+
+  const _user = req.currentUser
+
+  // Check password
+  if (!bcrypt.compareSync(old_password, _user.password.split(' ')[0])) {
+    return res.status(401).json({
+      status: false,
+      error: 'invalid_old_password'
+    })
+  }
+
+  // TODO: Include only email for now
+  const token = jwt.sign({email}, process.env.JWT_SECRET)
+
+  const user = _user.get({
+    plain: true
+  })
+
+  // prevent user's password to be returned
+  delete user.password
+  res.send({
+    status: true,
+    data: {
+      token,
+      user
+    }
+  })
+
+
+
+}
+
 module.exports = {
   signup,
   login,
