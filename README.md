@@ -345,21 +345,22 @@ Reset password by old password
 
   Body: 
   ```
-  { "type": String }
+  { "type": String, "description": String(Optinal) }
   ```
 
   Response:  
   HTTP Status: 200. 
   ```
   {
-    "status": true,
-    "data": {
-        "id": 1,
-        "type": "boy",
-        "user_id": 2,
-        "updatedAt": "2018-08-20T08:12:30.304Z",
-        "createdAt": "2018-08-20T08:12:30.304Z"
-    }
+      "status": true,
+      "data": {
+          "id": 2,
+          "type": "boys",
+          "description": "AAAa",
+          "user_id": 1,
+          "updatedAt": "2018-08-27T16:56:04.173Z",
+          "createdAt": "2018-08-27T16:56:04.173Z"
+      }
   }
   ```
 - GET `/api/category/:id`
@@ -397,7 +398,8 @@ Reset password by old password
 - POST `/api/post`
   Create a single post. 
   `picture` should be get by `API host` + `/api/files` + returned id from POST `/api/file`. 
-
+  `category_id` is from `POST /api/category` or `GET /api/category/:id`
+  
   Body: 
   ```
   {

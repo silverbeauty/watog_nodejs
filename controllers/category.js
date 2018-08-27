@@ -13,7 +13,7 @@ const create = async (req, res) => {
   }
 
   const category = Category.build({
-    type: req.body.type,
+    ...req.body,
     user_id: req.currentUser.id
   })
 

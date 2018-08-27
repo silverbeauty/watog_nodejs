@@ -10,7 +10,10 @@ const router = express.Router()
 // Create a new cateogry
 router.post('/',
   UserCtrl.checkAuth,
-  [ body('type').isLength({ min: 3 }).withMessage('type must be at least 3 chars long')]
+  [
+    body('type').isLength({ min: 3 }).withMessage('type must be at least 3 chars long'),
+    body('description').optional().isString()
+  ]
   , CategoryCtrl.create)
 
 // Get a single category

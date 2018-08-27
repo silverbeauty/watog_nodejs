@@ -11,11 +11,18 @@ const Category = sequelize.define('Category', {
     autoIncrement: true,
     primaryKey: true
   },
+
   type: {
     type: Sequelize.STRING,
     allowNull: false,
     unique: true
   },
+
+  description: {
+    type: Sequelize.STRING,
+    allowNull: true
+  },
+
   user_id: {
     type: Sequelize.INTEGER,
     allowNull: false
