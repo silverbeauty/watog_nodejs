@@ -31,7 +31,7 @@ const create = async (req, res) => {
     })
   }
 
-  const post = Post.build({
+  const post = new Post({
     ...req.body,
     user_id: req.currentUser.id,
     up_vote_count: 0,

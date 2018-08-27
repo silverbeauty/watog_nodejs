@@ -402,7 +402,8 @@ Reset password by old password
   ```
   {
     "category_id": 1,
-    "picture": "localhost:3000/api/files/44230068adab9f01e680c25c26b08bc5.png"
+    "picture": "localhost:3000/api/files/44230068adab9f01e680c25c26b08bc5.png",
+    "description": "Description"
   }
   ```
 
@@ -410,15 +411,19 @@ Reset password by old password
   HTTP Status: 200. 
   ```
   {
-    "status": true,
-    "data": {
-        "id": 2,
-        "category_id": 1,
-        "picture": "localhost:3000/api/files/44230068adab9f01e680c25c26b08bc5.png",
-        "user_id": 2,
-        "updatedAt": "2018-08-20T08:37:12.218Z",
-        "createdAt": "2018-08-20T08:37:12.218Z"
-    }
+      "status": true,
+      "data": {
+          "id": 2,
+          "category_id": 3,
+          "picture": "localhost:3000/api/files/44230068adab9f01e680c25c26b08bc5.png",
+          "description": "Test",
+          "user_id": 1,
+          "up_vote_count": 0,
+          "down_vote_count": 0,
+          "vote_score": 0,
+          "updatedAt": "2018-08-27T14:13:56.743Z",
+          "createdAt": "2018-08-27T14:13:56.743Z"
+      }
   }
   ```
   Response:
