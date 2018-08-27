@@ -19,7 +19,7 @@ const Category = sequelize.define('Category', {
     unique: true
   },
 
-  type: {
+  description: {
     type: Sequelize.STRING,
     allowNull: true
   },
