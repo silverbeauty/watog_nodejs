@@ -608,25 +608,12 @@ const resetPasswordByOld = async (req, res) => {
     })
   }
 
-  // TODO: Include only email for now
-  const token = jwt.sign({email}, process.env.JWT_SECRET)
+  _user.password = await bcrypt.hash(new_password, 8)
+  await _user.save()
 
-  const user = _user.get({
-    plain: true
-  })
-
-  // prevent user's password to be returned
-  delete user.password
   res.send({
-    status: true,
-    data: {
-      token,
-      user
-    }
+    status: true
   })
-
-
-
 }
 
 module.exports = {
@@ -643,5 +630,6 @@ module.exports = {
   verifySms,
   forgotPassword,
   resetPasswordByToken,
-  resetPasswordByCode
+  resetPasswordByCode,
+  resetPasswordByOld
 }
