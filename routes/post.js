@@ -8,7 +8,11 @@ const UserCtrl = require('../controllers/user')
 const router = express.Router()
 
 // TODO: should check parameters here
-router.post('/', UserCtrl.checkAuth, PostCtrl.create)
+router.post('/', UserCtrl.checkAuth, [
+	body('category_id').isDecimal(),
+	body('picture').isString(),
+	body('description').isString(),
+	], PostCtrl.create)
 
 // Create a new vote
 router.post('/:id/vote', UserCtrl.checkAuth, [ body('commend').isBoolean() ], PostCtrl.load, PostCtrl.vote)
