@@ -15,6 +15,12 @@ const Post = sequelize.define('Post', {
     type: Sequelize.STRING,
     allowNull: false
   },
+
+  description: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
+
   category_id: {
     type: Sequelize.INTEGER,
     allowNull: false
