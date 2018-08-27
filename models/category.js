@@ -12,7 +12,6 @@ const Category = sequelize.define('Category', {
     primaryKey: true
   },
 
-
   type: {
     type: Sequelize.STRING,
     allowNull: false,
@@ -23,7 +22,7 @@ const Category = sequelize.define('Category', {
     type: Sequelize.STRING,
     allowNull: true
   },
-  
+
   user_id: {
     type: Sequelize.INTEGER,
     allowNull: false
