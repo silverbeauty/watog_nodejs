@@ -199,6 +199,54 @@
     // settings should be stringified using JSON.stringify, eg: "{"notifications":{"vote":true,"participate":true,"spam_mark":true}}"
   }
   ```
+
+- POST `/user/forgot-password`
+
+Send password reset link through email or verification code to cell phone  
+  Body:  
+  ```
+  {
+    email: 
+  }
+  ```
+
+  Response:  
+  ```
+  {
+    status: true
+  }
+  ```
+
+- POST `/reset-password/:token`  
+
+Reset password by the token sent by email
+
+  Body:  
+  ```
+  {
+    password
+  }
+  ```
+
+  Response:  
+  ```
+  {
+    status: true
+  }
+  ```
+
+- POST `/new-password'  
+
+Reset password by old password
+
+  Body:
+  ```
+  {
+    old_password,
+    new_password
+  }
+  ```
+
 ### Verify APIs  
 - POST `/user/verify/email`  
   Send Verification Email (Requires JWT set in `Authorization` header)  

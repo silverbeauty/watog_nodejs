@@ -585,6 +585,37 @@ const resetPasswordByCode = async (req, res) => {
   })
 }
 
+const resetPasswordByOld = async (req, res) => {
+  const { old_password, new_password } = req.body
+
+  const errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    return res.status(401).json({
+      status: false,
+      error: errors.array()
+    })
+  }
+
+  const { email, password } = req.body
+
+  const _user = req.currentUser
+
+  // Check password
+  if (!bcrypt.compareSync(old_password, _user.password.split(' ')[0])) {
+    return res.status(401).json({
+      status: false,
+      error: 'invalid_old_password'
+    })
+  }
+
+  _user.password = await bcrypt.hash(new_password, 8)
+  await _user.save()
+
+  res.send({
+    status: true
+  })
+}
+
 module.exports = {
   signup,
   login,
@@ -599,5 +630,6 @@ module.exports = {
   verifySms,
   forgotPassword,
   resetPasswordByToken,
-  resetPasswordByCode
+  resetPasswordByCode,
+  resetPasswordByOld
 }
