@@ -235,7 +235,7 @@ Reset password by the token sent by email
   }
   ```
 
-- POST `/reset-password'  
+- POST `/new-password'  
 
 Reset password by old password
 

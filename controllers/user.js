@@ -592,7 +592,7 @@ const resetPasswordByOld = async (req, res) => {
   if (!errors.isEmpty()) {
     return res.status(401).json({
       status: false,
-      error: 'Invalid email or password!'
+      error: errors.array()
     })
   }
 
