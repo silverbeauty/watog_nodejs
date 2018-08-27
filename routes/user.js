@@ -53,6 +53,7 @@ router.get('/verify/sms/:code', UserCtrl.checkAuth, UserCtrl.verifySms)
 
 router.post('/forgot-password', UserCtrl.forgotPassword)
 router.post('/reset-password/:token', [ body('password').isLength({ min: 5}) ], UserCtrl.resetPasswordByToken)
+router.post('/reset-password', [ body('old_password').isLength({ min: 5}), body('new_password').isLength({ min: 5 }) ], UserCtrl.resetPasswordByToken)
 
 // Reset password by code
 router.post('/reset-password', [
