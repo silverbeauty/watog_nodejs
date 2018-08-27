@@ -397,7 +397,8 @@ Reset password by old password
 - POST `/api/post`
   Create a single post. 
   `picture` should be get by `API host` + `/api/files` + returned id from POST `/api/file`. 
-
+  `category_id` is from `POST /api/category` or `GET /api/category/:id`
+  
   Body: 
   ```
   {
