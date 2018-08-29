@@ -18,7 +18,7 @@ router.post('/'
     body('country').isLength({ min: 1 }).withMessage('country must be at least 1 chars long'),
     body('hospital').isLength({ min: 1 }).withMessage('hospital must be at least 1 chars long'),
     // :TODO phone number regexp should be used
-    body('cell_phone').isLength({ min: 9 }).matches(/^[0-9]+$/).withMessage('cell_phone must be at least 9 chars long and only numbers!')
+    body('cell_phone').isLength({ min: 9 }).matches(/^[\+\d]?(?:[\d-.\s()]*)$/).withMessage('cell_phone must be a valid phone number!')
   ]
   , UserCtrl.signup)
 
