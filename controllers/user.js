@@ -219,8 +219,8 @@ const queryUsers = async (req, res) => {
     })
   }
 
-  const limit = query.limit || 10
-  const offset = query.offset || 0
+  const limit = query.limit
+  const offset = query.offset
 
   if (query.name) { // name query
     // TODO: we should use MySQL or PostgreSQL to use regexp operator
@@ -250,10 +250,15 @@ const queryUsers = async (req, res) => {
   const sQuery = {
     where: query,
     attributes: ['id', 'first_name', 'last_name', 'country', 'hospital', 'cell_phone', 'picture_profile', 'picture_cover'],
-    limit,
-    offset,
-    order: []
     raw: true,
+  }
+
+  if (limit > 0) {
+    sQuery.limit = limit
+  }
+
+  if (offset >= 0) {
+    sQuery.offset = offset
   }
 
   if (order) {
