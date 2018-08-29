@@ -616,5 +616,5 @@ Reset password by old password
 ## Installed Package Requirements
 
    sudo npm install nodemon -g
-   npm install --save sequelize 
-   npm install --save sqlite3
+   sudo npm install --save sequelize 
+   sudo npm install --save sqlite3
