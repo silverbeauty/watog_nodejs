@@ -13,6 +13,7 @@ router.post('/',
   [
     body('type').isLength({ min: 3 }).withMessage('type must be at least 3 chars long'),
     body('description').optional().isString()
+    body('picture').optional().isString()
   ]
   , CategoryCtrl.create)
 
