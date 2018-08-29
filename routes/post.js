@@ -22,6 +22,9 @@ router.post('/:id/report', UserCtrl.checkAuth, [
   body('type').isIn(['spam', 'violence', 'sex', 'other'])
 ], PostCtrl.load, PostCtrl.report)
 
+// Count post
+router.get('/count', UserCtrl.checkAuth, PostCtrl.count)
+
 // Get a single post
 router.get('/:id', UserCtrl.checkAuth, PostCtrl.load, PostCtrl.get)
 

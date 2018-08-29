@@ -23,6 +23,11 @@ const Category = sequelize.define('Category', {
     allowNull: true
   },
 
+  picture: {
+    type: Sequelize.STRING,
+    allowNull: true
+  },
+
   user_id: {
     type: Sequelize.INTEGER,
     allowNull: false
