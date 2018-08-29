@@ -199,7 +199,7 @@ const queryUsers = async (req, res) => {
   // TODO: query condition should be defined in route
   // TODO: limit access to users
   // TODO: should add sort option
-  const allowed_queries = ['limit', 'offset', 'first_name', 'last_name', 'country', 'hospital', 'name']
+  const allowed_queries = ['limit', 'offset', 'first_name', 'last_name', 'country', 'hospital', 'name', 'sort']
   const query = {...req.query}
   const cquery = {...query}
 
