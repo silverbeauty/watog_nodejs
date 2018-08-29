@@ -196,10 +196,19 @@ const getUser = async (req, res) => {
 }
 
 const queryUsers = async (req, res) => {
+  const errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    return res.status(400).json({
+      status: false,
+      error: errors.array()
+    })
+  }
+
   // TODO: query condition should be defined in route
   // TODO: limit access to users
   // TODO: should add sort option
-  const allowed_queries = ['limit', 'offset', 'first_name', 'last_name', 'country', 'hospital', 'name']
+  const allowed_queries = ['limit', 'offset', 'first_name', 'last_name', 'country', 'hospital', 'name', 'order', 'direction']
+  const allowed_attributes = ['id', 'first_name', 'last_name', 'country', 'hospital', 'cell_phone', 'picture_profile', 'picture_cover', 'vote_score', 'up_vote_count', 'down_vote_count']
   const query = {...req.query}
   const cquery = {...query}
 
@@ -219,8 +228,8 @@ const queryUsers = async (req, res) => {
     })
   }
 
-  const limit = query.limit || 10
-  const offset = query.offset || 0
+  const limit = query.limit
+  const offset = query.offset
 
   if (query.name) { // name query
     // TODO: we should use MySQL or PostgreSQL to use regexp operator
@@ -235,18 +244,37 @@ const queryUsers = async (req, res) => {
     }]
   }
 
+  let { direction, order } = query
+  if (!direction) {
+    direction = 'DESC'
+  }
+
   // Remove offset, limit, name
   delete query.limit
   delete query.offset
   delete query.name
+  delete query.order
+  delete query.direction
 
-  const users = await User.findAll({
+  const sQuery = {
     where: query,
-    attributes: ['id', 'first_name', 'last_name', 'country', 'hospital', 'cell_phone', 'picture_profile', 'picture_cover'],
-    limit,
-    offset,
+    attributes: allowed_attributes,
     raw: true
-  })
+  }
+
+  if (limit > 0) {
+    sQuery.limit = limit
+  }
+
+  if (offset >= 0) {
+    sQuery.offset = offset
+  }
+
+  if (order) {
+    sQuery.order = [[order, direction]]
+  }
+
+  const users = await User.findAll(sQuery)
 
   res.send({
     status: true,

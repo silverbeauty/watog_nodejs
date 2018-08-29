@@ -168,7 +168,10 @@
   Query users with [QUERY] - QUERY can be missing  
 
   Query:  
-  `limit`, `offset`, `first_name`, `last_name`, `country`, `hospital`, `name`  
+  `limit`, `offset`, `first_name`, `last_name`, `country`, `hospital`, `name`, `order`, `direction`  
+
+  - `order`: one of ['vote_score', 'up_vote_count', 'down_vote_count', 'createdAt', 'updatedAt']
+  - `direction`: one of ['DESC', 'ASC']
 
   Response:  
 

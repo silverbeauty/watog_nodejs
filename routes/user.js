@@ -37,7 +37,10 @@ router.get('/me', UserCtrl.checkAuth, UserCtrl.getMe)
 router.get('/:id', UserCtrl.checkAuth, UserCtrl.getUser)
 
 // Query users
-router.get('/', UserCtrl.checkAuth, UserCtrl.queryUsers)
+router.get('/', UserCtrl.checkAuth, [
+  query('direction').optional().isIn(['DESC', 'ASC']).withMessage('direction must be DESC or ASC'),
+  query('order').optional().isIn(['vote_score', 'up_vote_count', 'down_vote_count', 'createdAt', 'updatedAt']).withMessage(`order must be one of 'vote_score', 'up_vote_count', 'down_vote_count', 'createdAt', 'updatedAt'`)
+], UserCtrl.queryUsers)
 
 // Send Verify Email
 router.post('/verify/email', UserCtrl.checkAuth, UserCtrl.sendVerifyEmail)
