@@ -168,7 +168,10 @@ const query = async (req, res) => {
   const limit = query.limit || 10
   const offset = query.offset || 0
   const order = query.order
-  const direction = query.direction
+  let direction = query.direction
+  if (!direction) {
+    direction = 'DESC'
+  }
 
   // Remove offset, limit
   delete query.limit
@@ -184,6 +187,11 @@ const query = async (req, res) => {
       model: User,
       attributes: userFields
     }]
+  }
+
+
+  if (order) {
+    sQuery.order = [[order, direction]]
   }
 
   const data = await Post.findAll(sQuery)
