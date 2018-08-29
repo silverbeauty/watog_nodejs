@@ -199,7 +199,7 @@ const queryUsers = async (req, res) => {
   // TODO: query condition should be defined in route
   // TODO: limit access to users
   // TODO: should add sort option
-  const allowed_queries = ['limit', 'offset', 'first_name', 'last_name', 'country', 'hospital', 'name', 'sort']
+  const allowed_queries = ['limit', 'offset', 'first_name', 'last_name', 'country', 'hospital', 'name', 'order', 'direction']
   const query = {...req.query}
   const cquery = {...query}
 
@@ -235,18 +235,32 @@ const queryUsers = async (req, res) => {
     }]
   }
 
+  let { direction, order } = query
+  if (!direction) {
+    direction = 'DESC'
+  }
+
   // Remove offset, limit, name
   delete query.limit
   delete query.offset
   delete query.name
+  delete query.order
+  delete query.direction
 
-  const users = await User.findAll({
+  const sQuery = {
     where: query,
     attributes: ['id', 'first_name', 'last_name', 'country', 'hospital', 'cell_phone', 'picture_profile', 'picture_cover'],
     limit,
     offset,
-    raw: true
-  })
+    order: []
+    raw: true,
+  }
+
+  if (order) {
+    sQuery.order = [order, direction]
+  }
+
+  const users = await User.findAll(sQuery)
 
   res.send({
     status: true,
