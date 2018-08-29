@@ -510,6 +510,18 @@ Reset password by old password
   }
   ```
 
+- GET `/api/post/count?[QUERY]`
+  Query posts. valid queries are `user_id`, `category_id`. 
+
+  Response:
+  HTTP Status: 200
+  ```
+  {
+    "status": true,
+    "data": { "count": Number }
+  }
+  ```
+
 ### Vote API
 
 - POST `/api/post/:id/vote`
