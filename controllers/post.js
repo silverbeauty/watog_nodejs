@@ -107,7 +107,6 @@ const get = async (req, res) => {
   })
 }
 
-
 const count = async (req, res) => {
   // TODO: query condition should be defined in route
   // TODO: limit access to users
@@ -132,7 +131,7 @@ const count = async (req, res) => {
   }
 
   const count_post = await Post.count({
-    where: query,
+    where: query
   })
 
   res.send({

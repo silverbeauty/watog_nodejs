@@ -196,7 +196,6 @@ const getUser = async (req, res) => {
 }
 
 const queryUsers = async (req, res) => {
-
   const errors = validationResult(req)
   if (!errors.isEmpty()) {
     return res.status(400).json({
@@ -260,7 +259,7 @@ const queryUsers = async (req, res) => {
   const sQuery = {
     where: query,
     attributes: allowed_attributes,
-    raw: true,
+    raw: true
   }
 
   if (limit > 0) {
