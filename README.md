@@ -112,43 +112,46 @@
    ``` 
 
 ### User APIs
-- GET `/user/me`  
+
+#### GET `/user/me`  
   Return own profile by JWT  
 
   Response:  
 
   HTTP Status: 200  
   ```  
-{
-    "status": true,
-    "data": {
-        "id": 1,
-        "first_name": "Test",
-        "last_name": "Again",
-        "email": "test@test.com",
-        "cell_phone": "1234567890",
-        "country": "usa",
-        "state": null,
-        "hospital": "a",
-        "proof_of_status": null,
-        "proof_of_status_date": null,
-        "email_verified_date": null,
-        "sms_verified_date": null,
-        "picture_profile": null,
-        "picture_cover": null,
-        "up_vote_count": 0,
-        "down_vote_count": 0,
-        "vote_score": -1,
-        "createdAt": "2018-08-23T04:23:48.689Z",
-        "updatedAt": "2018-08-23T05:16:23.498Z",
-        "vote_rank": 1,
-        "good_posts": [Post] // up to 5, ordered by 'up_vote_count' 
-        ]
-    }
-}
+  {
+      "status": true,
+      "data": {
+          "id": 1,
+          "first_name": "Test",
+          "last_name": "Again",
+          "email": "test@test.com",
+          "cell_phone": "1234567890",
+          "country": "usa",
+          "state": null,
+          "hospital": "a",
+          "proof_of_status": null,
+          "proof_of_status_date": null,
+          "email_verified_date": null,
+          "sms_verified_date": null,
+          "picture_profile": null,
+          "picture_cover": null,
+          "up_vote_count": 0,
+          "down_vote_count": 0,
+          "vote_score": -1,
+          "createdAt": "2018-08-23T04:23:48.689Z",
+          "updatedAt": "2018-08-23T05:16:23.498Z",
+          "vote_rank": 1,
+          "good_posts": [Post] // up to 5, ordered by 'up_vote_count' 
+          ]
+      }
+  }
   ```
 
-- GET `/user/me`  
+
+#### GET `/user/me`  
+
   Edit own profile by JWT  
 
   Response:  
@@ -161,7 +164,7 @@
   }
   ```
 
-- GET `/user?[QUERY]`  
+#### GET `/user?[QUERY]`  
   Query users with [QUERY] - QUERY can be missing  
 
   Query:  
@@ -176,7 +179,7 @@
     "data": [User Object]
   }
   ``` 
-- GET `/user/:id`
+#### GET `/user/:id`
   Return a user with id  
 
   Response:  
@@ -189,7 +192,7 @@
   }
   ```
 
-- PUT `/user/me`
+#### PUT `/user/me`
   Edit own profile
 
   Body:
@@ -200,7 +203,7 @@
   }
   ```
 
-- POST `/user/forgot-password`
+#### POST `/user/forgot-password`
 
 Send password reset link through email or verification code to cell phone  
   Body:  
@@ -217,7 +220,7 @@ Send password reset link through email or verification code to cell phone
   }
   ```
 
-- POST `/reset-password/:token`  
+#### POST `/reset-password/:token`  
 
 Reset password by the token sent by email
 
@@ -235,7 +238,8 @@ Reset password by the token sent by email
   }
   ```
 
-- POST `/new-password'  
+
+#### POST `/new-password'
 
 Reset password by old password
 
@@ -248,18 +252,23 @@ Reset password by old password
   ```
 
 ### Verify APIs  
-- POST `/user/verify/email`  
+
+#### POST `/user/verify/email`  
+  
   Send Verification Email (Requires JWT set in `Authorization` header)  
 
-- POST `/user/verify/sms`. 
+#### POST `/user/verify/sms`. 
+  
   Send Verification SMS to `cell_phone` (Requires JWT set in `Authorization` header)
 
-- GET `/user/verify/email/:code`. 
+#### GET `/user/verify/email/:code`. 
+  
   Link sent in the verify email.  
   User will click this link.   
   Response: normal HTTP response. 
 
-- GET `/user/verify/sms/:code`
+#### GET `/user/verify/sms/:code`
+  
   User should make a GET request with the codes sent by SMS.  
 
   Response:  
@@ -281,10 +290,13 @@ Reset password by old password
   ```
 
 ### File APIs
-- GET `/api/file/:name`
+
+#### GET `/api/file/:name`
+  
   Return file in `files/:name`
 
-- POST `/api/file`
+#### POST `/api/file`
+
   Upload file 
 
   Header:  
@@ -320,16 +332,18 @@ Reset password by old password
   }
   ```
 
-- GET `/api/file/verify/:id`
+#### GET `/api/file/verify/:id`
+  
   Return proof of status doc in `files/:id`
 
-- POST `/api/file/verify`
+#### POST `/api/file/verify`
+  
   Upload proof of status doc
 
   Header:  
   
   ```
-  "Content-Type": "application/json"
+    "Content-Type": "application/json"
   ```
 
   Body:  
@@ -341,7 +355,8 @@ Reset password by old password
   Response: the same as `/api/user`
 
 ### Category APIs
-- POST `/api/category`
+
+#### POST `/api/category`
 
   Body: 
   ```
@@ -363,7 +378,8 @@ Reset password by old password
       }
   }
   ```
-- GET `/api/category/:id`
+
+#### GET `/api/category/:id`
 
   Response:
   HTTP Status: 200,  
@@ -380,7 +396,8 @@ Reset password by old password
   }
   ```
 
-- GET `/api/category?[QUERY]`
+#### GET `/api/category?[QUERY]`
+  
   Query categories
   QUERY can be `limit`, `offset`, `user_id`
 
@@ -395,7 +412,7 @@ Reset password by old password
   ```
 
 ### Post APIs
-- POST `/api/post`
+#### POST `/api/post`
   Create a single post. 
   `picture` should be get by `API host` + `/api/files` + returned id from POST `/api/file`. 
   `category_id` is from `POST /api/category` or `GET /api/category/:id`
@@ -438,7 +455,7 @@ Reset password by old password
   ```
 
 
-- GET `/api/post/:id[?vote&category&user]`
+#### GET `/api/post/:id[?vote&category&user]`
   Get a single post. 
   If `?vote`: return posts with votes
   If `?category`: return posts with `Category`
@@ -496,7 +513,7 @@ Reset password by old password
   }
   ```
 
-- GET `/api/post?[QUERY]`
+#### GET `/api/post?[QUERY]`
   Query posts. valid queries are `limit`, `offset`, `user_id`, `category_id`. 
 
 
@@ -510,7 +527,7 @@ Reset password by old password
   }
   ```
 
-- GET `/api/post/count?[QUERY]`
+#### GET `/api/post/count?[QUERY]`
   Query posts. valid queries are `user_id`, `category_id`. 
 
   Response:
@@ -524,7 +541,7 @@ Reset password by old password
 
 ### Vote API
 
-- POST `/api/post/:id/vote`
+#### POST `/api/post/:id/vote`
   Place a vote to a post: up or down. 
 
   Body  
@@ -581,7 +598,7 @@ Reset password by old password
 
 ### Report API
 
-- POST `/api/post/:id/vote`
+#### POST `/api/post/:id/vote`
   Place a reprot to a post with a description
 
   Body  
