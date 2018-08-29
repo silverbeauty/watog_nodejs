@@ -1,6 +1,6 @@
 const express = require('express')
 
-const { body } = require('express-validator/check')
+const { body, query } = require('express-validator/check')
 
 const PostCtrl = require('../controllers/post')
 const UserCtrl = require('../controllers/user')
@@ -32,6 +32,6 @@ router.get('/:id', UserCtrl.checkAuth, PostCtrl.load, PostCtrl.get)
 router.get('/', UserCtrl.checkAuth, [
   query('direction').optional().isIn(['DESC', 'ASC']).withMessage('direction must be DESC or ASC'),
   query('order').optional().isIn(['vote_score', 'up_vote_count', 'down_vote_count', 'createdAt', 'updatedAt']).withMessage(`order must be one of 'vote_score', 'up_vote_count', 'down_vote_count', 'createdAt', 'updatedAt'`)
-	] PostCtrl.query)
+	], PostCtrl.query)
 
 module.exports = router

@@ -143,6 +143,15 @@ const count = async (req, res) => {
 }
 
 const query = async (req, res) => {
+
+  const errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    return res.status(400).json({
+      status: false,
+      error: errors.array()
+    })
+  }
+
   // TODO: query condition should be defined in route
   // TODO: limit access to users
   const allowed_queries = ['limit', 'offset', 'category_id', 'user_id', 'order', 'direction']
