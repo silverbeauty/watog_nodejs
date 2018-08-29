@@ -196,10 +196,20 @@ const getUser = async (req, res) => {
 }
 
 const queryUsers = async (req, res) => {
+
+  const errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    return res.status(400).json({
+      status: false,
+      error: errors.array()
+    })
+  }
+
   // TODO: query condition should be defined in route
   // TODO: limit access to users
   // TODO: should add sort option
   const allowed_queries = ['limit', 'offset', 'first_name', 'last_name', 'country', 'hospital', 'name', 'order', 'direction']
+  const allowed_attributes = ['id', 'first_name', 'last_name', 'country', 'hospital', 'cell_phone', 'picture_profile', 'picture_cover', 'vote_score', 'up_vote_count', 'down_vote_count']
   const query = {...req.query}
   const cquery = {...query}
 
@@ -249,7 +259,7 @@ const queryUsers = async (req, res) => {
 
   const sQuery = {
     where: query,
-    attributes: ['id', 'first_name', 'last_name', 'country', 'hospital', 'cell_phone', 'picture_profile', 'picture_cover'],
+    attributes: allowed_attributes,
     raw: true,
   }
 
@@ -262,7 +272,7 @@ const queryUsers = async (req, res) => {
   }
 
   if (order) {
-    sQuery.order = [order, direction]
+    sQuery.order = [[order, direction]]
   }
 
   const users = await User.findAll(sQuery)
