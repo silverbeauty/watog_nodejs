@@ -145,7 +145,7 @@ const count = async (req, res) => {
 const query = async (req, res) => {
   // TODO: query condition should be defined in route
   // TODO: limit access to users
-  const allowed_queries = ['limit', 'offset', 'category_id', 'user_id']
+  const allowed_queries = ['limit', 'offset', 'category_id', 'user_id', 'order', 'direction']
   const query = {...req.query}
   const cquery = {...query}
 
@@ -167,12 +167,16 @@ const query = async (req, res) => {
 
   const limit = query.limit || 10
   const offset = query.offset || 0
+  const order = query.order
+  const direction = query.direction
 
   // Remove offset, limit
   delete query.limit
   delete query.offset
+  delete query.order
+  delete query.direction
 
-  const data = await Post.findAll({
+  const sQuery = {
     where: query,
     limit,
     offset,
@@ -180,7 +184,9 @@ const query = async (req, res) => {
       model: User,
       attributes: userFields
     }]
-  })
+  }
+
+  const data = await Post.findAll(sQuery)
 
   res.send({
     status: true,
