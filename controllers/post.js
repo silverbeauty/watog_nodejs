@@ -143,9 +143,18 @@ const count = async (req, res) => {
 }
 
 const query = async (req, res) => {
+
+  const errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    return res.status(400).json({
+      status: false,
+      error: errors.array()
+    })
+  }
+
   // TODO: query condition should be defined in route
   // TODO: limit access to users
-  const allowed_queries = ['limit', 'offset', 'category_id', 'user_id']
+  const allowed_queries = ['limit', 'offset', 'category_id', 'user_id', 'order', 'direction']
   const query = {...req.query}
   const cquery = {...query}
 
@@ -167,12 +176,19 @@ const query = async (req, res) => {
 
   const limit = query.limit || 10
   const offset = query.offset || 0
+  const order = query.order
+  let direction = query.direction
+  if (!direction) {
+    direction = 'DESC'
+  }
 
   // Remove offset, limit
   delete query.limit
   delete query.offset
+  delete query.order
+  delete query.direction
 
-  const data = await Post.findAll({
+  const sQuery = {
     where: query,
     limit,
     offset,
@@ -180,7 +196,14 @@ const query = async (req, res) => {
       model: User,
       attributes: userFields
     }]
-  })
+  }
+
+
+  if (order) {
+    sQuery.order = [[order, direction]]
+  }
+
+  const data = await Post.findAll(sQuery)
 
   res.send({
     status: true,
