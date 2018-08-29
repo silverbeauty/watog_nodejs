@@ -28,4 +28,7 @@ router.get('/:id', UserCtrl.checkAuth, PostCtrl.load, PostCtrl.get)
 // Query post
 router.get('/', UserCtrl.checkAuth, PostCtrl.query)
 
+// Count post
+router.get('/count', UserCtrl.checkAuth, PostCtrl.count)
+
 module.exports = router

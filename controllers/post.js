@@ -107,6 +107,42 @@ const get = async (req, res) => {
   })
 }
 
+
+const count = async (req, res) => {
+  // TODO: query condition should be defined in route
+  // TODO: limit access to users
+  const allowed_queries = ['category_id', 'user_id']
+  const query = {...req.query}
+  const cquery = {...query}
+
+  // Check valid queries
+  for (let key of allowed_queries) {
+    delete cquery[key]
+  }
+
+  if (Object.keys(cquery).length > 0) { // Other queries
+    console.error('Query not allowed:', cquery)
+    return res.status(400).send({
+      status: false,
+      error: {
+        msg: 'Query not allowed',
+        data: cquery
+      }
+    })
+  }
+
+  const count_post = await Post.count({
+    where: query,
+  })
+
+  res.send({
+    status: true,
+    data: {
+      count: count_post
+    }
+  })
+}
+
 const query = async (req, res) => {
   // TODO: query condition should be defined in route
   // TODO: limit access to users
@@ -293,5 +329,6 @@ module.exports = {
   get,
   query,
   vote,
-  report
+  report,
+  count
 }
