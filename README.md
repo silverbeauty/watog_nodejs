@@ -6,7 +6,15 @@
 ### Production
 `npm start`
 ### Required Env Variables
-#### JWT_SECRET
+
+Set these env variables in .env file at the root level of the project
+
+#### PORT=3000
+#### TWILIO_SID=***
+#### TWILIO_AUTH_TOKEN=***
+#### TWILIO_FROM=***
+#### JWT_SECRET=****
+#### WATOG_DOMAIN=http://xxx.com[:port number]
 
 ## Endpoints
 
@@ -298,9 +306,14 @@ Reset password by old password
   
   Return file in `files/:name`
 
+#### DELETE `/api/file/:name`
+  
+  Remove a file. 
+  Only the files the user created can be removed
+
 #### POST `/api/file`
 
-  Upload file 
+  Upload a file 
 
   Header:  
   
