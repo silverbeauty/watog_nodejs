@@ -4,10 +4,18 @@ const fs = require('fs')
 const uuidv1 = require('uuid/v1')
 const base64Img = require('base64-img')
 
+const File = require('../models/file')
 const User = require('../models/user')
 
-const create = (req, res) => {
+const create = async (req, res) => {
   if (req.file) {
+    const file = new File({
+      user_id: req.currentUser.id,
+      name: req.file.filename
+    })
+
+    await file.save()
+
     res.send({
       status: true,
       data: {
@@ -19,6 +27,13 @@ const create = (req, res) => {
     const fileName = uuidv1()
     try {
       const filePath = base64Img.imgSync(req.body.file, path.resolve('files/'), fileName)
+      const file = new File({
+        user_id: req.currentUser.id,
+        name: path.basename(filePath)
+      })
+
+      await file.save()
+
       res.send({
         status: true,
         data: {
