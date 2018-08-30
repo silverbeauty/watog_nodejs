@@ -298,9 +298,14 @@ Reset password by old password
   
   Return file in `files/:name`
 
+#### DELETE `/api/file/:name`
+  
+  Remove a file. 
+  Only the files the user created can be removed
+
 #### POST `/api/file`
 
-  Upload file 
+  Upload a file 
 
   Header:  
   
