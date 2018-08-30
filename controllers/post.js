@@ -347,7 +347,7 @@ const report = async (req, res) => {
 
 const remove = async (req, res) => {
   const { post, currentUser } = req
-  if (post.user_id !== currentUser) {
+  if (post.user_id !== currentUser.id) {
     return res.send({
       status: false,
       error: 'invalid_permission'
