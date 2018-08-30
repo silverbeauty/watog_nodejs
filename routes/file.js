@@ -34,7 +34,7 @@ const uploadVerify = multer({ storage: verifyStorage })
 router.post('/verify', Users.checkAuth, uploadVerify.single('file'), FileCtrl.uploadVerifyDoc)
 
 // Upload a file
-router.post('/', upload.single('file'), FileCtrl.create)
+router.post('/', Users.checkAuth, upload.single('file'), FileCtrl.create)
 
 // Get a file
 router.get('/:id', FileCtrl.get)
