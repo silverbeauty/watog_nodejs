@@ -117,7 +117,7 @@ const checkAuth = async (req, res, next) => {
     console.error(err)
     return res.status(401).send({
       status: false,
-      error: 'Invalid Authorization'
+      error: 'invalid_auth'
     })
     // err
   }

@@ -39,6 +39,9 @@ router.post('/', Users.checkAuth, upload.single('file'), FileCtrl.create)
 // Get a file
 router.get('/:id', FileCtrl.get)
 
+// Delete a file
+router.delete('/:id', Users.checkAuth, FileCtrl.remove)
+
 // Get a verify doc
 router.get('/verify/:id', FileCtrl.getVerifyDoc)
 

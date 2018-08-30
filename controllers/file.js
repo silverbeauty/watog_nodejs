@@ -139,6 +139,7 @@ const remove = async (req, res) => {
 module.exports = {
   create,
   get,
+  remove,
   uploadVerifyDoc,
   getVerifyDoc
 }
