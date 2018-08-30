@@ -369,7 +369,15 @@ const sendVerifySms = async (req, res) => {
 
   // Save Verification Object
   await verify.save()
-  await SmsCtrl.send(cell_phone, `WATOG Verification: ${code}`)
+  try {
+    await SmsCtrl.send(cell_phone, `WATOG Verification: ${code}`)
+  } catch (e) {
+    console.error(e)
+    return res.status(500).send({
+      status: false,
+      error: 'failed_sms'
+    })
+  }
   res.send({
     status: true
   })
