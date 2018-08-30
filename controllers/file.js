@@ -104,6 +104,38 @@ const uploadVerifyDoc = async (req, res) => {
   }
 }
 
+const remove = async (req, res) => {
+  try {
+    const file = File.findOne({
+      where: {
+        user_id: req.currentUser.id,
+        name: req.params.id
+      }
+    })
+
+    if (file) {
+      fs.unlinkSync(path.resolve('files/' + req.params.id))
+      res.send({
+        status: true,
+        data: {
+          file_name: req.params.id
+        }
+      })
+    } else {
+      res.status(404).send({
+        status: false,
+        error: 'file_not_found'
+      })
+    }
+  } catch (e) {
+    console.error(e)
+    res.status(500).send({
+      status: false,
+      error: 'internal_server_error'
+    })
+  }
+}
+
 module.exports = {
   create,
   get,
