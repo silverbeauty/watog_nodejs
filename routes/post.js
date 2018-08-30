@@ -28,6 +28,9 @@ router.get('/count', UserCtrl.checkAuth, PostCtrl.count)
 // Get a single post
 router.get('/:id', UserCtrl.checkAuth, PostCtrl.load, PostCtrl.get)
 
+// Remove a single post
+router.delete('/:id', UserCtrl.checkAuth, PostCtrl.load, PostCtrl.remove)
+
 // Query post
 router.get('/', UserCtrl.checkAuth, [
   query('direction').optional().isIn(['DESC', 'ASC']).withMessage('direction must be DESC or ASC'),

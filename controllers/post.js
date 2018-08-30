@@ -345,6 +345,28 @@ const report = async (req, res) => {
   })
 }
 
+const remove = async (req, res) => {
+  const { post, currentUser } = req
+  if (post.user_id !== currentUser) {
+    return res.send({
+      status: false,
+      error: 'invalid_permission'
+    })
+  }
+  try {
+    await post.destroy()
+  } catch(e) {
+    console.error(e)
+    return res.status(500).send({
+      status: false,
+      error: 'internal_error'
+    })
+  }
+  res.send({
+    status: true
+  })
+}
+
 module.exports = {
   create,
   load,
@@ -352,5 +374,6 @@ module.exports = {
   query,
   vote,
   report,
-  count
+  count,
+  remove
 }
