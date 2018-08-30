@@ -542,6 +542,9 @@ Reset password by old password
   }
   ```
 
+#### DELETE `/api/post/:id`  
+  Delete a single post. 
+
 ### Vote API
 
 #### POST `/api/post/:id/vote`

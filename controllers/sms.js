@@ -7,10 +7,10 @@ const twilio = require('twilio')(accountSid, authToken)
 module.exports.send = (phoneNumber, text) => {
   console.info('Send SMS:', phoneNumber, text)
 
-	return twilio.messages
+  return twilio.messages
     .create({from: fromNumber, body: text, to: phoneNumber})
     .then(message => {
-    	console.info('SMS Sent:', message)
-    	return message
+      console.info('SMS Sent:', message)
+      return message
     })
 }

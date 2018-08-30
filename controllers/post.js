@@ -143,7 +143,6 @@ const count = async (req, res) => {
 }
 
 const query = async (req, res) => {
-
   const errors = validationResult(req)
   if (!errors.isEmpty()) {
     return res.status(400).json({
@@ -197,7 +196,6 @@ const query = async (req, res) => {
       attributes: userFields
     }]
   }
-
 
   if (order) {
     sQuery.order = [[order, direction]]
@@ -345,6 +343,28 @@ const report = async (req, res) => {
   })
 }
 
+const remove = async (req, res) => {
+  const { post, currentUser } = req
+  if (post.user_id !== currentUser.id) {
+    return res.send({
+      status: false,
+      error: 'invalid_permission'
+    })
+  }
+  try {
+    await post.destroy()
+  } catch (e) {
+    console.error(e)
+    return res.status(500).send({
+      status: false,
+      error: 'internal_error'
+    })
+  }
+  res.send({
+    status: true
+  })
+}
+
 module.exports = {
   create,
   load,
@@ -352,5 +372,6 @@ module.exports = {
   query,
   vote,
   report,
-  count
+  count,
+  remove
 }
