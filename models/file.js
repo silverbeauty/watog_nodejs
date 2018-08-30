@@ -13,7 +13,7 @@ const File = sequelize.define('File', {
     type: Sequelize.STRING, // email or sms
     allowNull: false,
     unique: true
-  }
+  },
   user_id: {
     type: Sequelize.INTEGER,
     allowNull: false
