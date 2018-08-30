@@ -143,7 +143,6 @@ const count = async (req, res) => {
 }
 
 const query = async (req, res) => {
-
   const errors = validationResult(req)
   if (!errors.isEmpty()) {
     return res.status(400).json({
@@ -197,7 +196,6 @@ const query = async (req, res) => {
       attributes: userFields
     }]
   }
-
 
   if (order) {
     sQuery.order = [[order, direction]]
@@ -355,7 +353,7 @@ const remove = async (req, res) => {
   }
   try {
     await post.destroy()
-  } catch(e) {
+  } catch (e) {
     console.error(e)
     return res.status(500).send({
       status: false,

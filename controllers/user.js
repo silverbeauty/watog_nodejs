@@ -448,7 +448,6 @@ const verifySms = async (req, res) => {
     })
   }
 
-
   if (currentUser.id !== verify.user_id) { // user_id is not matched
     return res.status(400).send({
       status: false,
