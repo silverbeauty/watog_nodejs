@@ -359,9 +359,7 @@ const sendVerifyEmail = async (req, res) => {
 const sendVerifySms = async (req, res) => {
   const { currentUser } = req
   const { cell_phone, id } = currentUser
-  const subject = 'Please confirm your email address in Watog'
   const code = randomstring.generate(4)
-  const link = process.env.WATOG_DOMAIN + '/api/user/verify/email/' + code
 
   const verify = new Verify({
     user_id: id,
@@ -371,7 +369,7 @@ const sendVerifySms = async (req, res) => {
 
   // Save Verification Object
   await verify.save()
-  await SmsCtrl.send(cell_phone, code)
+  await SmsCtrl.send(cell_phone, `WATOG Verification: ${code}`)
   res.send({
     status: true
   })
@@ -418,9 +416,11 @@ const verifyEmail = async (req, res) => {
 }
 
 const verifySms = async (req, res) => {
+  const { currentUser } = req
   const { code } = req.params
   const verify = await Verify.findOne({
     where: {
+      user_id: currentUser.id,
       code: code,
       type: 'sms'
     }
@@ -433,14 +433,13 @@ const verifySms = async (req, res) => {
   const created = verify.createdAt.getTime()
   const now = new Date().getTime()
 
-  if (now - created > 1000 * 60 * 60) { // 1 hr expire
+  if (now - created > 1000 * 60 * 10) { // 10 minutes expire
     return res.status(400).send({
       status: false,
       error: 'expired_code'
     })
   }
 
-  const { currentUser } = req
 
   if (currentUser.id !== verify.user_id) { // user_id is not matched
     return res.status(400).send({
