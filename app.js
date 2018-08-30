@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser')
 const logger = require('morgan')
 const cors = require('cors')
 const fs = require('fs')
+require('dotenv').config()
 
 const indexRouter = require('./routes/index')
 
@@ -22,7 +23,12 @@ if (!process.env.JWT_SECRET) {
 }
 
 if (!process.env.WATOG_DOMAIN) { 
-  console.error('Please set WATOG_DOMAIN env! eg: WATOG_DOMAIN=http://x.x.x.x:3000')
+  console.error('Please set WATOG_DOMAIN env! eg: WATOG_DOMAIN=http://x.x.x.x:3000 or http://xxx.com')
+  process.exit(1)
+}
+
+if (!process.env.TWILIO_SID || !process.env.TWILIO_AUTH_TOKEN || !process.env.TWILIO_FROM) {
+  console.error('Please set the valid TWILIO_SID, TWILIO_AUTH_TOKEN, TWILIO_FROM')
   process.exit(1)
 }
 

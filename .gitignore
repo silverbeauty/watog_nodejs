@@ -2,3 +2,4 @@ config/watogDB.sqlite
 files
 docs
 watogDB.sqlite-journal
+.env
