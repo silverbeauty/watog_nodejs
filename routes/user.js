@@ -3,6 +3,7 @@ const express = require('express')
 const { body, query } = require('express-validator/check')
 
 const UserCtrl = require('../controllers/user')
+const { catchError } = require('../controllers/error')
 
 const router = express.Router()
 
@@ -20,49 +21,49 @@ router.post('/'
     // :TODO phone number regexp should be used
     body('cell_phone').isLength({ min: 9 }).matches(/^[\+\d]?(?:[\d-.\s()]*)$/).withMessage('cell_phone must be a valid phone number!')
   ]
-  , UserCtrl.signup)
+  , catchError(UserCtrl.signup))
 
 router.post('/login', [
   body('email').isLength({ min: 3 }),
   body('password').isLength({ min: 1 })
-], UserCtrl.login)
+], catchError(UserCtrl.login))
 
 // Return own profile
-router.put('/me', UserCtrl.checkAuth, UserCtrl.editMe)
+router.put('/me', UserCtrl.checkAuth, catchError(UserCtrl.editMe))
 
 // Return own profile
-router.get('/me', UserCtrl.checkAuth, UserCtrl.getMe)
+router.get('/me', UserCtrl.checkAuth, catchError(UserCtrl.getMe))
 
 // Return a single user profile
-router.get('/:id', UserCtrl.checkAuth, UserCtrl.getUser)
+router.get('/:id', UserCtrl.checkAuth, catchError(UserCtrl.getUser))
 
 // Query users
 router.get('/', UserCtrl.checkAuth, [
   query('direction').optional().isIn(['DESC', 'ASC']).withMessage('direction must be DESC or ASC'),
   query('order').optional().isIn(['vote_score', 'up_vote_count', 'down_vote_count', 'createdAt', 'updatedAt']).withMessage(`order must be one of 'vote_score', 'up_vote_count', 'down_vote_count', 'createdAt', 'updatedAt'`)
-], UserCtrl.queryUsers)
+], catchError(UserCtrl.queryUsers))
 
 // Send Verify Email
-router.post('/verify/email', UserCtrl.checkAuth, UserCtrl.sendVerifyEmail)
+router.post('/verify/email', UserCtrl.checkAuth, catchError(UserCtrl.sendVerifyEmail))
 
 // Send Verify SMS
-router.post('/verify/sms', UserCtrl.checkAuth, UserCtrl.sendVerifySms)
+router.post('/verify/sms', UserCtrl.checkAuth, catchError(UserCtrl.sendVerifySms))
 
 // Send Verify Email
-router.get('/verify/email/:code', UserCtrl.verifyEmail)
+router.get('/verify/email/:code', catchError(UserCtrl.verifyEmail))
 
 // Send Verify SMS
-router.get('/verify/sms/:code', UserCtrl.checkAuth, UserCtrl.verifySms)
+router.get('/verify/sms/:code', UserCtrl.checkAuth, catchError(UserCtrl.verifySms))
 
-router.post('/forgot-password', UserCtrl.forgotPassword)
-router.post('/new-password', UserCtrl.checkAuth, [ body('old_password').isLength({ min: 5}), body('new_password').isLength({ min: 5 }) ], UserCtrl.resetPasswordByOld)
-router.post('/reset-password/:token', [ body('password').isLength({ min: 5}) ], UserCtrl.resetPasswordByToken)
+router.post('/forgot-password', catchError(UserCtrl.forgotPassword))
+router.post('/new-password', UserCtrl.checkAuth, [ body('old_password').isLength({ min: 5}), body('new_password').isLength({ min: 5 }) ], catchError(UserCtrl.resetPasswordByOld))
+router.post('/reset-password/:token', [ body('password').isLength({ min: 5}) ], catchError(UserCtrl.resetPasswordByToken))
 
 // Reset password by code
 router.post('/reset-password', [
   body('password').isLength({min: 5}),
   body('email').isEmail(),
   body('code').isLength({ min: 4 })
-], UserCtrl.resetPasswordByCode)
+], catchError(UserCtrl.resetPasswordByCode))
 
 module.exports = router

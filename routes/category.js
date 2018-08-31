@@ -4,6 +4,7 @@ const { body, validationResult } = require('express-validator/check')
 
 const CategoryCtrl = require('../controllers/category')
 const UserCtrl = require('../controllers/user')
+const { catchError } = require('../controllers/error')
 
 const router = express.Router()
 
@@ -15,12 +16,12 @@ router.post('/',
     body('description').optional().isString(),
     body('picture').optional().isString()
   ]
-  , CategoryCtrl.create)
+  , catchError(CategoryCtrl.create))
 
 // Get a single category
-router.get('/:id', UserCtrl.checkAuth, CategoryCtrl.get)
+router.get('/:id', UserCtrl.checkAuth, catchError(CategoryCtrl.get))
 
 // Get a single category
-router.get('/', UserCtrl.checkAuth, CategoryCtrl.query)
+router.get('/', UserCtrl.checkAuth, catchError(CategoryCtrl.query))
 
 module.exports = router
