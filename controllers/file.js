@@ -97,10 +97,30 @@ const uploadVerifyDoc = async (req, res) => {
       data
     })
   } else {
-    res.status(400).send({
-      status: false,
-      error: 'file is not passed!'
-    })
+    const fileName = uuidv1()
+    try {
+      const filePath = base64Img.imgSync(req.body.file, path.resolve('docs/'), fileName)
+      const file = new File({
+        user_id: req.currentUser.id,
+        name: path.basename(filePath)
+      })
+
+      await file.save()
+      currentUser.proof_of_status = process.env.WATOG_DOMAIN + '/api/file/verify/' + path.basename(filePath)
+    
+      res.send({
+        status: true,
+        data: {
+          url: process.env.WATOG_DOMAIN + '/api/file/verify/' + path.basename(filePath),
+          filename: path.basename(filePath)
+        }
+      })
+    } catch (e) {
+      console.error(e)
+      res.status(500).send({
+        status: false
+      })
+    }
   }
 }
 
