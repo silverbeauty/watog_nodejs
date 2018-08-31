@@ -256,8 +256,8 @@ const vote = async (req, res) => {
     const newVote = new Vote({
       post_id: post.id,
       user_id: currentUser.id,
-      category_id: post.category_id
-
+      category_id: post.category_id,
+      commend
     })
 
     await newVote.save()
