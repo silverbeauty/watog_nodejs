@@ -4,7 +4,7 @@ const catchError = (callback) => {
 			await callback(req, res)
 		} catch (e) {
 			res.status(500).send({
-				status: true,
+				status: false,
 				error: 'internal_server_error'
 			})
 		}
