@@ -8,7 +8,7 @@ const Vote = require('../models/vote')
 const Report = require('../models/report')
 
 // Common user fields
-const userFields = ['id', 'first_name', 'last_name', 'hospital', 'picture_profile', 'user_name']
+const userFields = ['id', 'first_name', 'last_name', 'hospital', 'picture_profile', 'user_name', 'country']
 
 const create = async (req, res) => {
   // console.log(req.body)
@@ -94,7 +94,7 @@ const get = async (req, res) => {
 
   if ('user' in req.query) {
     const user = await User.findById(post.user_id, {
-      attributes: ['id', 'first_name', 'last_name', 'hospital', 'picture_profile']
+      attributes: ['id', 'first_name', 'last_name', 'hospital', 'picture_profile', 'country']
     })
     if (user) {
       data.User = user
