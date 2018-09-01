@@ -6,7 +6,8 @@
     "start": "node ./bin/www",
     "start:dev": "nodemon ./bin/www",
     "lint": "eslint config controllers models routes",
-    "lint-fix": "bash fixTab.sh && eslint config controllers models routes --fix"
+    "lint-fix": "bash fixTab.sh && eslint config controllers models routes --fix",
+    "deploy": "pm2 deploy pm2.json production --force"
   },
   "dependencies": {
     "ajv": "^6.5.2",
