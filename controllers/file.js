@@ -84,8 +84,15 @@ const getVerifyDoc = (req, res) => {
 }
 
 const uploadVerifyDoc = async (req, res) => {
+  const { currentUser } = req
   if (req.file) {
-    const { currentUser } = req
+
+    const file = new File({
+      user_id: currentUser.id,
+      name: req.file.filename,
+      type: 'verify_doc'
+    })
+
     currentUser.proof_of_status = process.env.WATOG_DOMAIN + '/api/file/verify/' + req.file.filename
     await currentUser.save()
     const data = currentUser.get({
@@ -103,19 +110,23 @@ const uploadVerifyDoc = async (req, res) => {
     try {
       const filePath = base64Img.imgSync(req.body.file, path.resolve('docs/'), fileName)
       const file = new File({
-        user_id: req.currentUser.id,
-        name: path.basename(filePath)
+        user_id: currentUser.id,
+        name: path.basename(filePath),
+        type: 'verify_doc'
       })
 
       await file.save()
       currentUser.proof_of_status = process.env.WATOG_DOMAIN + '/api/file/verify/' + path.basename(filePath)
     
+      const data = currentUser.get({
+        plain: true
+      })
+
+      delete data.password
+
       res.send({
         status: true,
-        data: {
-          url: process.env.WATOG_DOMAIN + '/api/file/verify/' + path.basename(filePath),
-          filename: path.basename(filePath)
-        }
+        data
       })
     } catch (e) {
       console.error(e)
