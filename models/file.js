@@ -10,9 +10,14 @@ const File = sequelize.define('File', {
     primaryKey: true
   },
   name: {
-    type: Sequelize.STRING, // email or sms
+    type: Sequelize.STRING, // file name, ex: xxx-xxx-xxxx.png
     allowNull: false,
     unique: true
+  },
+  type: {
+    type: Sequelize.STRING, // 'image' or 'verify_doc'
+    allowNull: false,
+    default: 'image'
   },
   user_id: {
     type: Sequelize.INTEGER,
