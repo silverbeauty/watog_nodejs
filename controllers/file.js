@@ -11,7 +11,8 @@ const create = async (req, res) => {
   if (req.file) {
     const file = new File({
       user_id: req.currentUser.id,
-      name: req.file.filename
+      name: req.file.filename,
+      type: 'image'
     })
 
     await file.save()
@@ -29,7 +30,8 @@ const create = async (req, res) => {
       const filePath = base64Img.imgSync(req.body.file, path.resolve('files/'), fileName)
       const file = new File({
         user_id: req.currentUser.id,
-        name: path.basename(filePath)
+        name: path.basename(filePath),
+        type: 'image'
       })
 
       await file.save()
