@@ -30,7 +30,7 @@
       // tion file.  This is useful for specifying options for which there
       // is no separate command-line flag, see 'man ssh' 
       // can be either a single string or an array of strings
-      "ssh_options": "StrictHostKeyChecking=no",
+      "ssh_options": "StrictHostKeyChecking=yes",
       "post-deploy" : "npm install && pm2 start npm -- start",
       // Environment variables that must be injected in all applications on this env
       "env"  : {
