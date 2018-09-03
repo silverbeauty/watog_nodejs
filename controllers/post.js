@@ -1,5 +1,6 @@
 
 const { validationResult } = require('express-validator/check')
+const Sequelize = require('sequelize')
 
 const Post = require('../models/post')
 const User = require('../models/user')
@@ -177,6 +178,8 @@ const query = async (req, res) => {
   const offset = query.offset || 0
   const order = query.order
   let direction = query.direction
+  const isRandom = 'random' in query
+
   if (!direction) {
     direction = 'DESC'
   }
@@ -198,8 +201,10 @@ const query = async (req, res) => {
     }]
   }
 
-  if (order) {
+  if (order && !isRandom) {
     sQuery.order = [[order, direction]]
+  } else if (isRandom) {
+    sQuery.order = [Sequelize.fn('RAND')]
   }
 
   const data = await Post.findAll(sQuery)
