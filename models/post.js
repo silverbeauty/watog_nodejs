@@ -45,6 +45,12 @@ const Post = sequelize.define('Post', {
     type: Sequelize.INTEGER,
     allowNull: true,
     default: 0
+  },
+
+  report_count: {
+    type: Sequelize.INTEGER,
+    allowNull: true,
+    default: 0
   }
 })
 
