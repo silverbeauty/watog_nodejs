@@ -3,3 +3,4 @@ files
 docs
 watogDB.sqlite-journal
 .env
+test.sqlite
