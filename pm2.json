@@ -34,7 +34,17 @@
       "post-deploy" : "npm install && pm2 start npm -- start",
       // Environment variables that must be injected in all applications on this env
       "env"  : {
-        "NODE_ENV": "production"
+        "NODE_ENV": "production",
+        "PORT": "3000",
+        "TWILIO_SID": "AC8e3c210be67bb1f78abb22fd7700810e",
+        "TWILIO_AUTH_TOKEN": "5609cf4ccae27a202ca69d84746a6ede",
+        "TWILIO_FROM": "+33757916836",
+        "JWT_SECRET":"dev",
+        "WATOG_DOMAIN": "http://18.188.63.192:3000",
+        "SMTP_DOMAIN": "smtp.mailgun.org",
+        "SMTP_PORT": 587,
+        "SMTP_USER": "user",
+        "SMTP_PASS":"pass"
       }
     }
   }
