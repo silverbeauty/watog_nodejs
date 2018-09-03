@@ -130,9 +130,23 @@ const checkAuth = async (req, res, next) => {
     console.error('Valid JWT but no user:', decoded)
     res.send({
       status: false,
-      error: 'Invalid User'
+      error: 'invalid_user'
     })
   }
+}
+
+const checkAuthOptional = async (req, res, next) => {
+  const token = req.get('Authorization')
+  let decoded
+  try {
+    decoded = jwt.verify(token, process.env.JWT_SECRET)
+  } catch (err) {
+    next()
+    return
+  }
+
+  req.currentUser = await User.findOne({ where: { email: decoded.email } })
+  next()
 }
 
 const getMe = async (req, res) => {
@@ -654,6 +668,7 @@ module.exports = {
   signup,
   login,
   checkAuth,
+  checkAuthOptional,
   getMe,
   editMe,
   getUser,
