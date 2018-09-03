@@ -12,9 +12,14 @@ Set these env variables in .env file at the root level of the project
 #### PORT=3000
 #### TWILIO_SID=***
 #### TWILIO_AUTH_TOKEN=***
-#### TWILIO_FROM=***
+#### TWILIO_FROM=+33757916836
 #### JWT_SECRET=****
 #### WATOG_DOMAIN=http://xxx.com[:port number]
+#### SMTP_DOMAIN
+#### SMTP_PORT
+#### SMTP_SECURE
+#### SMTP_USER
+#### SMTP_PASS
 
 ## Endpoints
 

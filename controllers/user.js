@@ -328,7 +328,7 @@ const sendVerifyEmail = async (req, res) => {
   const subject = 'Please confirm your email address in Watog'
   const code = randomstring.generate(12)
   const link = process.env.WATOG_DOMAIN + '/api/user/verify/email/' + code
-  const text = `<html>
+  const html = `<html>
     <head></head>
     <body style="font-family:sans-serif;">
       <h1 style="text-align:center">Please confirm your email address</h1>
@@ -350,7 +350,7 @@ const sendVerifyEmail = async (req, res) => {
 
   // Save Verification Object
   await verify.save()
-  await EmailCtrl.send('support@watog.com', email, subject, text)
+  await EmailCtrl.send('support@watog.com', email, subject, html, html)
   res.send({
     status: true
   })
@@ -510,7 +510,7 @@ const forgotPassword = async (req, res) => {
 
   _user.password = oldPassword + ' ' + code
   await _user.save()
-  const text = `<html>
+  const html = `<html>
     <head></head>
     <body style="font-family:sans-serif;">
       <h1 style="text-align:center">We received a request to reset your password</h1>
@@ -527,7 +527,7 @@ const forgotPassword = async (req, res) => {
     </body>
     </html>`
 
-  await EmailCtrl.send('support@watog.com', _user.email, 'Reset your Watog password', text)
+  await EmailCtrl.send('support@watog.com', _user.email, 'Reset your Watog password', html, htm)
   res.send({
     status: true
   })
