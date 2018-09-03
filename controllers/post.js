@@ -153,7 +153,7 @@ const query = async (req, res) => {
 
   // TODO: query condition should be defined in route
   // TODO: limit access to users
-  const allowed_queries = ['limit', 'offset', 'category_id', 'user_id', 'order', 'direction']
+  const allowed_queries = ['limit', 'offset', 'category_id', 'user_id', 'order', 'direction', 'random']
   const query = {...req.query}
   const cquery = {...query}
 
@@ -186,6 +186,7 @@ const query = async (req, res) => {
   delete query.offset
   delete query.order
   delete query.direction
+  delete query.random
 
   const sQuery = {
     where: query,
