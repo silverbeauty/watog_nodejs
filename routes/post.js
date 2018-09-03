@@ -12,7 +12,8 @@ const router = express.Router()
 router.post('/', UserCtrl.checkAuth, [
   body('category_id').isDecimal(),
   body('picture').isString(),
-  body('description').optional().isString()
+  body('description').optional().isString(),
+  body('random').optional().isString()
 ], catchError(PostCtrl.create))
 
 // Create a new vote

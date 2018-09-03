@@ -1,5 +1,6 @@
 
 const { validationResult } = require('express-validator/check')
+const Sequelize = require('sequelize')
 
 const Post = require('../models/post')
 const User = require('../models/user')
@@ -153,7 +154,7 @@ const query = async (req, res) => {
 
   // TODO: query condition should be defined in route
   // TODO: limit access to users
-  const allowed_queries = ['limit', 'offset', 'category_id', 'user_id', 'order', 'direction']
+  const allowed_queries = ['limit', 'offset', 'category_id', 'user_id', 'order', 'direction', 'random']
   const query = {...req.query}
   const cquery = {...query}
 
@@ -177,6 +178,8 @@ const query = async (req, res) => {
   const offset = query.offset || 0
   const order = query.order
   let direction = query.direction
+  const isRandom = 'random' in query
+
   if (!direction) {
     direction = 'DESC'
   }
@@ -186,6 +189,7 @@ const query = async (req, res) => {
   delete query.offset
   delete query.order
   delete query.direction
+  delete query.random
 
   const sQuery = {
     where: query,
@@ -197,8 +201,10 @@ const query = async (req, res) => {
     }]
   }
 
-  if (order) {
+  if (order && !isRandom) {
     sQuery.order = [[order, direction]]
+  } else if (isRandom) {
+    sQuery.order = [Sequelize.fn('RANDOM')]
   }
 
   const data = await Post.findAll(sQuery)
