@@ -535,7 +535,7 @@ Reset password by old password
   ```
 
 #### GET `/api/post?[QUERY]`
-  Query posts. valid queries are `limit`, `offset`, `user_id`, `category_id`. 
+  Query posts. valid queries are `limit`, `offset`, `user_id`, `category_id`. `random`
 
 
   Response:
