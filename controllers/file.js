@@ -9,14 +9,15 @@ const User = require('../models/user')
 
 const create = async (req, res) => {
   if (req.file) {
-    const file = new File({
-      user_id: req.currentUser.id,
-      name: req.file.filename,
-      type: 'image'
-    })
+    if (req.currentUser) {
+      const file = new File({
+        user_id: req.currentUser.id,
+        name: req.file.filename,
+        type: 'image'
+      })
 
-    await file.save()
-
+      await file.save()
+    }
     res.send({
       status: true,
       data: {
@@ -25,16 +26,19 @@ const create = async (req, res) => {
       }
     })
   } else if (req.body.file) { // base 64 image
+
     const fileName = uuidv1()
     try {
       const filePath = base64Img.imgSync(req.body.file, path.resolve('files/'), fileName)
-      const file = new File({
-        user_id: req.currentUser.id,
-        name: path.basename(filePath),
-        type: 'image'
-      })
+      if (req.currentUser) {
+        const file = new File({
+          user_id: req.currentUser.id,
+          name: path.basename(filePath),
+          type: 'image'
+        })
 
-      await file.save()
+        await file.save()
+      }
 
       res.send({
         status: true,
