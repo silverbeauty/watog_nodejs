@@ -204,7 +204,7 @@ const query = async (req, res) => {
   if (order && !isRandom) {
     sQuery.order = [[order, direction]]
   } else if (isRandom) {
-    sQuery.order = [Sequelize.fn('RAND')]
+    sQuery.order = [Sequelize.fn('RANDOM')]
   }
 
   const data = await Post.findAll(sQuery)
