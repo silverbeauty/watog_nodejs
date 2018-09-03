@@ -1,5 +1,7 @@
-const app = require('../app')
 const test = require('ava')
+const request = require('supertest')
+
+const app = require('../app')
 
 test('base route', t =>
   request(app)
