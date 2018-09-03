@@ -14,7 +14,7 @@ const sequelize = new Sequelize('database', null, null, {
   },
 
   // SQLite only
-  storage: './config/watogDB.sqlite'
+  storage: process.env.NODE_ENV === 'test' ? './config/test.sqlite' : './config/watogDB.sqlite'
 })
 
 sequelize
