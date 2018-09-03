@@ -8,6 +8,8 @@ const Category = require('../models/category')
 const Vote = require('../models/vote')
 const Report = require('../models/report')
 
+const Op = Sequelize.Op
+
 // Common user fields
 const userFields = ['id', 'first_name', 'last_name', 'hospital', 'picture_profile', 'user_name', 'country']
 
@@ -111,7 +113,7 @@ const get = async (req, res) => {
     }
   })
 
-  data.rank = rank
+  data.rank = rank + 1
 
   res.send({
     status: true,
