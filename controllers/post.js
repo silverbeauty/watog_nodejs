@@ -102,6 +102,17 @@ const get = async (req, res) => {
     }
   }
 
+    // Calculate Rank
+  const rank = await Post.count({
+    where: {
+      vote_score: {
+        [Op.gt]: data.vote_score
+      }
+    }
+  })
+
+  data.rank = rank
+
   res.send({
     status: true,
     data
