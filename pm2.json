@@ -21,7 +21,7 @@
       // Multi host is possible, just by passing IPs/hostname as an array
       "host" : "ec2-18-188-63-192.us-east-2.compute.amazonaws.com",
       // Branch
-      "ref"  : "origin/valeri/no_auth_file",//"origin/master",
+      "ref"  : "origin/develop",
       // Git repository to clone
       "repo" : "git@gitlab.com:watog-app/sql-nodejs.git",
       // Path of the application on target servers
