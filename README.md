@@ -535,8 +535,12 @@ Reset password by old password
   ```
 
 #### GET `/api/post?[QUERY]`
-  Query posts. valid queries are `limit`, `offset`, `user_id`, `category_id`. `random`
+  Query posts. valid queries are `limit`, `offset`, `user_id`, `category_id`. `random`, `order`, `direction`
 
+  `direction`: ASC or DESC  
+  `order`: any post field  
+
+  `random` ignores `order` and `direction`  
 
   Response:
   HTTP Status: 200
