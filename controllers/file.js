@@ -26,7 +26,6 @@ const create = async (req, res) => {
       }
     })
   } else if (req.body.file) { // base 64 image
-
     const fileName = uuidv1()
     try {
       const filePath = base64Img.imgSync(req.body.file, path.resolve('files/'), fileName)

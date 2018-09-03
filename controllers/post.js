@@ -104,7 +104,7 @@ const get = async (req, res) => {
     }
   }
 
-    // Calculate Rank
+  // Calculate Rank
   const rank = await Post.count({
     where: {
       vote_score: {
@@ -211,7 +211,7 @@ const query = async (req, res) => {
     include: [{
       model: User,
       attributes: userFields
-    }/*, { model: Report, attributes: [ 'id'] }*/ ]
+    }/*, { model: Report, attributes: [ 'id'] } */ ]
   }
 
   if (order && !isRandom) {
@@ -358,7 +358,7 @@ const report = async (req, res) => {
   })
   await report.save()
 
-// Update report count
+  // Update report count
   const count = await Report.count({
     where: {
       post_id: req.post.id
@@ -366,10 +366,9 @@ const report = async (req, res) => {
   })
   post.report_count = count
 
-  
   await post.save()
 
-// Update user report count
+  // Update user report count
   const report_count = await Report.count({
     include: [{
       model: Post,
