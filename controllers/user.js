@@ -510,7 +510,7 @@ const forgotPassword = async (req, res) => {
 
   _user.password = oldPassword + ' ' + code
   await _user.save()
-  const text = `<html>
+  const html = `<html>
     <head></head>
     <body style="font-family:sans-serif;">
       <h1 style="text-align:center">We received a request to reset your password</h1>
@@ -527,7 +527,7 @@ const forgotPassword = async (req, res) => {
     </body>
     </html>`
 
-  await EmailCtrl.send('support@watog.com', _user.email, 'Reset your Watog password', text)
+  await EmailCtrl.send('support@watog.com', _user.email, 'Reset your Watog password', html, htm)
   res.send({
     status: true
   })
