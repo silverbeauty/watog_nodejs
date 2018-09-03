@@ -198,7 +198,7 @@ const query = async (req, res) => {
     include: [{
       model: User,
       attributes: userFields
-    }]
+    }/*, { model: Report, attributes: [ 'id'] }*/ ]
   }
 
   if (order && !isRandom) {
