@@ -15,22 +15,22 @@ module.exports.send = (from, to, subject, html, text) => {
   return new Promise((resolve, reject) => { // TODO: Should be replaced with MailGun or something else
     const mailOptions = {
       from,
-      to, 
+      to,
       subject,
       text,
-      html,
+      html
     }
 
     // send mail with defined transport object
     transporter.sendMail(mailOptions, (error, info) => {
-	    if (error) {
-	    	reject(error)
-	      return 
-	    }
-	    console.log('Message sent: %s', info.messageId);
-	    // Preview only available when sending through an Ethereal account
-	    console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info))
-	    resolve()
+      if (error) {
+        reject(error)
+        return
+      }
+      console.log('Message sent: %s', info.messageId)
+      // Preview only available when sending through an Ethereal account
+      console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info))
+      resolve()
     })
   })
 }
