@@ -8,6 +8,8 @@ const Category = require('../models/category')
 const Vote = require('../models/vote')
 const Report = require('../models/report')
 
+const Op = Sequelize.Op
+
 // Common user fields
 const userFields = ['id', 'first_name', 'last_name', 'hospital', 'picture_profile', 'user_name', 'country']
 
@@ -101,6 +103,17 @@ const get = async (req, res) => {
       data.User = user
     }
   }
+
+  // Calculate Rank
+  const rank = await Post.count({
+    where: {
+      vote_score: {
+        [Op.gt]: data.vote_score
+      }
+    }
+  })
+
+  data.rank = rank + 1
 
   res.send({
     status: true,
@@ -198,7 +211,7 @@ const query = async (req, res) => {
     include: [{
       model: User,
       attributes: userFields
-    }]
+    }/*, { model: Report, attributes: [ 'id'] } */ ]
   }
 
   if (order && !isRandom) {
@@ -223,7 +236,7 @@ const load = async (req, res, next) => {
       req.post = post
       next()
     } else {
-      res.send({
+      res.status(400).send({
         status: false,
         error: 'no_post'
       })
@@ -335,13 +348,46 @@ const vote = async (req, res) => {
 }
 
 const report = async (req, res) => {
+  const { post } = req
+
   const report = new Report({
-    post_id: req.post.id,
+    post_id: post.id,
     type: req.body.type,
     user_id: req.currentUser.id,
     description: req.body.description
   })
   await report.save()
+
+  // Update report count
+  const count = await Report.count({
+    where: {
+      post_id: req.post.id
+    }
+  })
+  post.report_count = count
+
+  await post.save()
+
+  // Update user report count
+  const report_count = await Report.count({
+    include: [{
+      model: Post,
+      attributes: ['id', 'user_id'],
+      where: {
+        user_id: post.user_id
+      }
+    }]
+  })
+
+  console.info('Total Report Count:', report_count)
+
+  await User.update({
+    report_count
+  }, {
+    where: {
+      id: post.user_id
+    }
+  })
 
   res.send({
     status: true,

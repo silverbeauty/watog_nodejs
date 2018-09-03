@@ -222,7 +222,7 @@ const queryUsers = async (req, res) => {
   // TODO: limit access to users
   // TODO: should add sort option
   const allowed_queries = ['limit', 'offset', 'first_name', 'last_name', 'country', 'hospital', 'name', 'order', 'direction']
-  const allowed_attributes = ['id', 'first_name', 'last_name', 'country', 'hospital', 'cell_phone', 'picture_profile', 'picture_cover', 'vote_score', 'up_vote_count', 'down_vote_count']
+  const allowed_attributes = ['id', 'first_name', 'last_name', 'country', 'hospital', 'cell_phone', 'picture_profile', 'picture_cover', 'vote_score', 'up_vote_count', 'down_vote_count', 'report_count']
   const query = {...req.query}
   const cquery = {...query}
 

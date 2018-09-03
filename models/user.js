@@ -95,6 +95,11 @@ const User = sequelize.define('User', {
     allowNull: true,
     default: 0
   },
+  report_count: {
+    type: Sequelize.INTEGER,
+    allowNull: true,
+    default: 0
+  },
   settings: { // Should be stringified using JSON.stringify
     type: Sequelize.STRING,
     allowNull: true,
