@@ -190,7 +190,4 @@ test('Create Sample Data', async t => {
   	.set({ Authorization: tokens[0] })
 
   t.is(meRes.status, 200)
-
-
-
 })
