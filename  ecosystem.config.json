@@ -31,7 +31,7 @@
       // is no separate command-line flag, see 'man ssh' 
       // can be either a single string or an array of strings
       "ssh_options": "StrictHostKeyChecking=yes",
-      "post-deploy" : "npm install && npm test && pm2 start && npm -- start:test",
+      "post-deploy" : "npm install && npm test && pm2 start pm2.json && npm -- start:test",
       // Environment variables that must be injected in all applications on this env
       "env"  : {
         "NODE_ENV": "test"
