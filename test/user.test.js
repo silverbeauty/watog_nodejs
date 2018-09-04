@@ -21,19 +21,23 @@ test('Health Check', t =>
 
 // Sign Up
 test('user: POST /user should return 200', async t => {
-  const res = await request(app)
+	// Create 10 users
+
+	for (let i = 0 ; i < 10; i ++) {
+		const res = await request(app)
     .post(`/api/user`)
     .set({ 'Content-Type': 'application/json' })
     .send({
-			'email': 'test3@test.com',
-			'first_name': 'Test1',
-			'last_name': 'Test',
-			'cell_phone': '1234567894',
+			'email': `test${i}@test.com`,
+			'first_name': `Test${i}`,
+			'last_name': `Last${i}`,
+			'cell_phone': `123456789${i}`,
 			'country': 'usa',
-			'password': '123456',
-			'hospital': 'b',
-			'user_name': 'test4',
+			'password': `123456${i}`,
+			'hospital': `Hospital${i}`,
+			'user_name': `test${i}`,
 			'job': 'Doctor'
     })
-  t.is(res.status, 200)
+	  t.is(res.status, 200)
+	}
 })
