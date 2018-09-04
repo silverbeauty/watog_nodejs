@@ -189,7 +189,7 @@ const getMe = async (req, res) => {
     where: {
       user_id: currentUser.id
     },
-    order: [ 'up_vote_count'],
+    order: [ ['up_vote_count', 'DESC'] ],
     limit: 5
   })
 
@@ -201,6 +201,7 @@ const getMe = async (req, res) => {
 
   const week_vote_count = await Vote.count({
     where: {
+      commend: true,
       createdAt: {
         [Op.gt]: monday
       }
