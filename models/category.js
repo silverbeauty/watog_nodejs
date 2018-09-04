@@ -31,6 +31,12 @@ const Category = sequelize.define('Category', {
   user_id: {
     type: Sequelize.INTEGER,
     allowNull: false
+  },
+
+  score_ratio: {
+    type: Sequelize.FLOAT,
+    allowNull: false,
+    default: 1.0
   }
 })
 
