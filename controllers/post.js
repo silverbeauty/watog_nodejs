@@ -39,7 +39,8 @@ const create = async (req, res) => {
     user_id: req.currentUser.id,
     up_vote_count: 0,
     down_vote_count: 0,
-    vote_score: 0
+    vote_score: 0,
+    report_count: 0
   })
   let data
   try {
@@ -167,9 +168,10 @@ const query = async (req, res) => {
 
   // TODO: query condition should be defined in route
   // TODO: limit access to users
-  const allowed_queries = ['limit', 'offset', 'category_id', 'user_id', 'order', 'direction', 'random']
+  const allowed_queries = ['limit', 'offset', 'category_id', 'user_id', 'order', 'direction', 'random', `country`]
   const query = {...req.query}
   const cquery = {...query}
+  const { country } = query
 
   // Check valid queries
   for (let key of allowed_queries) {
@@ -203,15 +205,32 @@ const query = async (req, res) => {
   delete query.order
   delete query.direction
   delete query.random
+  delete query.country
 
-  const sQuery = {
-    where: query,
-    limit,
-    offset,
-    include: [{
-      model: User,
-      attributes: userFields
-    }/*, { model: Report, attributes: [ 'id'] } */ ]
+  let sQuery
+  if (country) {
+    sQuery = {
+      where: query,
+      limit,
+      offset,
+      include: [{
+        model: User,
+        attributes: userFields,
+        where: {
+          country
+        }
+      }]
+    }
+  } else {
+    sQuery = {
+      where: query,
+      limit,
+      offset,
+      include: [{
+        model: User,
+        attributes: userFields
+      }/*, { model: Report, attributes: [ 'id'] } */ ]
+    }
   }
 
   if (order && !isRandom) {

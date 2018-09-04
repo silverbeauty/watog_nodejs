@@ -30,6 +30,7 @@ const signup = async (req, res) => {
     up_vote_count: 0,
     down_vote_count: 0,
     vote_score: 0,
+    report_count: 0
   })
 
   let data
