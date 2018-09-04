@@ -146,6 +146,28 @@ test('Create Sample Data', async t => {
 	    .send({
 	    	commend: false
 	    })
+	   	t.is(res.status, 200)
+  }
+
+  // test1 ~ test5 upvotes test0's second post
+  // test6 ~ test9 downvotes test0's second post
+  for (let i = 1; i <= 6; i ++) {
+  	const res = await request(app)
+	    .post(`/api/post/${posts[0][1].id}/vote`)
+	    .set({ 'Content-Type': 'application/json', Authorization: tokens[i] })
+	    .send({
+	    	commend: true
+	    })
 	   t.is(res.status, 200)
-  }  
+  }
+
+	for (let i = 7; i <= 9; i ++) {
+  	const res = await request(app)
+	    .post(`/api/post/${posts[0][1].id}/vote`)
+	    .set({ 'Content-Type': 'application/json', Authorization: tokens[i] })
+	    .send({
+	    	commend: false
+	    })
+	   	t.is(res.status, 200)
+  }
 })
