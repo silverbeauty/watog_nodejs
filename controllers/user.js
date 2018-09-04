@@ -548,7 +548,7 @@ const forgotPassword = async (req, res) => {
     </body>
     </html>`
 
-  await EmailCtrl.send('support@watog.com', _user.email, 'Reset your Watog password', html, htm)
+  await EmailCtrl.send('support@watog.com', _user.email, 'Reset your Watog password', html, html)
   res.send({
     status: true
   })
