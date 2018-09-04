@@ -237,6 +237,9 @@ const load = async (req, res, next) => {
       },
       include: [{
         model: Category
+      }, {
+        model: User,
+        attributes: ['id', 'first_name', 'last_name']
       }]
     })
     if (post) {
