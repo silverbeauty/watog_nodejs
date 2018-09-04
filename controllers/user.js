@@ -201,6 +201,7 @@ const getMe = async (req, res) => {
 
   const week_vote_count = await Vote.count({
     where: {
+      commend: true,
       createdAt: {
         [Op.gt]: monday
       }
