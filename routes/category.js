@@ -14,7 +14,7 @@ router.post('/',
     body('type').isLength({ min: 3 }).withMessage('type must be at least 3 chars long'),
     body('description').optional().isString(),
     body('picture').optional().isString(),
-    body('score_ratio').optional().isString()
+    body('score_ratio').optional().isDecimal()
   ], catchError(CategoryCtrl.create))
 
 // Get a single category
