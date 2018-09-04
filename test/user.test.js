@@ -19,7 +19,7 @@ test('Create Sample Data', async t => {
 	let tokens = []
 	let categories = []
 	let posts = []
-
+	const countries = ['USA', 'France', 'Germany', 'Netherlands', 'UK']
 	// Create 20 users - Sign Up
 	for (let i = 0 ; i < 20; i ++) {
 		const res = await request(app)
@@ -30,7 +30,7 @@ test('Create Sample Data', async t => {
 				'first_name': `Test${i}`,
 				'last_name': `Last${i}`,
 				'cell_phone': `123456789${i}`,
-				'country': 'usa',
+				'country': countries[i % countries.length],
 				'password': `123456${i}`,
 				'hospital': `Hospital${i}`,
 				'user_name': `test${i}`,

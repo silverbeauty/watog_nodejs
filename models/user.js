@@ -86,22 +86,22 @@ const User = sequelize.define('User', {
   },
   up_vote_count: {
     type: Sequelize.INTEGER,
-    allowNull: true,
+    allowNull: false,
     default: 0
   },
   down_vote_count: {
     type: Sequelize.INTEGER,
-    allowNull: true,
+    allowNull: false,
     default: 0
   },
   vote_score: { // https://gitlab.com/watog-app/sql-nodejs/issues/11
     type: Sequelize.FLOAT,
-    allowNull: true,
+    allowNull: false,
     default: 0
   },
   report_count: {
     type: Sequelize.INTEGER,
-    allowNull: true,
+    allowNull: false,
     default: 0
   },
   settings: { // Should be stringified using JSON.stringify
