@@ -7,6 +7,8 @@ const Sequelize = require('sequelize')
 const User = require('../models/user')
 const Post = require('../models/post')
 const Verify = require('../models/verify')
+const Vote = require('../models/vote')
+
 const EmailCtrl = require('./email')
 const SmsCtrl = require('./sms')
 
@@ -191,7 +193,28 @@ const getMe = async (req, res) => {
     limit: 5
   })
 
+  // Find this week's votes
+
+  const d = new Date()
+  const day = d.getDay(), diff = d.getDate() - day + (day == 0 ? -6:1)
+  const monday = new Date(d.setDate(diff))
+
+  const week_vote_count = await Vote.count({
+    where: {
+      createdAt: {
+        [Op.gt]: monday
+      }
+    },
+    include: {
+      model: Post,
+      where: {
+        user_id: currentUser.id
+      }
+    }
+  })
+
   profile.good_posts = good_posts
+  profile.week_vote_count = week_vote_count
 
   res.send({
     status: true,
