@@ -5,7 +5,8 @@
   "scripts": {
     "start": "node ./bin/www",
     "start:dev": "nodemon ./bin/www",
-    "start:test": "NODE_ENV=test npm run start:dev",
+    "start:test-dev": "NODE_ENV=test npm run start:dev",
+    "start:test": "NODE_ENV=test npm run start",
     "lint": "eslint config controllers models routes",
     "lint-fix": "bash fixTab.sh && eslint config controllers models routes --fix",
     "deploy": "pm2 deploy pm2.json production --force",

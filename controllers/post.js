@@ -317,7 +317,7 @@ const vote = async (req, res) => {
   // Update upvote, downvote, vote score
   post.up_vote_count = upVotes.length
   post.down_vote_count = downVotes.length
-  post.vote_score = upVotes.length - downVotes.length
+  post.vote_score = (upVotes.length - downVotes.length) * post.Category.score_ratio
 
   await post.save()
 
@@ -345,9 +345,15 @@ const vote = async (req, res) => {
     }
   })
 
+  const vote_score = await Post.sum('vote_score', {
+    where: {
+      user_id: post.user_id
+    }
+  })
+
   user.up_vote_count = user.up_vote_count || 0
   user.down_vote_count = user.down_vote_count || 0
-  user.vote_score = up_vote_count - down_vote_count || 0
+  user.vote_score = vote_score || 0
 
   await user.save()
 
