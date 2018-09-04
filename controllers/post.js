@@ -370,8 +370,9 @@ const vote = async (req, res) => {
     }
   })
 
-  user.up_vote_count = user.up_vote_count || 0
-  user.down_vote_count = user.down_vote_count || 0
+
+  user.up_vote_count = up_vote_count || 0
+  user.down_vote_count = down_vote_count || 0
   user.vote_score = vote_score || 0
 
   await user.save()
