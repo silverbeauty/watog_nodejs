@@ -537,7 +537,7 @@ Reset password by old password
   ```
 
 #### GET `/api/post?[QUERY]`
-  Query posts. valid queries are `limit`, `offset`, `user_id`, `category_id`. `random`, `order`, `direction`
+  Query posts. valid queries are `limit`, `offset`, `user_id`, `category_id`. `random`, `order`, `direction`, `country`
 
   `direction`: ASC or DESC  
   `order`: any post field  
