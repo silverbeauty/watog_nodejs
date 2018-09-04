@@ -189,7 +189,7 @@ const getMe = async (req, res) => {
     where: {
       user_id: currentUser.id
     },
-    order: [ 'up_vote_count'],
+    order: [ ['up_vote_count', 'DESC'] ],
     limit: 5
   })
 
