@@ -98,7 +98,7 @@ test('Create Sample Data', async t => {
 	 	categories[i] = res.body.data
   }
 
-  // Create 3 posts 
+  // Create 10 posts per user 
 
   for (let i in tokens) {
   	// Upload file
@@ -112,7 +112,7 @@ test('Create Sample Data', async t => {
 	  t.is(fileRes.status, 200)
 	  posts[i] = []
 
-	  for (let j = 0; j < 3; j ++) {
+	  for (let j = 0; j < 10; j ++) {
 	  	const res = await request(app)
 		    .post(`/api/post`)
 		    .set({ 'Content-Type': 'application/json', Authorization: tokens[i] })
@@ -181,4 +181,7 @@ test('Create Sample Data', async t => {
 	    })
 	   	t.is(res.status, 200)
   }
+
+
+
 })
