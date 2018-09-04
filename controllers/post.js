@@ -383,6 +383,98 @@ const vote = async (req, res) => {
   })
 }
 
+const cancelVote = async (req, res) => {
+  const { post, currentUser } = req
+
+  // Check if already voted
+  const vote = await Vote.findOne({
+    where: {
+      post_id: post.id,
+      user_id: currentUser.id
+    }
+  })
+
+  if (!vote) {
+    return res.status(400).send({
+      status: false,
+      error: 'no_vote'
+    })
+  }
+
+  await vote.destroy()
+
+  const downVotes = await Vote.findAll({
+    where: {
+      post_id: post.id,
+      commend: false
+    },
+    include: [{
+      model: User,
+      attributes: userFields
+    }]
+  })
+
+  const upVotes = await Vote.findAll({
+    where: {
+      post_id: post.id,
+      commend: true
+    },
+    include: [{
+      model: User,
+      attributes: userFields
+    }]
+  })
+
+  // Update upvote, downvote, vote score
+  post.up_vote_count = upVotes.length
+  post.down_vote_count = downVotes.length
+  post.vote_score = (upVotes.length - downVotes.length) * post.Category.score_ratio
+
+  await post.save()
+
+  const data = post.get({
+    plain: true
+  })
+
+  data.downVotes = downVotes.map(v => v.get({plain: true}))
+  data.upVotes = upVotes.map(v => v.get({plain: true}))
+
+  // Load User
+  const user = await User.findById(post.user_id)
+
+  // TODO: calculate user vote score
+  const up_vote_count = await Post.sum('up_vote_count', {
+    where: {
+      user_id: post.user_id
+    }
+  })
+
+  // TODO: calculate user vote score
+  const down_vote_count = await Post.sum('down_vote_count', {
+    where: {
+      user_id: post.user_id
+    }
+  })
+
+  const vote_score = await Post.sum('vote_score', {
+    where: {
+      user_id: post.user_id
+    }
+  })
+
+
+  user.up_vote_count = up_vote_count || 0
+  user.down_vote_count = down_vote_count || 0
+  user.vote_score = vote_score || 0
+
+  await user.save()
+
+  res.send({
+    status: true,
+    data
+  })
+}
+
 const report = async (req, res) => {
   const { post } = req
 
@@ -439,15 +531,9 @@ const remove = async (req, res) => {
       error: 'invalid_permission'
     })
   }
-  try {
-    await post.destroy()
-  } catch (e) {
-    console.error(e)
-    return res.status(500).send({
-      status: false,
-      error: 'internal_error'
-    })
-  }
+
+  await post.destroy()
+
   res.send({
     status: true
   })
