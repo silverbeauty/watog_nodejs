@@ -149,6 +149,17 @@ test('Create Sample Data', async t => {
 	   	t.is(res.status, 200)
   }
 
+  // test5, test6 reverts his upvotes to downvotes
+	for (let i = 5; i <= 6; i ++) {
+  	const res = await request(app)
+	    .post(`/api/post/${posts[0][0].id}/vote`)
+	    .set({ 'Content-Type': 'application/json', Authorization: tokens[i] })
+	    .send({
+	    	commend: false
+	    })
+	   t.is(res.status, 200)
+  }
+
   // test1 ~ test5 upvotes test0's second post
   // test6 ~ test9 downvotes test0's second post
   for (let i = 1; i <= 6; i ++) {
