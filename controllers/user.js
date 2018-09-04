@@ -26,8 +26,12 @@ const signup = async (req, res) => {
   const user = new User({
     ...req.body,
     password: hash,
-    settings: `{"notifications":{"vote":true,"participate":true,"spam_mark":true}}` // default setting
+    settings: `{"notifications":{"vote":true,"participate":true,"spam_mark":true}}`, // default setting
+    up_vote_count: 0,
+    down_vote_count: 0,
+    vote_score: 0,
   })
+
   let data
   try {
     const res = await user.save()
