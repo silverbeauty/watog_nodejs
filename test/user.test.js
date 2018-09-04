@@ -101,7 +101,6 @@ test('Create Sample Data', async t => {
   // Create 3 posts 
 
   for (let i in tokens) {
-
   	// Upload file
   	const fileRes = await request(app)
 	    .post(`/api/file`)
@@ -127,4 +126,26 @@ test('Create Sample Data', async t => {
 		   posts[i].push(res.body.data)
 	  }
   }
+
+  // test1 ~ test6 upvotes test0's first post
+  // test7 ~ test9 downvotes test0's first post
+  for (let i = 1; i <= 6; i ++) {
+  	const res = await request(app)
+	    .post(`/api/post/${posts[0][0].id}/vote`)
+	    .set({ 'Content-Type': 'application/json', Authorization: tokens[i] })
+	    .send({
+	    	commend: true
+	    })
+	   t.is(res.status, 200)
+  }
+
+	for (let i = 7; i <= 9; i ++) {
+  	const res = await request(app)
+	    .post(`/api/post/${posts[0][0].id}/vote`)
+	    .set({ 'Content-Type': 'application/json', Authorization: tokens[i] })
+	    .send({
+	    	commend: false
+	    })
+	   t.is(res.status, 200)
+  }  
 })
