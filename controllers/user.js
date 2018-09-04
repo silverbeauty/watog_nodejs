@@ -61,17 +61,24 @@ const login = async (req, res) => {
   if (!errors.isEmpty()) {
     return res.status(401).json({
       status: false,
-      error: 'Invalid email or password!'
+      error: errors.array()
     })
   }
 
-  const { email, password } = req.body
+  const { email, password, user_name } = req.body
+  if (!email && !user_name) {
+    return res.status(401).json({
+      status: false,
+      error: 'missing_email_user_name'
+    })
+  }
 
+  console.info('User Name:', email || user_name)
   const _user = await User.findOne({ where: {
     [Op.or]: [{
       email
     }, {
-      user_name: email
+      user_name: email || user_name
     }]
   } })
 

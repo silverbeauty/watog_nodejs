@@ -24,7 +24,8 @@ router.post('/'
   , catchError(UserCtrl.signup))
 
 router.post('/login', [
-  body('email').isLength({ min: 3 }),
+  body('email').optional().isLength({ min: 3 }),
+  body('user_name').optional().isLength({ min: 3 }),
   body('password').isLength({ min: 1 })
 ], catchError(UserCtrl.login))
 
