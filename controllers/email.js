@@ -11,7 +11,7 @@ const transporter = nodemailer.createTransport({
 })
 
 module.exports.send = (from, to, subject, html, text) => {
-  console.info('Send email', from, to, subject, body)
+  console.info('Send email', from, to, subject, html, text)
   return new Promise((resolve, reject) => { // TODO: Should be replaced with MailGun or something else
     const mailOptions = {
       from,
