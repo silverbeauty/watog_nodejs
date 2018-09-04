@@ -117,7 +117,7 @@ test('Create Sample Data', async t => {
 		    .post(`/api/post`)
 		    .set({ 'Content-Type': 'application/json', Authorization: tokens[i] })
 		    .send({
-		    	category_id: categories[j].id,
+		    	category_id: categories[j % categories.length].id,
 		    	picture: fileRes.body.data.url,
 		    	description: `Post_${j}_test${i}`
 		    })
@@ -179,9 +179,14 @@ test('Create Sample Data', async t => {
 	    .send({
 	    	commend: false
 	    })
-	   	t.is(res.status, 200)
+	  t.is(res.status, 200)
   }
 
+  // test get me
 
+  const meRes = await request(app)
+  	.get(`/api/user/me`)
+  	.set({ Authorization: tokens[0] })
 
+  t.is(meRes.status, 200)
 })
