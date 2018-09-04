@@ -50,6 +50,26 @@ test('Create Sample Data', async t => {
 
 	  t.is(resLogin.status, 200)
 	  tokens[i] = resLogin.body.data.token
+
+		// Upload proof of status
+		const verifyRes = await request(app)
+	    .post(`/api/file/verify`)
+	    .set({ 'Content-Type': 'application/json', Authorization: tokens[i] })
+	    .send({
+				'file': strImage
+	    })
+	  t.is(verifyRes.status, 200)
+
+	  // Get me 
+
+		const meRes = await request(app)
+	    .get(`/api/user/me`)
+	    .set({ 'Content-Type': 'application/json', Authorization: tokens[i] })
+
+	  t.is(meRes.status, 200)
+
+	  // Check if proof_of_status is uploaded
+	  t.is(meRes.body.data.proof_of_status, verifyRes.body.data.proof_of_status)
 	}
 
 	// user_name login
