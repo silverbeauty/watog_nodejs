@@ -19,6 +19,9 @@ router.post('/', UserCtrl.checkAuth, [
 // Create a new vote
 router.post('/:id/vote', UserCtrl.checkAuth, [ body('commend').isBoolean() ], PostCtrl.load, catchError(PostCtrl.vote))
 
+// Cancel a vote
+router.post('/:id/vote/cancel', UserCtrl.checkAuth, PostCtrl.load, catchError(PostCtrl.cancelVote))
+
 // Create a new report about a post
 router.post('/:id/report', UserCtrl.checkAuth, [
   body('type').isIn(['spam', 'violence', 'sex', 'other'])

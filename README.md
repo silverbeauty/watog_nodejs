@@ -626,6 +626,54 @@ Reset password by old password
   }
   ```
 
+#### POST `/api/post/:id/vote/cancel`
+  Cacnel vote 
+
+  Response:  
+
+  Http Status: 200. 
+  ```
+  {
+    "status": true,
+    "data": {
+        "id": 2,
+        "picture": "localhost:3000/api/files/44230068adab9f01e680c25c26b08bc5.png",
+        "category_id": 1,
+        "user_id": 2,
+        "createdAt": "2018-08-20T08:37:12.218Z",
+        "updatedAt": "2018-08-20T08:37:12.218Z",
+        "downVotes": [],
+        "upVotes": [
+            {
+                "id": 1,
+                "category_id": 1,
+                "post_id": 2,
+                "user_id": 1,
+                "commend": true,
+                "createdAt": "2018-08-21T08:50:18.309Z",
+                "updatedAt": "2018-08-21T08:50:39.030Z",
+                "User": {
+                    "id": 1,
+                    "first_name": "John",
+                    "last_name": "test",
+                    "hospital": "a",
+                    "picture_profile": null
+                }
+            }
+        ]
+    }
+  }
+  ```
+
+  Http Status: 400. 
+
+  ```
+  {
+    "status": false,
+    "error": `already_voted`
+  }
+  ```
+
 ### Report API
 
 #### POST `/api/post/:id/vote`

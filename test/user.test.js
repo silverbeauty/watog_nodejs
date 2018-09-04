@@ -161,8 +161,14 @@ test('Create Sample Data', async t => {
 	   t.is(res.status, 200)
   }
 
-  // test1 ~ test5 upvotes test0's second post
-  // test6 ~ test9 downvotes test0's second post
+  // test6 cancels vote 
+	const cancelVoteRes = await request(app)
+    .post(`/api/post/${posts[0][0].id}/vote/cancel`)
+    .set({ 'Content-Type': 'application/json', Authorization: tokens[6] })
+
+  t.is(cancelVoteRes.status, 200)
+
+  // test1 ~ test6 upvotes test0's second post
   for (let i = 1; i <= 6; i ++) {
   	const res = await request(app)
 	    .post(`/api/post/${posts[0][1].id}/vote`)
@@ -173,6 +179,7 @@ test('Create Sample Data', async t => {
 	   t.is(res.status, 200)
   }
 
+  // test7 ~ test9 downvotes test0's second post
 	for (let i = 7; i <= 9; i ++) {
   	const res = await request(app)
 	    .post(`/api/post/${posts[0][1].id}/vote`)
