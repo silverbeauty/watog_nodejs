@@ -381,7 +381,7 @@ Reset password by old password
 
   Body: 
   ```
-  { "type": String, "description": String(Optinal), "ratio": Float (default: 1.0 )}
+  { "type": String, "description": String(Optinal), "score_ratio": Float (default: 1.0 )}
   ```
 
   Response:  
