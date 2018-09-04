@@ -34,7 +34,8 @@ test('Create Sample Data', async t => {
 				'password': `123456${i}`,
 				'hospital': `Hospital${i}`,
 				'user_name': `test${i}`,
-				'job': 'Doctor'
+				'job': 'Doctor',
+				'bio': `I am Test${i}`
 	    })
 	  t.is(res.status, 200)
 
@@ -189,4 +190,7 @@ test('Create Sample Data', async t => {
   	.set({ Authorization: tokens[0] })
 
   t.is(meRes.status, 200)
+
+
+
 })
