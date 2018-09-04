@@ -1,6 +1,8 @@
 
 const Sequelize = require('sequelize')
 
+console.info('NODE_ENV:', process.env.NODE_ENV)
+
 const sequelize = new Sequelize('database', null, null, {
   host: 'localhost',
   dialect: 'sqlite',

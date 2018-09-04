@@ -11,9 +11,15 @@ const create = async (req, res) => {
       error: errors.array()
     })
   }
+  let { score_ratio } = req.body
+
+  if (isNaN(score_ratio)) {
+    score_ratio = 0.2
+  }
 
   const category = Category.build({
     ...req.body,
+    score_ratio,
     user_id: req.currentUser.id
   })
 

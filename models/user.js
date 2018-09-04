@@ -21,6 +21,10 @@ const User = sequelize.define('User', {
     type: Sequelize.STRING,
     allowNull: false
   },
+  bio: {
+    type: Sequelize.STRING,
+    allowNull: true
+  },
   password: {
     type: Sequelize.STRING,
     allowNull: false
@@ -90,8 +94,8 @@ const User = sequelize.define('User', {
     allowNull: true,
     default: 0
   },
-  vote_score: {
-    type: Sequelize.INTEGER,
+  vote_score: { // https://gitlab.com/watog-app/sql-nodejs/issues/11
+    type: Sequelize.FLOAT,
     allowNull: true,
     default: 0
   },

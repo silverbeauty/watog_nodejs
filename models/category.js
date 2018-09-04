@@ -31,6 +31,12 @@ const Category = sequelize.define('Category', {
   user_id: {
     type: Sequelize.INTEGER,
     allowNull: false
+  },
+
+  score_ratio: {
+    type: Sequelize.FLOAT,
+    allowNull: false,
+    default: 0.2 // https://gitlab.com/watog-app/sql-nodejs/issues/11 //other category
   }
 })
 

@@ -26,8 +26,12 @@ const signup = async (req, res) => {
   const user = new User({
     ...req.body,
     password: hash,
-    settings: `{"notifications":{"vote":true,"participate":true,"spam_mark":true}}` // default setting
+    settings: `{"notifications":{"vote":true,"participate":true,"spam_mark":true}}`, // default setting
+    up_vote_count: 0,
+    down_vote_count: 0,
+    vote_score: 0,
   })
+
   let data
   try {
     const res = await user.save()
@@ -61,17 +65,24 @@ const login = async (req, res) => {
   if (!errors.isEmpty()) {
     return res.status(401).json({
       status: false,
-      error: 'Invalid email or password!'
+      error: errors.array()
     })
   }
 
-  const { email, password } = req.body
+  const { email, password, user_name } = req.body
+  if (!email && !user_name) {
+    return res.status(401).json({
+      status: false,
+      error: 'missing_email_user_name'
+    })
+  }
 
+  console.info('User Name:', email || user_name)
   const _user = await User.findOne({ where: {
     [Op.or]: [{
       email
     }, {
-      user_name: email
+      user_name: email || user_name
     }]
   } })
 
@@ -541,7 +552,7 @@ const forgotPassword = async (req, res) => {
     </body>
     </html>`
 
-  await EmailCtrl.send('support@watog.com', _user.email, 'Reset your Watog password', html, htm)
+  await EmailCtrl.send('support@watog.com', _user.email, 'Reset your Watog password', html, html)
   res.send({
     status: true
   })

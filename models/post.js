@@ -30,7 +30,7 @@ const Post = sequelize.define('Post', {
     allowNull: false
   },
   vote_score: { // Upvote count - down vote count
-    type: Sequelize.INTEGER,
+    type: Sequelize.FLOAT,
     allowNull: true,
     default: 0
   },

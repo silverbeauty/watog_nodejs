@@ -9,13 +9,13 @@
     // Environment variables injected when starting with --env production
     // http://pm2.keymetrics.io/docs/usage/application-declaration/#switching-to-different-environments
     "env_production" : {
-      "NODE_ENV": "production"
+      "NODE_ENV": "test"
     }
   }],
   // Deployment part
   // Here you describe each environment
   "deploy" : {
-    "production" : {
+    "staging" : {
       "user" : "ubuntu",
       "key"  : "~/.ssh/va.pem",
       // Multi host is possible, just by passing IPs/hostname as an array
@@ -31,10 +31,10 @@
       // is no separate command-line flag, see 'man ssh' 
       // can be either a single string or an array of strings
       "ssh_options": "StrictHostKeyChecking=yes",
-      "post-deploy" : "npm install && pm2 start npm -- start",
+      "post-deploy" : "npm install && npm test && pm2 start npm -- run start:test",
       // Environment variables that must be injected in all applications on this env
       "env"  : {
-        "NODE_ENV": "production"
+        "NODE_ENV": "test"
       }
     }
   }
