@@ -231,7 +231,14 @@ const query = async (req, res) => {
 const load = async (req, res, next) => {
   const { id } = req.params
   try {
-    const post = await Post.findById(id)
+    const post = await Post.findOne({
+      where: {
+        id
+      },
+      include: [{
+        model: Category
+      }]
+    })
     if (post) {
       req.post = post
       next()
