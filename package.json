@@ -9,7 +9,7 @@
     "start:test": "NODE_ENV=test npm run start",
     "lint": "eslint config controllers models routes",
     "lint-fix": "bash fixTab.sh && eslint config controllers models routes --fix",
-    "deploy": "pm2 deploy pm2.json production --force",
+    "deploy": "pm2 deploy pm2.json staging --force",
     "test": "rm -f config/test.sqlite && ava test/**/*.test.js"
   },
   "dependencies": {
