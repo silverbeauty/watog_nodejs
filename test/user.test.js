@@ -30,7 +30,7 @@ test('Create Sample Data', async t => {
 				'first_name': `Test${i}`,
 				'last_name': `Last${i}`,
 				'cell_phone': `123456789${i}`,
-				'country': countries[i % country.length],
+				'country': countries[i % countries.length],
 				'password': `123456${i}`,
 				'hospital': `Hospital${i}`,
 				'user_name': `test${i}`,
