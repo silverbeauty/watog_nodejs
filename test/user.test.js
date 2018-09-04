@@ -20,8 +20,8 @@ test('Create Sample Data', async t => {
 	let categories = []
 	let posts = []
 
-	// Create 10 users - Sign Up
-	for (let i = 0 ; i < 10; i ++) {
+	// Create 20 users - Sign Up
+	for (let i = 0 ; i < 20; i ++) {
 		const res = await request(app)
 	    .post(`/api/user`)
 	    .set({ 'Content-Type': 'application/json' })
