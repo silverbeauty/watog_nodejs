@@ -8,7 +8,7 @@
     "lint": "eslint config controllers models routes",
     "lint-fix": "bash fixTab.sh && eslint config controllers models routes --fix",
     "deploy": "pm2 deploy pm2.json production --force",
-    "test": "ava test/**/*.test.js"
+    "test": "rm config/test.sqlite && ava test/**/*.test.js"
   },
   "dependencies": {
     "ajv": "^6.5.2",
