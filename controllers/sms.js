@@ -7,6 +7,12 @@ const twilio = require('twilio')(accountSid, authToken)
 module.exports.send = (phoneNumber, text) => {
   console.info(`Send SMS: ${fromNumber} -> ${phoneNumber} :`, text)
 
+  if (process.env.NODE_ENV === 'test') {
+  	return new Promise((resolve, reject) => {
+  		resolve()
+  	})
+  }
+
   return twilio.messages
     .create({from: fromNumber, body: text, to: phoneNumber})
     .then(message => {
