@@ -79,6 +79,20 @@ test('Create Sample Data', async t => {
 	  	.set({ 'Content-Type': 'application/json', Authorization: tokens[i] })
 
 	  t.is(emailRes.status, 200)
+
+	  const verifyObj = await Verify.findOne({
+	  	where: {
+	  		user_id: meRes.body.data.id,
+	  		type: 'email'
+	  	}
+	  })
+
+	  t.is(verifyObj.user_id, meRes.body.data.id)
+
+	  const verifyEmailGetRes = await request(app)
+	  	.get('/api/user/verify/email/' + verifyObj.code)
+
+	  t.is(verifyEmailGetRes.status, 200)
 	}
 
 	// user_name login
