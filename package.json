@@ -10,7 +10,7 @@
     "lint": "eslint config controllers models routes",
     "lint-fix": "bash fixTab.sh && eslint config controllers models routes --fix",
     "deploy": "pm2 deploy ecosystem.config.json staging --force",
-    "test": "rm -f config/test.sqlite && ava test/**/*.test.js"
+    "test": "rm -f config/test.sqlite && NODE_ENV=test ava test/**/*.test.js"
   },
   "dependencies": {
     "ajv": "^6.5.2",
