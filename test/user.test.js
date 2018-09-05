@@ -148,6 +148,16 @@ test('Create Sample Data', async t => {
 	  }
   }
 
+  // Prevent self vote res
+	const selfVoteRes = await request(app)
+    .post(`/api/post/${posts[0][0].id}/vote`)
+    .set({ 'Content-Type': 'application/json', Authorization: tokens[0] })
+    .send({
+    	commend: true
+    })
+  t.is(selfVoteRes.status, 400)
+  t.is(selfVoteRes.body.error, 'self_post')
+
   // test1 ~ test6 upvotes test0's first post
   // test7 ~ test9 downvotes test0's first post
   for (let i = 1; i <= 6; i ++) {
@@ -157,7 +167,7 @@ test('Create Sample Data', async t => {
 	    .send({
 	    	commend: true
 	    })
-	   t.is(res.status, 200)
+	  t.is(res.status, 200)
   }
 
 	for (let i = 7; i <= 9; i ++) {
