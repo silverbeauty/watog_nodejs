@@ -168,7 +168,7 @@ const query = async (req, res) => {
 
   // TODO: query condition should be defined in route
   // TODO: limit access to users
-  const allowed_queries = ['limit', 'offset', 'category_id', 'user_id', 'order', 'direction', 'random', `country`]
+  const allowed_queries = ['limit', 'offset', 'category_id', 'user_id', 'order', 'direction', 'random', `country`, `vote`]
   const query = {...req.query}
   const cquery = {...query}
   const { country } = query
@@ -206,6 +206,7 @@ const query = async (req, res) => {
   delete query.direction
   delete query.random
   delete query.country
+  delete query.vote
 
   let sQuery
   if (country) {
@@ -219,7 +220,7 @@ const query = async (req, res) => {
         where: {
           country
         }
-      }]
+      }, { model: Vote }]
     }
   } else {
     sQuery = {
@@ -229,7 +230,7 @@ const query = async (req, res) => {
       include: [{
         model: User,
         attributes: userFields
-      }/*, { model: Report, attributes: [ 'id'] } */ ]
+      }, { model: Vote }/*, { model: Report, attributes: [ 'id'] } */ ]
     }
   }
 
