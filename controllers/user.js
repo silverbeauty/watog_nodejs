@@ -196,7 +196,7 @@ const getMe = async (req, res) => {
   // Find this week's votes
 
   const d = new Date()
-  const day = d.getDay(), diff = d.getDate() - day + (day == 0 ? -6:1)
+  const day = d.getDay(); const diff = d.getDate() - day + (day == 0 ? -6 : 1)
   const monday = new Date(d.setDate(diff))
 
   const week_vote_count = await Vote.count({

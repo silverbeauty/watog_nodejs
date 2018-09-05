@@ -279,7 +279,7 @@ const load = async (req, res, next) => {
 const vote = async (req, res) => {
   const { post, currentUser } = req
   let { commend } = req.body
-  
+
   // Check self voting
   if (post.user_id === currentUser.id) {
     return res.status(400).send({
@@ -379,7 +379,6 @@ const vote = async (req, res) => {
       user_id: post.user_id
     }
   })
-
 
   user.up_vote_count = up_vote_count || 0
   user.down_vote_count = down_vote_count || 0
