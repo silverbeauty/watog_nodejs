@@ -285,7 +285,7 @@ const queryUsers = async (req, res) => {
     // TODO: we should use MySQL or PostgreSQL to use regexp operator
     // SQLite only supports like
     const likeQuery = {
-      [Op.like]: '%' + query.name
+      [Op.like]: '%' + query.name + '%'
     }
     query[Op.or] = [{
       'first_name': likeQuery
