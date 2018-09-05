@@ -122,7 +122,7 @@ const uploadVerifyDoc = async (req, res) => {
       await file.save()
       currentUser.proof_of_status = process.env.WATOG_DOMAIN + '/api/file/verify/' + path.basename(filePath)
       await currentUser.save()
-      
+
       const data = currentUser.get({
         plain: true
       })

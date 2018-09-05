@@ -8,9 +8,9 @@ module.exports.send = (phoneNumber, text) => {
   console.info(`Send SMS: ${fromNumber} -> ${phoneNumber} :`, text)
 
   if (process.env.NODE_ENV === 'test') {
-  	return new Promise((resolve, reject) => {
-  		resolve()
-  	})
+    return new Promise((resolve, reject) => {
+      resolve()
+    })
   }
 
   return twilio.messages
