@@ -13,6 +13,10 @@ const transporter = nodemailer.createTransport({
 module.exports.send = (from, to, subject, html, text) => {
   console.info('Send email', from, to, subject, html, text)
   return new Promise((resolve, reject) => { // TODO: Should be replaced with MailGun or something else
+    if (process.env.NODE_ENV === 'test') {
+      return resolve()
+    }
+
     const mailOptions = {
       from,
       to,
