@@ -278,6 +278,15 @@ const load = async (req, res, next) => {
 const vote = async (req, res) => {
   const { post, currentUser } = req
   let { commend } = req.body
+  
+  // Check self voting
+  if (post.user_id === currentUser.id) {
+    return res.status(400).send({
+      status: false,
+      error: 'self_post'
+    })
+  }
+
   if (commend === undefined) { // If commend is not specified: it is true by default
     commend = true
   } else {
