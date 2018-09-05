@@ -93,6 +93,28 @@ test('Create Sample Data', async t => {
 	  	.get('/api/user/verify/email/' + verifyObj.code)
 
 	  t.is(verifyEmailGetRes.status, 200)
+
+	  // Send SMS
+	  const smsRes = await request(app)
+	  	.post(`/api/user/verify/sms`)
+	  	.set({ 'Content-Type': 'application/json', Authorization: tokens[i] })
+
+	  t.is(smsRes.status, 200)
+
+	  const smsVerifyObj = await Verify.findOne({
+	  	where: {
+	  		user_id: meRes.body.data.id,
+	  		type: 'sms'
+	  	}
+	  })
+
+	  t.is(smsVerifyObj.user_id, meRes.body.data.id)
+
+	  const verifySmsRes = await request(app)
+	  	.get('/api/user/verify/sms/' + smsVerifyObj.code)
+	  	.set({ 'Content-Type': 'application/json', Authorization: tokens[i] })
+
+	  t.is(verifySmsRes.status, 200)
 	}
 
 	// user_name login
