@@ -193,6 +193,18 @@ const getMe = async (req, res) => {
     limit: 5
   })
 
+  const allPosts = await Post.findAll({
+    attributes: ['vote_score']
+  })
+
+  const ranks = allPosts.map((p) => p.vote_score).sort((a, b) => (b - a))
+  const good_posts_rank = good_posts.map(p => {
+    const index = ranks.findIndex(r => r <= p.vote_score)
+    const post = p.get({plain: true})
+    post.rank = index + 1
+    return post
+  })
+
   // Find this week's votes
 
   const d = new Date()
@@ -214,7 +226,7 @@ const getMe = async (req, res) => {
     }
   })
 
-  profile.good_posts = good_posts
+  profile.good_posts = good_posts_rank
   profile.week_vote_count = week_vote_count
 
   res.send({
