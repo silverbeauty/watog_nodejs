@@ -230,6 +230,12 @@ test('Create Sample Data', async t => {
   t.is(getCatRes.status, 200)
   t.is(getCatRes.body.data.id, categories[0].id)
 
+  const cancelVoteCatRes = await request(app)
+    .post(`/api/category/${categories[0].id}/vote/cancel`)
+    .set({ 'Content-Type': 'application/json', Authorization: tokens[0] })
+    
+  t.is(cancelVoteCatRes.status, 200)
+
   // Prevent self vote res
 	const selfVoteRes = await request(app)
     .post(`/api/post/${posts[0][0].id}/vote`)

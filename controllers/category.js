@@ -125,6 +125,7 @@ const vote = async (req, res) => {
     where: {
       user_id: req.currentUser.id,
       category_id: category.id,
+      post_id: null,
       commend
     }
   })
@@ -148,9 +149,41 @@ const vote = async (req, res) => {
   })
 }
 
+const cancelVote = async (req, res) => {
+  const category = await Category.findById(req.params.id)
+  if (!category) {
+    return res.status(400).send({
+      status: false,
+      error: 'invalid_category'
+    })
+  }
+
+  let curVote = await Vote.findOne({
+    where: {
+      user_id: req.currentUser.id,
+      category_id: category.id,
+      post_id: null
+    }
+  })
+
+  if (curVote) {
+    await curVote.destroy()
+  } else {
+    return res.status(400).send({
+      status: false,
+      error: 'invalid_category_vote'
+    })    
+  }
+
+  res.send({
+    status: true,
+  })
+}
+
 module.exports = {
   create,
   get,
   query,
-  vote
+  vote,
+  cancelVote
 }
