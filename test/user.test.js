@@ -210,6 +210,8 @@ test('Create Sample Data', async t => {
 
   const queryPostRes = await request(app)
     .get(`/api/post?keyword=Post_0`)
+    .set({ Authorization: tokens[0] })
+
   t.is(queryPostRes.status, 200)
   t.is(queryPostRes.body.data.length, 10)
 
