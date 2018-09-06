@@ -10,7 +10,7 @@
     "lint": "eslint config controllers models routes",
     "lint-fix": "bash fixTab.sh && eslint config controllers models routes --fix",
     "deploy": "pm2 deploy ecosystem.config.json staging --force",
-    "test": "rm -f config/test.sqlite && NODE_ENV=test ava test/**/*.test.js"
+    "test": "rm -f config/test.sqlite && NODE_ENV=test nyc ava test/**/*.test.js"
   },
   "dependencies": {
     "ajv": "^6.5.2",
@@ -30,6 +30,7 @@
     "multer": "^1.3.1",
     "nodemailer": "^4.6.8",
     "nodemon": "^1.18.3",
+    "nyc": "^13.0.1",
     "package.json": "^2.0.1",
     "pug": "2.0.0-beta11",
     "randomstring": "^1.1.5",
