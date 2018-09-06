@@ -206,6 +206,20 @@ test('Create Sample Data', async t => {
 	  }
   }
 
+  // Vote category
+  const voteCatRes = await request(app)
+    .post(`/api/category/${categories[0].id}/vote`)
+    .set({ 'Content-Type': 'application/json', Authorization: tokens[0] })
+    .send({
+    	commend: true
+    })
+
+  t.is(voteCatRes.status, 200)
+  t.is(voteCatRes.body.status, true)
+  t.is(voteCatRes.body.data.user_id, users[0].id)
+  t.is(voteCatRes.body.data.commend, true)
+  t.is(voteCatRes.body.data.category_id, categories[0].id)
+
   // Prevent self vote res
 	const selfVoteRes = await request(app)
     .post(`/api/post/${posts[0][0].id}/vote`)
