@@ -3,6 +3,8 @@ const { validationResult } = require('express-validator/check')
 
 const Category = require('../models/category')
 const Vote = require('../models/vote')
+const User = require('../models/user')
+
 
 const create = async (req, res) => {
   const errors = validationResult(req)

@@ -214,11 +214,21 @@ test('Create Sample Data', async t => {
     	commend: true
     })
 
+
   t.is(voteCatRes.status, 200)
   t.is(voteCatRes.body.status, true)
   t.is(voteCatRes.body.data.user_id, users[0].id)
   t.is(voteCatRes.body.data.commend, true)
   t.is(voteCatRes.body.data.category_id, categories[0].id)
+
+  // Get category
+
+  const getCatRes = await request(app)
+    .get(`/api/category/${categories[0].id}`)
+    .set({ 'Content-Type': 'application/json', Authorization: tokens[0] })
+  
+  t.is(getCatRes.status, 200)
+  t.is(getCatRes.body.data.id, categories[0].id)
 
   // Prevent self vote res
 	const selfVoteRes = await request(app)
