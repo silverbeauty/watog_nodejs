@@ -451,7 +451,7 @@ const cancelVote = async (req, res) => {
   // Update upvote, downvote, vote score
   post.up_vote_count = upVotes.length
   post.down_vote_count = downVotes.length
-  post.vote_score = (upVotes.length - downVotes.length) * post.Category.score_ratio
+  post.vote_score = ((upVotes.length - downVotes.length) * post.Category.score_ratio).toFixed(2) // Cut down decimal
 
   await post.save()
 
@@ -468,14 +468,20 @@ const cancelVote = async (req, res) => {
   // TODO: calculate user vote score
   const up_vote_count = await Post.sum('up_vote_count', {
     where: {
-      user_id: post.user_id
+      user_id: post.user_id,
+      up_vote_count: {
+        [Op.not]: null
+      }
     }
   })
 
   // TODO: calculate user vote score
   const down_vote_count = await Post.sum('down_vote_count', {
     where: {
-      user_id: post.user_id
+      user_id: post.user_id,
+      down_vote_count: {
+        [Op.not]: null
+      }
     }
   })
 
@@ -487,7 +493,7 @@ const cancelVote = async (req, res) => {
 
   user.up_vote_count = up_vote_count || 0
   user.down_vote_count = down_vote_count || 0
-  user.vote_score = vote_score || 0
+  user.vote_score = (vote_score || 0).toFixed(2)
 
   await user.save()
 
