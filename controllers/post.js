@@ -302,12 +302,7 @@ const vote = async (req, res) => {
     }
   })
 
-  if (vote && vote.commend === commend) {
-    return res.send({
-      status: false,
-      error: 'already_voted'
-    })
-  } else if (vote) {
+  if (vote) {
     vote.commend = commend
     await vote.save()
   } else {
