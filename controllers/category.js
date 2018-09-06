@@ -2,6 +2,7 @@
 const { validationResult } = require('express-validator/check')
 
 const Category = require('../models/category')
+const Vote = require('../models/vote')
 
 const create = async (req, res) => {
   const errors = validationResult(req)
@@ -93,8 +94,46 @@ const query = async (req, res) => {
   })
 }
 
+const vote = async (req, res) => {
+  const category = await Category.findById(req.params.id)
+  if (!category) {
+    return res.status(400).send({
+      status: false,
+      error: 'invalid_category'
+    })
+  }
+
+  const commend = !!req.body.commend
+
+  const curVote = await Vote.findOne({
+    where: {
+      user_id: currentUser.id,
+      category_id: category.id,
+      commend
+    }
+  })
+
+  if (curVote) {
+    curVote.commend = commend
+    await curVote.save()
+  } else {
+    const vote = new Vote({
+      user_id: currentUser.id,
+      category_id: category.id,
+      commend: !!req.body.commend
+    })
+
+    await vote.save()    
+  }
+
+  res.send({
+    status: true
+  })
+}
+
 module.exports = {
   create,
   get,
-  query
+  query,
+  vote
 }
