@@ -218,7 +218,6 @@ const query = async (req, res) => {
   let sQuery
   if (country) {
     sQuery = {
-      raw: true,
       where: query,
       limit,
       offset,
@@ -232,7 +231,6 @@ const query = async (req, res) => {
     }
   } else {
     sQuery = {
-      raw: true,
       where: query,
       limit,
       offset,
@@ -258,8 +256,9 @@ const query = async (req, res) => {
   const ranks = allPosts.map((p) => p.vote_score).sort((a, b) => (b - a))
   const rankData = data.map(p => {
     const index = ranks.findIndex(r => r <= p.vote_score)
-    p.rank = index + 1
-    return p
+    const post = p.get({plain: true})
+    post.rank = index + 1
+    return post
   })
 
   res.send({

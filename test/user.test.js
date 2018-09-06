@@ -206,15 +206,6 @@ test('Create Sample Data', async t => {
 	  }
   }
 
-  // Query post
-
-  const queryPostRes = await request(app)
-    .get(`/api/post?keyword=Post_0`)
-    .set({ Authorization: tokens[0] })
-
-  t.is(queryPostRes.status, 200)
-  t.is(queryPostRes.body.data.length, 10)
-
   // Vote category
   const voteCatRes = await request(app)
     .post(`/api/category/${categories[0].id}/vote`)
@@ -266,6 +257,15 @@ test('Create Sample Data', async t => {
 	    })
 	  t.is(res.status, 200)
   }
+
+  // Query post
+  const queryPostRes = await request(app)
+    .get(`/api/post?keyword=Post_0`)
+    .set({ Authorization: tokens[0] })
+
+  t.is(queryPostRes.status, 200)
+  t.is(queryPostRes.body.data.length, 10)
+  t.is(queryPostRes.body.data[0].rank, 1)
 
 	for (let i = 7; i <= 9; i ++) {
   	const res = await request(app)
