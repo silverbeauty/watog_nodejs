@@ -5,3 +5,4 @@ watogDB.sqlite-journal
 .env
 test.sqlite
 .nyc_output
+coverage
