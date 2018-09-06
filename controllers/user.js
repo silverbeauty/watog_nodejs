@@ -257,7 +257,7 @@ const queryUsers = async (req, res) => {
   // TODO: query condition should be defined in route
   // TODO: limit access to users
   // TODO: should add sort option
-  const allowed_queries = ['limit', 'offset', 'first_name', 'last_name', 'country', 'hospital', 'name', 'order', 'direction']
+  const allowed_queries = ['limit', 'offset', 'first_name', 'last_name', 'country', 'hospital', 'name', 'order', 'direction', 'not_me']
   const allowed_attributes = ['id', 'first_name', 'last_name', 'country', 'hospital', 'cell_phone', 'picture_profile', 'picture_cover', 'vote_score', 'up_vote_count', 'down_vote_count', 'report_count']
   const query = {...req.query}
   const cquery = {...query}
@@ -299,12 +299,20 @@ const queryUsers = async (req, res) => {
     direction = 'DESC'
   }
 
+  if ('not_me' in query) {
+    // Exclude self user
+    query.id = {
+      [Op.not]: req.currentUser.id
+    }
+  }
+
   // Remove offset, limit, name
   delete query.limit
   delete query.offset
   delete query.name
   delete query.order
   delete query.direction
+  delete query.not_me
 
   const sQuery = {
     where: query,

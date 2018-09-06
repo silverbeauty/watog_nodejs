@@ -20,6 +20,7 @@ test('Create Sample Data', async t => {
 	let tokens = []
 	let categories = []
 	let posts = []
+	let users = []
 	const countries = ['USA', 'France', 'Germany', 'Netherlands', 'UK']
 	// Create 20 users - Sign Up
 	for (let i = 0 ; i < 20; i ++) {
@@ -68,6 +69,7 @@ test('Create Sample Data', async t => {
 	    .set({ 'Content-Type': 'application/json', Authorization: tokens[i] })
 
 	  t.is(meRes.status, 200)
+	  users[i] = meRes.body.data
 
 	  // Check if proof_of_status is uploaded
 	  t.is(meRes.body.data.proof_of_status, verifyRes.body.data.proof_of_status)
@@ -127,6 +129,17 @@ test('Create Sample Data', async t => {
     })
 
   t.is(resLoginUsername.status, 200)
+
+  // Test user query
+  const userQueryRes = await request(app)
+  	.get(`/api/user?not_me`)
+	  .set({ 'Content-Type': 'application/json', Authorization: tokens[0] })
+
+	t.is(userQueryRes.status, 200)
+	const { data } = userQueryRes.body
+
+	// Current user should not be here
+	t.is(data.findIndex((u) => u.id === users[0].id), -1)
 
   const categoriesRequests = [
   	{
