@@ -21,7 +21,7 @@ router.post('/',
 router.get('/:id', UserCtrl.checkAuth, catchError(CategoryCtrl.get))
 
 // Vote a single category
-router.get('/:id/vote', UserCtrl.checkAuth, catchError(CategoryCtrl.vote))
+router.post('/:id/vote', UserCtrl.checkAuth, catchError(CategoryCtrl.vote))
 
 // Get a single category
 router.get('/', UserCtrl.checkAuth, catchError(CategoryCtrl.query))
