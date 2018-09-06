@@ -237,14 +237,14 @@ test('Create Sample Data', async t => {
   t.is(cancelVoteCatRes.status, 200)
 
   // Prevent self vote res
-	const selfVoteRes = await request(app)
-    .post(`/api/post/${posts[0][0].id}/vote`)
-    .set({ 'Content-Type': 'application/json', Authorization: tokens[0] })
-    .send({
-    	commend: true
-    })
-  t.is(selfVoteRes.status, 400)
-  t.is(selfVoteRes.body.error, 'self_post')
+	// const selfVoteRes = await request(app)
+ //    .post(`/api/post/${posts[0][0].id}/vote`)
+ //    .set({ 'Content-Type': 'application/json', Authorization: tokens[0] })
+ //    .send({
+ //    	commend: true
+ //    })
+ //  t.is(selfVoteRes.status, 400)
+ //  t.is(selfVoteRes.body.error, 'self_post')
 
   // test1 ~ test6 upvotes test0's first post
   // test7 ~ test9 downvotes test0's first post
