@@ -15,7 +15,7 @@ const Vote = sequelize.define('Votes', {
   },
   post_id: {
     type: Sequelize.INTEGER,
-    allowNull: false
+    allowNull: true // Vote can be category only
   },
   user_id: {
     type: Sequelize.INTEGER,

@@ -676,6 +676,13 @@ Reset password by old password
   }
   ```
 
+#### POST `/api/category/:id/vote`
+
+ - Vote category
+
+#### POST `/api/category/:id/vote/cancel`
+ - Cancel vote for category
+
 ### Report API
 
 #### POST `/api/post/:id/vote`

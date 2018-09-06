@@ -2,6 +2,9 @@
 const { validationResult } = require('express-validator/check')
 
 const Category = require('../models/category')
+const Vote = require('../models/vote')
+const User = require('../models/user')
+
 
 const create = async (req, res) => {
   const errors = validationResult(req)
@@ -43,10 +46,20 @@ const create = async (req, res) => {
 }
 
 const get = async (req, res) => {
-  const category = await Category.findById(req.params.id)
+  const category = await Category.findOne({
+    where: {
+      id: req.params.id,
+    },
+    include: [{
+      model: User
+    }, {
+      model: Vote
+    }]
+  })
+
   res.send({
     status: true,
-    data: category.get({ plain: true})
+    data: category
   })
 }
 
@@ -84,7 +97,11 @@ const query = async (req, res) => {
     where: query,
     limit,
     offset,
-    raw: true
+    include: [{
+      model: User
+    }, {
+      model: Vote
+    }]
   })
 
   res.send({
@@ -93,8 +110,80 @@ const query = async (req, res) => {
   })
 }
 
+const vote = async (req, res) => {
+  const category = await Category.findById(req.params.id)
+  if (!category) {
+    return res.status(400).send({
+      status: false,
+      error: 'invalid_category'
+    })
+  }
+
+  const commend = !!req.body.commend
+
+  let curVote = await Vote.findOne({
+    where: {
+      user_id: req.currentUser.id,
+      category_id: category.id,
+      post_id: null,
+      commend
+    }
+  })
+
+  if (curVote) {
+    curVote.commend = commend
+    await curVote.save()
+  } else {
+    curVote = new Vote({
+      user_id: req.currentUser.id,
+      category_id: category.id,
+      commend: !!req.body.commend
+    })
+
+    await curVote.save()    
+  }
+
+  res.send({
+    status: true,
+    data: curVote
+  })
+}
+
+const cancelVote = async (req, res) => {
+  const category = await Category.findById(req.params.id)
+  if (!category) {
+    return res.status(400).send({
+      status: false,
+      error: 'invalid_category'
+    })
+  }
+
+  let curVote = await Vote.findOne({
+    where: {
+      user_id: req.currentUser.id,
+      category_id: category.id,
+      post_id: null
+    }
+  })
+
+  if (curVote) {
+    await curVote.destroy()
+  } else {
+    return res.status(400).send({
+      status: false,
+      error: 'invalid_category_vote'
+    })    
+  }
+
+  res.send({
+    status: true,
+  })
+}
+
 module.exports = {
   create,
   get,
-  query
+  query,
+  vote,
+  cancelVote
 }
