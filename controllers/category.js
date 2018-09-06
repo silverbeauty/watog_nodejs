@@ -105,7 +105,7 @@ const vote = async (req, res) => {
 
   const commend = !!req.body.commend
 
-  const curVote = await Vote.findOne({
+  let curVote = await Vote.findOne({
     where: {
       user_id: currentUser.id,
       category_id: category.id,
@@ -117,17 +117,18 @@ const vote = async (req, res) => {
     curVote.commend = commend
     await curVote.save()
   } else {
-    const vote = new Vote({
+    curVote = new Vote({
       user_id: currentUser.id,
       category_id: category.id,
       commend: !!req.body.commend
     })
 
-    await vote.save()    
+    await curVote.save()    
   }
 
   res.send({
-    status: true
+    status: true,
+    data: curVote
   })
 }
 
