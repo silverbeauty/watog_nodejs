@@ -168,7 +168,7 @@ const query = async (req, res) => {
 
   // TODO: query condition should be defined in route
   // TODO: limit access to users
-  const allowed_queries = ['limit', 'offset', 'category_id', 'user_id', 'order', 'direction', 'random', `country`, `vote`]
+  const allowed_queries = ['limit', 'offset', 'category_id', 'user_id', 'order', 'direction', 'random', 'country', 'vote', 'keyword']
   const query = {...req.query}
   const cquery = {...query}
   const { country } = query
@@ -199,7 +199,13 @@ const query = async (req, res) => {
     direction = 'DESC'
   }
 
-  // Remove offset, limit
+  if (query.keyword) {
+    query.description = {
+      [Op.like]: '%' + query.keyword + '%'
+    }
+  }
+
+  // remove non field queries
   delete query.limit
   delete query.offset
   delete query.order
@@ -207,6 +213,7 @@ const query = async (req, res) => {
   delete query.random
   delete query.country
   delete query.vote
+  delete query.keyword
 
   let sQuery
   if (country) {

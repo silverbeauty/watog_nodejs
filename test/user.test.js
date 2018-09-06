@@ -206,6 +206,15 @@ test('Create Sample Data', async t => {
 	  }
   }
 
+  // Query post
+
+  const queryPostRes = await request(app)
+    .get(`/api/post?keyword=Post_0`)
+    .set({ Authorization: tokens[0] })
+
+  t.is(queryPostRes.status, 200)
+  t.is(queryPostRes.body.data.length, 10)
+
   // Vote category
   const voteCatRes = await request(app)
     .post(`/api/category/${categories[0].id}/vote`)

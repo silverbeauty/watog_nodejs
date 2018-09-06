@@ -538,13 +538,14 @@ Reset password by old password
   ```
 
 #### GET `/api/post?[QUERY]`
-  Query posts. valid queries are `limit`, `offset`, `user_id`, `category_id`. `random`, `order`, `direction`, `country`, `vote`
+  Query posts. valid queries are `limit`, `offset`, `user_id`, `category_id`. `random`, `order`, `direction`, `country`, `vote`, `keyword`
 
   `direction`: ASC or DESC  
   `order`: any post field  
 
   `random` ignores `order` and `direction`  
   `vote` will return the posts with associated `Votes`. 
+  `keword` will be used to search according to description.
 
   Response:
   HTTP Status: 200

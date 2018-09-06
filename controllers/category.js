@@ -5,7 +5,6 @@ const Category = require('../models/category')
 const Vote = require('../models/vote')
 const User = require('../models/user')
 
-
 const create = async (req, res) => {
   const errors = validationResult(req)
   if (!errors.isEmpty()) {
@@ -48,7 +47,7 @@ const create = async (req, res) => {
 const get = async (req, res) => {
   const category = await Category.findOne({
     where: {
-      id: req.params.id,
+      id: req.params.id
     },
     include: [{
       model: User
@@ -140,7 +139,7 @@ const vote = async (req, res) => {
       commend: !!req.body.commend
     })
 
-    await curVote.save()    
+    await curVote.save()
   }
 
   res.send({
@@ -172,11 +171,11 @@ const cancelVote = async (req, res) => {
     return res.status(400).send({
       status: false,
       error: 'invalid_category_vote'
-    })    
+    })
   }
 
   res.send({
-    status: true,
+    status: true
   })
 }
 
