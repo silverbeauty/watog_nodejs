@@ -107,7 +107,7 @@ const vote = async (req, res) => {
 
   let curVote = await Vote.findOne({
     where: {
-      user_id: currentUser.id,
+      user_id: req.currentUser.id,
       category_id: category.id,
       commend
     }
@@ -118,7 +118,7 @@ const vote = async (req, res) => {
     await curVote.save()
   } else {
     curVote = new Vote({
-      user_id: currentUser.id,
+      user_id: req.currentUser.id,
       category_id: category.id,
       commend: !!req.body.commend
     })
