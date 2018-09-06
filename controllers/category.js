@@ -44,10 +44,20 @@ const create = async (req, res) => {
 }
 
 const get = async (req, res) => {
-  const category = await Category.findById(req.params.id)
+  const category = await Category.findOne({
+    where: {
+      id: req.params.id,
+    },
+    include: [{
+      model: User
+    }, {
+      model: Vote
+    }]
+  })
+
   res.send({
     status: true,
-    data: category.get({ plain: true})
+    data: category
   })
 }
 
