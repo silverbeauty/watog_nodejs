@@ -306,6 +306,11 @@ const queryUsers = async (req, res) => {
   delete query.order
   delete query.direction
 
+  // Exclude self user
+  query.id = {
+    [Op.not]: req.currentUser.id
+  }
+
   const sQuery = {
     where: query,
     attributes: allowed_attributes,
