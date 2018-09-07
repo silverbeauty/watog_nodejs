@@ -1,5 +1,5 @@
-const getYYMMDD = (date) {
-  const d = new Date(date),
+const getYYMMDD = (date) => {
+  let d = new Date(date),
       month = '' + (d.getMonth() + 1),
       day = '' + d.getDate(),
       year = d.getFullYear()
@@ -16,4 +16,10 @@ const getToday = () => {
 
 const getTomorrow = () => {
 	return getYYMMDD(new Date().getTime() + 24 * 3600 * 1000)
+}
+
+module.exports = {
+	getYYMMDD,
+	getToday,
+	getTomorrow
 }

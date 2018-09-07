@@ -220,8 +220,10 @@ test('User_Login', async t => {
   const rangeQueryPostRes = await request(app)
   	.get(`/api/post?cfrom=${Lib.getToday()}&cto=${Lib.getTomorrow()}`)
   	.set({ 'Content-Type': 'application/json', Authorization: tokens[0] })
-  t.is(rangeQueryPostRes.status, 200)
 
+  t.is(rangeQueryPostRes.status, 200)
+  t.is(rangeQueryPostRes.body.status, true)
+  t.is(rangeQueryPostRes.body.data.length, 10) // 10 is default limit
 
   // Vote category
   const voteCatRes = await request(app)

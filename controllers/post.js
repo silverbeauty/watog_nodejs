@@ -220,19 +220,23 @@ const query = async (req, res) => {
     }
   }
 
+
+
   if (query.cfrom || query.cto) {
+    console.info('Post Query:', query.cfrom, new Date(query.cfrom))
+
     query.createdAt = {}
     if (query.cfrom) {
-      query.createdAt[Op.gte] = new Date(query.cfrom)
+      query.createdAt[Op.gte] = query.cfrom
     }
 
     if (query.cto) {
-      query.createdAt[Op.lte] = new Date(query.cto)
+      query.createdAt[Op.lte] = query.cto
     }
   }
 
-  if (query.createdAt) { query.createdAt = new Date(query.createdAt) }
-  if (query.updatedAt) { query.updatedAt = new Date(query.updatedAt) }
+  if (typeof query.createdAt === 'string') { query.createdAt = new Date(query.createdAt) }
+  if (typeof query.updatedAt === 'string') { query.updatedAt = new Date(query.updatedAt) }
 
   // remove non field queries
   delete query.limit
