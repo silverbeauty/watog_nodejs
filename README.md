@@ -577,6 +577,9 @@ Reset password by old password
 #### POST `/api/post/:id/vote`
   Place a vote to a post: up or down. 
 
+  `category_vote_count` in the response: Number of votes for same category
+
+
   Body  
   ```
   {
@@ -598,6 +601,7 @@ Reset password by old password
         "createdAt": "2018-08-20T08:37:12.218Z",
         "updatedAt": "2018-08-20T08:37:12.218Z",
         "downVotes": [],
+        "category_vote_count": 2, // Total votes for the same category
         "upVotes": [
             {
                 "id": 1,

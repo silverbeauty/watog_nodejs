@@ -400,6 +400,17 @@ const vote = async (req, res) => {
 
   await user.save()
 
+  // count
+  data.category_vote_count = await Vote.count({
+    where: {
+      user_id: req.currentUser.id,
+      category_id: post.category_id,
+      post_id: {
+        [Op.not]: null
+      }
+    }
+  })
+
   res.send({
     status: true,
     data
