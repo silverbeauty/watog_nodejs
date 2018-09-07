@@ -598,6 +598,7 @@ Reset password by old password
         "createdAt": "2018-08-20T08:37:12.218Z",
         "updatedAt": "2018-08-20T08:37:12.218Z",
         "downVotes": [],
+        "category_vote_count": 2, // Total votes for the same category
         "upVotes": [
             {
                 "id": 1,
