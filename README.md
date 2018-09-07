@@ -577,6 +577,9 @@ Reset password by old password
 #### POST `/api/post/:id/vote`
   Place a vote to a post: up or down. 
 
+  `category_vote_count` in the response: Number of votes for same category
+
+
   Body  
   ```
   {
