@@ -538,14 +538,18 @@ Reset password by old password
   ```
 
 #### GET `/api/post?[QUERY]`
-  Query posts. valid queries are `limit`, `offset`, `user_id`, `category_id`. `random`, `order`, `direction`, `country`, `vote`, `keyword`
+  Query posts. valid queries are `limit`, `offset`, `user_id`, `category_id`. `random`, `order`, `direction`, `country`, `vote`, `keyword`, `createdAt`, `updatedAt`, `cfrom`, `cto`
 
   `direction`: ASC or DESC  
   `order`: any post field  
 
-  `random` ignores `order` and `direction`  
-  `vote` will return the posts with associated `Votes`. 
-  `keword` will be used to search according to description.
+  - `random`: Itignores `order` and `direction`  
+  - `vote`: It returns the posts with associated `Votes`. 
+  - `keword`: It is used to search according to description.
+  - `cfrom`: It means `createdAt` > `cfrom`. : timestamp or string which new Date() accepts   
+  - `cto`: It means `createdAt` < `cto`.  : timestamp or string which new Date() accepts  
+  - `createdAt`: timestamp or string which new Date() accepts
+  - `updatedAt`: timestamp or string which new Date() accepts
 
   Response:
   HTTP Status: 200

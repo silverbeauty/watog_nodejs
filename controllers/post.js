@@ -168,7 +168,22 @@ const query = async (req, res) => {
 
   // TODO: query condition should be defined in route
   // TODO: limit access to users
-  const allowed_queries = ['limit', 'offset', 'category_id', 'user_id', 'order', 'direction', 'random', 'country', 'vote', 'keyword']
+  const allowed_queries = [
+    'limit', 
+    'offset', 
+    'category_id', 
+    'user_id', 
+    'order', 
+    'direction', 
+    'random', 
+    'country', 
+    'vote', 
+    'keyword',
+    'createdAt',
+    'updatedAt',
+    'cfrom',
+    'cto',
+  ]
   const query = {...req.query}
   const cquery = {...query}
   const { country } = query
@@ -205,6 +220,24 @@ const query = async (req, res) => {
     }
   }
 
+
+
+  if (query.cfrom || query.cto) {
+    console.info('Post Query:', query.cfrom, new Date(query.cfrom))
+
+    query.createdAt = {}
+    if (query.cfrom) {
+      query.createdAt[Op.gte] = query.cfrom
+    }
+
+    if (query.cto) {
+      query.createdAt[Op.lte] = query.cto
+    }
+  }
+
+  if (typeof query.createdAt === 'string') { query.createdAt = new Date(query.createdAt) }
+  if (typeof query.updatedAt === 'string') { query.updatedAt = new Date(query.updatedAt) }
+
   // remove non field queries
   delete query.limit
   delete query.offset
@@ -214,6 +247,8 @@ const query = async (req, res) => {
   delete query.country
   delete query.vote
   delete query.keyword
+  delete query.cfrom
+  delete query.cto
 
   let sQuery
   if (country) {
