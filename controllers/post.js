@@ -231,6 +231,9 @@ const query = async (req, res) => {
     }
   }
 
+  if (query.createdAt) { query.createdAt = new Date(query.createdAt) }
+  if (query.updatedAt) { query.updatedAt = new Date(query.updatedAt) }
+
   // remove non field queries
   delete query.limit
   delete query.offset
