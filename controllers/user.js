@@ -722,7 +722,12 @@ const resetPasswordByOld = async (req, res) => {
 
 const deleteMe = async (req, res) => {
   const { currentUser } = req
-
+  currentUser.removed = true;
+  await currentUser.save()
+  return res.send({
+    status: true,
+    data: currentUser
+  })
 }
 
 module.exports = {
