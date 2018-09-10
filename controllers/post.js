@@ -567,6 +567,20 @@ const cancelVote = async (req, res) => {
 const report = async (req, res) => {
   const { post } = req
 
+  const prevReport = await Report.findOne({
+    where: {
+      post_id: post.id,
+      user_id: req.currentUser.id,
+    }
+  })
+
+  if (prevReport) {
+    return res.status(400).send({
+      status: false,
+      error: 'already_reported'
+    })
+  }
+
   const report = new Report({
     post_id: post.id,
     type: req.body.type,
