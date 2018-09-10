@@ -248,6 +248,15 @@ test('Create Sample Data', async t => {
   t.is(rangeQueryPostRes.body.status, true)
   t.is(rangeQueryPostRes.body.data.length, 10) // 10 is default limit
 
+    // Test get single post
+  const singleGetRes = await request(app)
+    .get(`/api/post/${posts[0][0].id}`)
+    .set({ Authorization: tokens[0] })
+
+  t.is(singleGetRes.status, 200)
+  t.is(singleGetRes.body.status, true)
+  t.is(singleGetRes.body.data.id, posts[0][0].id)
+
   // Vote category
   const voteCatRes = await request(app)
     .post(`/api/category/${categories[0].id}/vote`)
