@@ -318,6 +318,9 @@ const queryUsers = async (req, res) => {
     }
   }
 
+  // Exclude removed users
+  query.removed = { [Op.not]: true }
+
   // Remove offset, limit, name
   delete query.limit
   delete query.offset
@@ -325,6 +328,7 @@ const queryUsers = async (req, res) => {
   delete query.order
   delete query.direction
   delete query.not_me
+
 
   const sQuery = {
     where: query,
@@ -720,12 +724,23 @@ const resetPasswordByOld = async (req, res) => {
   })
 }
 
+const removeMe = async (req, res) => {
+  const { currentUser } = req
+  currentUser.removed = true;
+  await currentUser.save()
+  return res.send({
+    status: true,
+    data: currentUser
+  })
+}
+
 module.exports = {
   signup,
   login,
   checkAuth,
   checkAuthOptional,
   getMe,
+  removeMe,
   editMe,
   getUser,
   queryUsers,

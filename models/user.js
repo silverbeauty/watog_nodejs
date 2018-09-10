@@ -104,6 +104,12 @@ const User = sequelize.define('User', {
     allowNull: false,
     default: 0
   },
+  removed: {
+    type: Sequelize.BOOLEAN,
+    allowNull: true,
+    default: false,
+  },
+
   settings: { // Should be stringified using JSON.stringify
     type: Sequelize.STRING,
     allowNull: true,

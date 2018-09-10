@@ -35,6 +35,9 @@ router.put('/me', UserCtrl.checkAuth, catchError(UserCtrl.editMe))
 // Return own profile
 router.get('/me', UserCtrl.checkAuth, catchError(UserCtrl.getMe))
 
+// Remove own profile
+router.delete('/me', UserCtrl.checkAuth, catchError(UserCtrl.removeMe))
+
 // Return a single user profile
 router.get('/:id', UserCtrl.checkAuth, catchError(UserCtrl.getUser))
 

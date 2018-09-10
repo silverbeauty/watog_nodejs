@@ -334,4 +334,13 @@ test('Create Sample Data', async t => {
   	.set({ Authorization: tokens[0] })
 
   t.is(meRes.status, 200)
+
+  // Remove user profile test
+
+	const deleteMeRes = await request(app)
+  	.get(`/api/user/me`)
+  	.set({ Authorization: tokens[0] })
+
+  t.is(deleteMeRes.status, 200)
+
 })
