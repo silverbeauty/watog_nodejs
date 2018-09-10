@@ -720,7 +720,7 @@ const resetPasswordByOld = async (req, res) => {
   })
 }
 
-const deleteMe = async (req, res) => {
+const removeMe = async (req, res) => {
   const { currentUser } = req
   currentUser.removed = true;
   await currentUser.save()
@@ -736,7 +736,7 @@ module.exports = {
   checkAuth,
   checkAuthOptional,
   getMe,
-  deleteMe,
+  removeMe,
   editMe,
   getUser,
   queryUsers,
