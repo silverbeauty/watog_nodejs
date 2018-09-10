@@ -163,7 +163,7 @@ Set these env variables in .env file at the root level of the project
   ```
 
 
-#### GET `/user/me`  
+#### PUT `/user/me`  
 
   Edit own profile by JWT  
 
@@ -174,6 +174,19 @@ Set these env variables in .env file at the root level of the project
   {
     "status": true,
     "data": User Object
+  }
+  ```
+
+#### PUT `/user/me`  
+
+  Edit own profile by JWT  
+
+  Response:
+
+  HTTP Status: 200  
+  ```  
+  {
+    "status": true,
   }
   ```
 
