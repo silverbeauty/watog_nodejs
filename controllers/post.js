@@ -34,6 +34,21 @@ const create = async (req, res) => {
     })
   }
 
+  // TODO: check if another post is submitted for the same category.
+  const prevPost = await Post.findOne({
+    where: {
+      category_id,
+      user_id: req.currentUser.id
+    }
+  })
+
+  if (prevPost) {
+    return res.status(400).send({
+      status: false,
+      error: 'already_posted_category'
+    })
+  }
+
   const post = new Post({
     ...req.body,
     user_id: req.currentUser.id,
