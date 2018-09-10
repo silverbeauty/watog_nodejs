@@ -720,6 +720,11 @@ const resetPasswordByOld = async (req, res) => {
   })
 }
 
+const deleteMe = async (req, res) => {
+  const { currentUser } = req
+
+}
+
 module.exports = {
   signup,
   login,
