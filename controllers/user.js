@@ -736,6 +736,7 @@ module.exports = {
   checkAuth,
   checkAuthOptional,
   getMe,
+  deleteMe,
   editMe,
   getUser,
   queryUsers,
