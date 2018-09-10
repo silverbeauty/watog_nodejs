@@ -225,8 +225,8 @@ test('Create Sample Data', async t => {
     .set({ 'Content-Type': 'application/json', Authorization: tokens[0] })
     .send({
     	category_id: categories[0].id,
-    	picture: fileRes.body.data.url,
-    	description: `Post_${j}_test${i}`
+    	picture: 'invalid_picture',
+    	description: `invalid_post`
     })
   t.is(dPostRes.status, 400)
 
