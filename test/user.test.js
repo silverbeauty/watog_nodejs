@@ -175,6 +175,15 @@ test('User_Login', async t => {
     }, {
     	type: 'trainee_resident_on_gyn',
     	description: 'Trainee or resident in ON/GYN'
+    }, {
+    	type: 'test1',
+    	description: 'test1'
+    }, {
+    	type: 'test2',
+    	description: 'test2',
+    }, {
+    	type: 'test3',
+    	description: 'test3'
     }]
 
   for (let i in categoriesRequests) {
