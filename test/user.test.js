@@ -15,20 +15,14 @@ test('Health Check', t =>
     .get('/api/health')
     .then(res => t.is(res.status, 200)))
 
-let tokens = []
-let categories = []
-let posts = []
-let users = []
-const countries = ['USA', 'France', 'Germany', 'Netherlands', 'UK']
-
-const wait = (ms) => {
-	return new Promise((resolve) => {
-		setTimeout(resolve, ms)
-	})
-}
-
 // Sign Up
-test('Sign Up, Login', async t => {
+test('Create Sample Data', async t => {
+
+	let tokens = []
+	let categories = []
+	let posts = []
+	let users = []
+	const countries = ['USA', 'France', 'Germany', 'Netherlands', 'UK']
 	// Create 20 users - Sign Up
 	for (let i = 0 ; i < 20; i ++) {
 		const res = await request(app)
@@ -125,10 +119,7 @@ test('Sign Up, Login', async t => {
 
 	  t.is(verifySmsRes.status, 200)
 	}
-})
 
-test('User_Login', async t => {
-	await wait(5000)
 	// user_name login
   const resLoginUsername = await request(app)
     .post(`/api/user/login`)
