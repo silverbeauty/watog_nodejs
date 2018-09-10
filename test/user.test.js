@@ -219,6 +219,17 @@ test('Create Sample Data', async t => {
 	  }
   }
 
+  // Try to create another post for the same category
+	const dPostRes = await request(app)
+    .post(`/api/post`)
+    .set({ 'Content-Type': 'application/json', Authorization: tokens[0] })
+    .send({
+    	category_id: categories[0].id,
+    	picture: 'invalid_picture',
+    	description: `invalid_post`
+    })
+  t.is(dPostRes.status, 400)
+
   // Query posts using createdAt
   const rangeQueryPostRes = await request(app)
   	.get(`/api/post?cfrom=${Lib.getToday()}&cto=${Lib.getTomorrow()}`)
