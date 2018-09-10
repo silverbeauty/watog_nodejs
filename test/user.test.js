@@ -219,6 +219,14 @@ test('Create Sample Data', async t => {
 	  }
   }
 
+  // Test count api
+  const countRes = await request(app)
+  	.get(`/api/post?user_id=${users[0].id}`)
+    .set({ 'Content-Type': 'application/json', Authorization: tokens[0] })
+
+  t.is(countRes.status, 200)
+  t.is(countRes.data.count, 10)
+
   // Try to create another post for the same category
 	const dPostRes = await request(app)
     .post(`/api/post`)
