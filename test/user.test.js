@@ -175,6 +175,9 @@ test('Create Sample Data', async t => {
     }, {
     	type: 'test3',
     	description: 'test3'
+    }, {
+    	type: 'test4',
+    	description: 'test4'
     }]
 
   for (let i in categoriesRequests) {
