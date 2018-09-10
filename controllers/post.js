@@ -184,20 +184,20 @@ const query = async (req, res) => {
   // TODO: query condition should be defined in route
   // TODO: limit access to users
   const allowed_queries = [
-    'limit', 
-    'offset', 
-    'category_id', 
-    'user_id', 
-    'order', 
-    'direction', 
-    'random', 
-    'country', 
-    'vote', 
+    'limit',
+    'offset',
+    'category_id',
+    'user_id',
+    'order',
+    'direction',
+    'random',
+    'country',
+    'vote',
     'keyword',
     'createdAt',
     'updatedAt',
     'cfrom',
-    'cto',
+    'cto'
   ]
   const query = {...req.query}
   const cquery = {...query}
@@ -234,8 +234,6 @@ const query = async (req, res) => {
       [Op.like]: '%' + query.keyword + '%'
     }
   }
-
-
 
   if (query.cfrom || query.cto) {
     console.info('Post Query:', query.cfrom, new Date(query.cfrom))
@@ -570,7 +568,7 @@ const report = async (req, res) => {
   const prevReport = await Report.findOne({
     where: {
       post_id: post.id,
-      user_id: req.currentUser.id,
+      user_id: req.currentUser.id
     }
   })
 

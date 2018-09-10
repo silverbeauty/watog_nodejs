@@ -329,7 +329,6 @@ const queryUsers = async (req, res) => {
   delete query.direction
   delete query.not_me
 
-
   const sQuery = {
     where: query,
     attributes: allowed_attributes,
@@ -726,7 +725,7 @@ const resetPasswordByOld = async (req, res) => {
 
 const removeMe = async (req, res) => {
   const { currentUser } = req
-  currentUser.removed = true;
+  currentUser.removed = true
   await currentUser.save()
   return res.send({
     status: true,
