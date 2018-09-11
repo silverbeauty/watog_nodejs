@@ -257,6 +257,14 @@ test('Create Sample Data', async t => {
   t.is(singleGetRes.body.status, true)
   t.is(singleGetRes.body.data.id, posts[0][0].id)
 
+  // Query posts by user_name
+
+	const userNameQueryPostRes = await request(app)
+  	.get(`/api/post?user_name=test0`)
+  	.set({ 'Content-Type': 'application/json', Authorization: tokens[0] })
+
+  t.is(userNameQueryPostRes.status, 200)
+
   // Vote category
   const voteCatRes = await request(app)
     .post(`/api/category/${categories[0].id}/vote`)
