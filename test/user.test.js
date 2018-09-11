@@ -318,7 +318,7 @@ test('Create Sample Data', async t => {
 
   // Query post
   const queryPostRes = await request(app)
-    .get(`/api/post?keyword=Post_0`)
+    .get(`/api/post?keyword=Post_0&random`)
     .set({ Authorization: tokens[0] })
 
   t.is(queryPostRes.status, 200)
