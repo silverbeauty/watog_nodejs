@@ -282,7 +282,8 @@ const query = async (req, res) => {
     'createdAt',
     'updatedAt',
     'cfrom',
-    'cto'
+    'cto',
+    'not_me'
   ]
   const query = {...req.query}
   const cquery = {...query}
