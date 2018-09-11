@@ -311,7 +311,7 @@ test('Create Sample Data', async t => {
 
   // Get single vote
   const getSinglePostRes = await request(app)
-    .get(`/api/post/0?vote`)
+    .get(`/api/post/${posts[0][0].id}?vote`)
     .set({ Authorization: tokens[0] })
 
   t.is(getSinglePostRes.status, 200)
