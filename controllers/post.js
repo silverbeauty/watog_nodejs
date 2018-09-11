@@ -238,6 +238,10 @@ const count = async (req, res) => {
     })
   }
 
+  query.banned = {
+    [Op.not]: true
+  }
+
   const count_post = await Post.count({
     where: query
   })
@@ -324,6 +328,10 @@ const query = async (req, res) => {
     if (query.cto) {
       query.createdAt[Op.lte] = query.cto
     }
+  }
+
+  query.banned = {
+    [Op.not]: true
   }
 
   if (typeof query.createdAt === 'string') { query.createdAt = new Date(query.createdAt) }
