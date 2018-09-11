@@ -368,6 +368,16 @@ test('Create Sample Data', async t => {
 	  t.is(res.status, 200)
   }
 
+  // test 10 report test0's post
+
+	const reportRes = await request(app)
+    .post(`/api/post/${posts[0][0].id}/report`)
+    .set({ 'Content-Type': 'application/json', Authorization: tokens[10] })
+    .send({
+    	type: 'scam'
+    })
+	t.is(reportRes.status, 200)
+
   // test get me
 
   const meRes = await request(app)

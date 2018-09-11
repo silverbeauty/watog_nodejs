@@ -51,7 +51,13 @@ const Post = sequelize.define('Post', {
     type: Sequelize.INTEGER,
     allowNull: false,
     default: 0
-  }
+  },
+
+  banned: {
+    type: Sequelize.BOOLEAN,
+    allowNull: true,
+    default: false
+  },
 })
 
 Post.hasMany(Vote, { foreignKey: 'post_id', sourceKey: 'id' })
