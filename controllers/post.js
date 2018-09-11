@@ -283,11 +283,12 @@ const query = async (req, res) => {
     'updatedAt',
     'cfrom',
     'cto',
-    'not_me'
+    'not_me',
+    'user_name'
   ]
   const query = {...req.query}
   const cquery = {...query}
-  const { country } = query
+  const { country, keyword, user_name } = query
 
   // Check valid queries
   for (let key of allowed_queries) {
@@ -359,31 +360,33 @@ const query = async (req, res) => {
   delete query.cfrom
   delete query.cto
   delete query.not_me
+  delete query.user_name
 
   let sQuery
+  let userQuery = {}
   if (country) {
-    sQuery = {
-      where: query,
-      limit,
-      offset,
-      include: [{
-        model: User,
-        attributes: userFields,
-        where: {
-          country
-        }
-      }, { model: Vote }]
-    }
-  } else {
-    sQuery = {
-      where: query,
-      limit,
-      offset,
-      include: [{
-        model: User,
-        attributes: userFields
-      }, { model: Vote }/*, { model: Report, attributes: [ 'id'] } */ ]
-    }
+    userQuery.country = country
+  }
+
+  if (user_name) {
+    userQuery[Op.or] = [{
+      user_name: { [Op.like]: '%' + user_name + '%' }
+    }, {
+      first_name: { [Op.like]: '%' + user_name + '%' }
+    }, {
+      last_name: { [Op.like]: '%' + user_name + '%' }
+    }]
+  }
+
+  sQuery = {
+    where: query,
+    limit,
+    offset,
+    include: [{
+      model: User,
+      attributes: userFields,
+      where: userQuery
+    }, { model: Vote }]
   }
 
   if (order && !isRandom) {
