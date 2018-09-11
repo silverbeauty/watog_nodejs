@@ -539,7 +539,12 @@ const report = async (req, res) => {
       post_id: req.post.id
     }
   })
+
   post.report_count = count
+
+  if (count >= 3) { // If reported count is bigger than 3: ban the post
+    post.banned = true
+  }
 
   await post.save()
 
