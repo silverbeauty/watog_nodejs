@@ -187,7 +187,10 @@ const getMe = async (req, res) => {
   // Find Best Ranked photo
   const good_posts = await Post.findAll({
     where: {
-      user_id: currentUser.id
+      user_id: currentUser.id,
+      banned: {
+        [Op.not]: true
+      }
     },
     order: [ ['up_vote_count', 'DESC'] ],
     limit: 5
