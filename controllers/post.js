@@ -13,6 +13,43 @@ const Op = Sequelize.Op
 // Common user fields
 const userFields = ['id', 'first_name', 'last_name', 'hospital', 'picture_profile', 'user_name', 'country']
 
+const calculateUserVoteScore = async (user) => {
+  // TODO: calculate user vote score
+  const up_vote_count = await Post.sum('up_vote_count', {
+    where: {
+      user_id: user.id,
+      banned: {
+        [Op.not]: true
+      }
+    }
+  })
+
+  // TODO: calculate user vote score
+  const down_vote_count = await Post.sum('down_vote_count', {
+    where: {
+      user_id: user.id
+      banned: {
+        [Op.not]: true
+      }
+    }
+  })
+
+  const vote_score = await Post.sum('vote_score', {
+    where: {
+      user_id: user.id
+      banned: {
+        [Op.not]: true
+      }
+    }
+  })
+
+  user.up_vote_count = up_vote_count || 0
+  user.down_vote_count = down_vote_count || 0
+  user.vote_score = vote_score || 0
+
+  await user.save()
+}
+
 const calculateVote = async (req, post) => {
   const downVotes = await Vote.findAll({
     where: {
@@ -52,41 +89,7 @@ const calculateVote = async (req, post) => {
 
   // Load User
   const user = await User.findById(post.user_id)
-
-  // TODO: calculate user vote score
-  const up_vote_count = await Post.sum('up_vote_count', {
-    where: {
-      user_id: post.user_id,
-      banned: {
-        [Op.not]: true
-      }
-    }
-  })
-
-  // TODO: calculate user vote score
-  const down_vote_count = await Post.sum('down_vote_count', {
-    where: {
-      user_id: post.user_id,
-      banned: {
-        [Op.not]: true
-      }
-    }
-  })
-
-  const vote_score = await Post.sum('vote_score', {
-    where: {
-      user_id: post.user_id,
-      banned: {
-        [Op.not]: true
-      }
-    }
-  })
-
-  user.up_vote_count = up_vote_count || 0
-  user.down_vote_count = down_vote_count || 0
-  user.vote_score = vote_score || 0
-
-  await user.save()
+  await calculateUserVoteScore(user)
 
     // count
   data.category_vote_count = await Vote.count({
