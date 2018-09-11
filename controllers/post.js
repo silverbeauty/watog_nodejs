@@ -484,76 +484,7 @@ const cancelVote = async (req, res) => {
 
   await vote.destroy()
 
-  const downVotes = await Vote.findAll({
-    where: {
-      post_id: post.id,
-      commend: false
-    },
-    include: [{
-      model: User,
-      attributes: userFields
-    }]
-  })
-
-  const upVotes = await Vote.findAll({
-    where: {
-      post_id: post.id,
-      commend: true
-    },
-    include: [{
-      model: User,
-      attributes: userFields
-    }]
-  })
-
-  // Update upvote, downvote, vote score
-  post.up_vote_count = upVotes.length
-  post.down_vote_count = downVotes.length
-  post.vote_score = ((upVotes.length - downVotes.length) * post.Category.score_ratio).toFixed(2) // Cut down decimal
-
-  await post.save()
-
-  const data = post.get({
-    plain: true
-  })
-
-  data.downVotes = downVotes.map(v => v.get({plain: true}))
-  data.upVotes = upVotes.map(v => v.get({plain: true}))
-
-  // Load User
-  const user = await User.findById(post.user_id)
-
-  // TODO: calculate user vote score
-  const up_vote_count = await Post.sum('up_vote_count', {
-    where: {
-      user_id: post.user_id,
-      up_vote_count: {
-        [Op.not]: null
-      }
-    }
-  })
-
-  // TODO: calculate user vote score
-  const down_vote_count = await Post.sum('down_vote_count', {
-    where: {
-      user_id: post.user_id,
-      down_vote_count: {
-        [Op.not]: null
-      }
-    }
-  })
-
-  const vote_score = await Post.sum('vote_score', {
-    where: {
-      user_id: post.user_id
-    }
-  })
-
-  user.up_vote_count = up_vote_count || 0
-  user.down_vote_count = down_vote_count || 0
-  user.vote_score = (vote_score || 0).toFixed(2)
-
-  await user.save()
+  const data = await calculateVote(req, post)
 
   res.send({
     status: true,
