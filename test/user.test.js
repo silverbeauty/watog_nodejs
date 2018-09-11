@@ -323,7 +323,7 @@ test('Create Sample Data', async t => {
 
   t.is(queryPostRes.status, 200)
   t.is(queryPostRes.body.data.length, 10)
-  t.is(queryPostRes.body.data[0].rank, 1)
+  t.is(queryPostRes.body.data[0].rank, 2)
 
 	for (let i = 7; i <= 9; i ++) {
   	const res = await request(app)
