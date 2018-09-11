@@ -56,20 +56,29 @@ const calculateVote = async (req, post) => {
   // TODO: calculate user vote score
   const up_vote_count = await Post.sum('up_vote_count', {
     where: {
-      user_id: post.user_id
+      user_id: post.user_id,
+      banned: {
+        [Op.not]: true
+      }
     }
   })
 
   // TODO: calculate user vote score
   const down_vote_count = await Post.sum('down_vote_count', {
     where: {
-      user_id: post.user_id
+      user_id: post.user_id,
+      banned: {
+        [Op.not]: true
+      }
     }
   })
 
   const vote_score = await Post.sum('vote_score', {
     where: {
-      user_id: post.user_id
+      user_id: post.user_id,
+      banned: {
+        [Op.not]: true
+      }
     }
   })
 
