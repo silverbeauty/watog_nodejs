@@ -248,6 +248,15 @@ test('Create Sample Data', async t => {
   t.is(rangeQueryPostRes.body.status, true)
   t.is(rangeQueryPostRes.body.data.length, 10) // 10 is default limit
 
+    // Test get single post
+  const singleGetRes = await request(app)
+    .get(`/api/post/${posts[0][0].id}`)
+    .set({ Authorization: tokens[0] })
+
+  t.is(singleGetRes.status, 200)
+  t.is(singleGetRes.body.status, true)
+  t.is(singleGetRes.body.data.id, posts[0][0].id)
+
   // Vote category
   const voteCatRes = await request(app)
     .post(`/api/category/${categories[0].id}/vote`)
@@ -299,6 +308,13 @@ test('Create Sample Data', async t => {
 	    })
 	  t.is(res.status, 200)
   }
+
+  // Get single vote
+  const getSinglePostRes = await request(app)
+    .get(`/api/post/${posts[0][0].id}?vote&category&user`)
+    .set({ Authorization: tokens[0] })
+
+  t.is(getSinglePostRes.status, 200)
 
   // Query post
   const queryPostRes = await request(app)
@@ -358,6 +374,16 @@ test('Create Sample Data', async t => {
 	    })
 	  t.is(res.status, 200)
   }
+
+  // test 10 report test0's post
+
+	const reportRes = await request(app)
+    .post(`/api/post/${posts[0][0].id}/report`)
+    .set({ 'Content-Type': 'application/json', Authorization: tokens[10] })
+    .send({
+    	type: 'scam'
+    })
+	t.is(reportRes.status, 200)
 
   // test get me
 
