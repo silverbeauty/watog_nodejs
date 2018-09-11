@@ -264,6 +264,8 @@ test('Create Sample Data', async t => {
   	.set({ 'Content-Type': 'application/json', Authorization: tokens[0] })
 
   t.is(userNameQueryPostRes.status, 200)
+  t.is(userNameQueryPostRes.body.status, true)
+  t.is(userNameQueryPostRes.body.data.length, 10)
 
   // Vote category
   const voteCatRes = await request(app)
