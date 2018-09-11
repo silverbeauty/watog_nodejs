@@ -25,18 +25,7 @@ const create = async (req, res) => {
     user_id: req.currentUser.id
   })
 
-  let data
-  try {
-    const res = await category.save()
-    data = res.get({plain: true})
-    // Remove password
-  } catch (e) {
-    console.log(e)
-    return res.status(500).send({
-      status: false,
-      error: e.errors
-    })
-  }
+  const data = await category.save()
 
   res.send({
     status: true,
