@@ -57,9 +57,7 @@ const create = async (req, res) => {
     vote_score: 0,
     report_count: 0
   })
-  const res = await post.save()
-  const data = res.get({plain: true})
-    // Remove password
+  const data = await post.save()
 
   res.send({
     status: true,
