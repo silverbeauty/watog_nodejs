@@ -57,18 +57,9 @@ const create = async (req, res) => {
     vote_score: 0,
     report_count: 0
   })
-  let data
-  try {
-    const res = await post.save()
-    data = res.get({plain: true})
+  const res = await post.save()
+  const data = res.get({plain: true})
     // Remove password
-  } catch (e) {
-    console.log(e)
-    return res.status(500).send({
-      status: false,
-      error: e.errors
-    })
-  }
 
   res.send({
     status: true,
@@ -340,6 +331,10 @@ const load = async (req, res, next) => {
     }
   } catch (e) {
     console.error('Failed to load post:', e)
+    res.status(500).send({
+      status: false,
+      error: 'internal_server_error'
+    })
   }
 }
 
