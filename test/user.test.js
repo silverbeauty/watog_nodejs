@@ -309,6 +309,13 @@ test('Create Sample Data', async t => {
 	  t.is(res.status, 200)
   }
 
+  // Get single vote
+  const getSinglePostRes = await request(app)
+    .get(`/api/post/0?vote`)
+    .set({ Authorization: tokens[0] })
+
+  t.is(getSinglePostRes.status, 200)
+
   // Query post
   const queryPostRes = await request(app)
     .get(`/api/post?keyword=Post_0`)
