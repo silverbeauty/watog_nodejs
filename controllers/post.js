@@ -334,7 +334,7 @@ const query = async (req, res) => {
     }
   }
 
-  if ((not_me in query) && !(user_id in query)) {
+  if (('not_me' in query) && !(user_id in query)) {
     query.user_id = {
       [Op.not]: req.currentUser.id
     }

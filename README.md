@@ -551,7 +551,7 @@ Reset password by old password
   ```
 
 #### GET `/api/post?[QUERY]`
-  Query posts. valid queries are `limit`, `offset`, `user_id`, `category_id`. `random`, `order`, `direction`, `country`, `vote`, `keyword`, `createdAt`, `updatedAt`, `cfrom`, `cto`
+  Query posts. valid queries are `limit`, `offset`, `user_id`, `category_id`. `random`, `order`, `direction`, `country`, `vote`, `keyword`, `createdAt`, `updatedAt`, `cfrom`, `cto`, `not_me`
 
   `direction`: ASC or DESC  
   `order`: any post field  
@@ -563,6 +563,7 @@ Reset password by old password
   - `cto`: It means `createdAt` < `cto`.  : timestamp or string which new Date() accepts  
   - `createdAt`: timestamp or string which new Date() accepts
   - `updatedAt`: timestamp or string which new Date() accepts
+  - `not_me`: exclude the requesting user's posts, when `user_id` is passed `not_me` is ignored. 
 
   Response:
   HTTP Status: 200

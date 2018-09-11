@@ -317,6 +317,14 @@ test('Create Sample Data', async t => {
   t.is(getSinglePostRes.status, 200)
 
   // Query post
+  const queryPostResNotMe = await request(app)
+    .get(`/api/post?not_me`)
+    .set({ Authorization: tokens[0] })
+
+  t.is(queryPostResNotMe.status, 200)
+
+
+  // Query post
   const queryPostRes = await request(app)
     .get(`/api/post?keyword=Post_0`)
     .set({ Authorization: tokens[0] })
