@@ -334,6 +334,12 @@ const query = async (req, res) => {
     }
   }
 
+  if ((not_me in query) && !(user_id in query)) {
+    query.user_id = {
+      [Op.not]: req.currentUser.id
+    }
+  }
+
   query.banned = {
     [Op.not]: true
   }
@@ -352,6 +358,7 @@ const query = async (req, res) => {
   delete query.keyword
   delete query.cfrom
   delete query.cto
+  delete query.not_me
 
   let sQuery
   if (country) {
