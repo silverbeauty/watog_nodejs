@@ -588,6 +588,7 @@ const remove = async (req, res) => {
   }
 
   await post.destroy()
+  await calculateUserVoteScore(currentUser)
 
   res.send({
     status: true
