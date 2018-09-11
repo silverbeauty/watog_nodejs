@@ -27,31 +27,24 @@ const create = async (req, res) => {
     })
   } else if (req.body.file) { // base 64 image
     const fileName = uuidv1()
-    try {
-      const filePath = base64Img.imgSync(req.body.file, path.resolve('files/'), fileName)
-      if (req.currentUser) {
-        const file = new File({
-          user_id: req.currentUser.id,
-          name: path.basename(filePath),
-          type: 'image'
-        })
-
-        await file.save()
-      }
-
-      res.send({
-        status: true,
-        data: {
-          url: process.env.WATOG_DOMAIN + '/api/file/' + path.basename(filePath),
-          filename: path.basename(filePath)
-        }
+    const filePath = base64Img.imgSync(req.body.file, path.resolve('files/'), fileName)
+    if (req.currentUser) {
+      const file = new File({
+        user_id: req.currentUser.id,
+        name: path.basename(filePath),
+        type: 'image'
       })
-    } catch (e) {
-      console.error(e)
-      res.status(500).send({
-        status: false
-      })
+
+      await file.save()
     }
+
+    res.send({
+      status: true,
+      data: {
+        url: process.env.WATOG_DOMAIN + '/api/file/' + path.basename(filePath),
+        filename: path.basename(filePath)
+      }
+    })
   }
 }
 
