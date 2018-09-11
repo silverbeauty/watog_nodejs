@@ -36,7 +36,7 @@ const calculateUserVoteScore = async (user) => {
 
   const vote_score = await Post.sum('vote_score', {
     where: {
-      user_id: user.id
+      user_id: user.id,
       banned: {
         [Op.not]: true
       }
