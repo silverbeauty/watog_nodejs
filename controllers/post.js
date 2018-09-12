@@ -345,6 +345,10 @@ const query = async (req, res) => {
     [Op.not]: true
   }
 
+  query.picture = {
+    [Op.not]: ''
+  }
+
   if (typeof query.createdAt === 'string') { query.createdAt = new Date(query.createdAt) }
   if (typeof query.updatedAt === 'string') { query.updatedAt = new Date(query.updatedAt) }
 
