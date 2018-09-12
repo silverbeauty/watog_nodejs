@@ -257,6 +257,16 @@ test('Create Sample Data', async t => {
   t.is(singleGetRes.body.status, true)
   t.is(singleGetRes.body.data.id, posts[0][0].id)
 
+  // Query posts by user_name
+
+	const userNameQueryPostRes = await request(app)
+  	.get(`/api/post?user_name=test0`)
+  	.set({ 'Content-Type': 'application/json', Authorization: tokens[0] })
+
+  t.is(userNameQueryPostRes.status, 200)
+  t.is(userNameQueryPostRes.body.status, true)
+  t.is(userNameQueryPostRes.body.data.length, 10)
+
   // Vote category
   const voteCatRes = await request(app)
     .post(`/api/category/${categories[0].id}/vote`)
@@ -317,13 +327,21 @@ test('Create Sample Data', async t => {
   t.is(getSinglePostRes.status, 200)
 
   // Query post
+  const queryPostResNotMe = await request(app)
+    .get(`/api/post?not_me`)
+    .set({ Authorization: tokens[0] })
+
+  t.is(queryPostResNotMe.status, 200)
+
+
+  // Query post
   const queryPostRes = await request(app)
-    .get(`/api/post?keyword=Post_0`)
+    .get(`/api/post?keyword=Post_0&random`)
     .set({ Authorization: tokens[0] })
 
   t.is(queryPostRes.status, 200)
   t.is(queryPostRes.body.data.length, 10)
-  t.is(queryPostRes.body.data[0].rank, 1)
+  t.is(queryPostRes.body.data[0].rank, 2)
 
 	for (let i = 7; i <= 9; i ++) {
   	const res = await request(app)

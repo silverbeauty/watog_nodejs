@@ -12,7 +12,7 @@ const Vote = require('../models/vote')
 const EmailCtrl = require('./email')
 const SmsCtrl = require('./sms')
 
-const Op = Sequelize.Op
+const { Op } = Sequelize
 
 const signup = async (req, res) => {
   const errors = validationResult(req)
