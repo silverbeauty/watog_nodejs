@@ -20,12 +20,12 @@ const Room = sequelize.define('Room', {
     type: Sequelize.STRING,
     allowNull: false
   },
-  private: {
+  is_private: {
     type: Sequelize.BOOLEAN,
     allowNull: false,
     default: false
   },
-  one_to_one: { // is one to one or is multi
+  is_one_to_one: { // is one to one or is multi
     type: Sequelize.BOOLEAN,
     allowNull: false,
     default: false
