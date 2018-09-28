@@ -23,6 +23,7 @@ app.set('port', port);
 
 var server = http.createServer(app);
 const io = socketIO(server);
+global.io = io;
 
 io.sockets
   .on('connection', socketioJwt.authorize({
@@ -31,6 +32,13 @@ io.sockets
   })).on('authenticated', function(socket) {
     //this socket is authenticated, we are good to handle more events from it.
     console.log('hello! ' + socket.decoded_token.name);
+
+    // TODO: read all rooms
+    // TODO: join rooms
+    // socket.join('some room');
+
+    // TODO:Send message
+    // io.to('some room').emit('some event');
   });
 
 /**
