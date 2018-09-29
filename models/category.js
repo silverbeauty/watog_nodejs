@@ -3,6 +3,7 @@ const Sequelize = require('sequelize')
 const sequelize = require('../config/database')
 const Post = require('./post')
 const Vote = require('./vote')
+const Room = require('./room')
 
 const Category = sequelize.define('Category', {
   id: {
@@ -45,5 +46,8 @@ Post.belongsTo(Category, { foreignKey: 'category_id', sourceKey: 'id' })
 
 Category.hasMany(Vote, { foreignKey: 'category_id', sourceKey: 'id' })
 Vote.belongsTo(Category, { foreignKey: 'category_id', sourceKey: 'id' })
+
+Category.hasMany(Room, { foreignKey: 'category_id', sourceKey: 'id' })
+Room.belongsTo(Category, { foreignKey: 'category_id', sourceKey: 'id' })
 
 module.exports = Category

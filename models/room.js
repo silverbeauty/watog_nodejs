@@ -12,11 +12,23 @@ const Room = sequelize.define('Room', {
     type: Sequelize.INTEGER,
     allowNull: false
   },
+  category_id: { // Topic
+    type: Sequelize.INTEGER,
+    allowNull: false
+  },
+  jobs: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
   title: {
     type: Sequelize.STRING,
     allowNull: false
   },
   description: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
+  countries: {
     type: Sequelize.STRING,
     allowNull: false
   },
@@ -34,11 +46,11 @@ const Room = sequelize.define('Room', {
     type: Sequelize.STRING,
     allowNull: true
   },
-  avatar: {
+  avatar: { // avatar photo
     type: Sequelize.STRING,
     allowNull: true
   },
-  background: {
+  background: { // background photo
     type: Sequelize.STRING,
     allowNull: true
   }
