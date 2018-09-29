@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node ./bin/www",
     "dev": "nodemon ./bin/www",
-    "dev:test": "NODE_ENV=test npm run start:dev",
+    "dev:test": "NODE_ENV=test npm run dev",
     "start:test": "NODE_ENV=test npm run start",
     "lint": "eslint config controllers models routes",
     "lint-fix": "bash fixTab.sh && eslint config controllers models routes --fix",
