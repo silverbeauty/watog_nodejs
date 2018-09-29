@@ -29,6 +29,10 @@ const Room = sequelize.define('Room', {
     type: Sequelize.BOOLEAN,
     allowNull: false,
     default: false
+  },
+  hash: { // represent 1:1 chat rooms
+    type: Sequelize.STRING,
+    allowNull: true
   }
 })
 

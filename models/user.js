@@ -5,6 +5,7 @@ const sequelize = require('../config/database')
 const Post = require('./post')
 const Category = require('./category')
 const Vote = require('./vote')
+const Member = require('./member')
 
 const User = sequelize.define('User', {
   id: {
@@ -120,9 +121,12 @@ const User = sequelize.define('User', {
 User.hasMany(Post, { foreignKey: 'user_id', sourceKey: 'id' })
 User.hasMany(Category, { foreignKey: 'user_id', sourceKey: 'id' })
 User.hasMany(Vote, { foreignKey: 'user_id', sourceKey: 'id' })
+User.hasMany(Member, { foreignKey: 'user_id', sourceKey: 'id' })
+
 
 Post.belongsTo(User, { foreignKey: 'user_id', sourceKey: 'id' })
 Category.belongsTo(User, { foreignKey: 'user_id', sourceKey: 'id' })
 Vote.belongsTo(User, { foreignKey: 'user_id', sourceKey: 'id' })
+Member.belongsTo(User, { foreignKey: 'user_id', sourceKey: 'id' })
 
 module.exports = User
