@@ -23,4 +23,4 @@ const Message = sequelize.define('Message', {
   }
 })
 
-module.exports = Member
+module.exports = Message
