@@ -33,6 +33,14 @@ const Room = sequelize.define('Room', {
   hash: { // represent 1:1 chat rooms
     type: Sequelize.STRING,
     allowNull: true
+  },
+  avatar: {
+    type: Sequelize.STRING,
+    allowNull: true
+  },
+  background: {
+    type: Sequelize.STRING,
+    allowNull: true
   }
 })
 
