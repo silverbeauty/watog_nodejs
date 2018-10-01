@@ -739,6 +739,9 @@ Reset password by old password
   ```
 
 #### GET `/api/room?[Query]`.  
+  Query my rooms.  
+
+#### GET `/api/room?[Query]`.  
   Query rooms.   
   
   Available queries: `user_id`
