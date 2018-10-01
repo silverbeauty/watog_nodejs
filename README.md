@@ -721,6 +721,22 @@ Reset password by old password
   }
   ```
 
+### Chat API
+
+#### POST `/api/room`.  
+  Create a chat room.  
+  
+  Body. 
+  ```
+  {
+      category_id: 1,
+      jobs: String, // separated by ,
+      title: String,
+      description: String,
+      countries: String, // separated by ,
+      members: [1, 2, 3] // array of user id
+  }
+  ```
 
 ## Installed Package Requirements
 
