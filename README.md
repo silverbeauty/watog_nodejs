@@ -738,6 +738,77 @@ Reset password by old password
   }
   ```
 
+#### GET `/api/room?[Query]`.  
+  Query rooms.   
+  
+  Available queries: `user_id`
+
+  Body. 
+  ```
+  {
+      "status": true,
+      "data": {
+          "id": "6803b0dd-8b5a-4161-9101-e62de85599d9",
+          "user_id": 1,
+          "category_id": 1,
+          "jobs": "obg",
+          "title": "test",
+          "description": "test room",
+          "countries": "USA",
+          "is_private": null,
+          "is_one_to_one": null,
+          "hash": null,
+          "avatar": null,
+          "background": null,
+          "createdAt": "2018-10-01T12:42:43.982Z",
+          "updatedAt": "2018-10-01T12:42:43.982Z",
+          "Members": [
+              {
+                  "id": 1,
+                  "user_id": 2,
+                  "room_id": "6803b0dd-8b5a-4161-9101-e62de85599d9",
+                  "createdAt": "2018-10-01T12:42:43.986Z",
+                  "updatedAt": "2018-10-01T12:42:43.986Z",
+                  "User": {
+                      "id": 2,
+                      "first_name": "Test1",
+                      "last_name": "Last1",
+                      "hospital": "Hospital1",
+                      "picture_profile": null,
+                      "user_name": "test1",
+                      "country": "France"
+                  }
+              },
+              {
+                  "id": 2,
+                  "user_id": 3,
+                  "room_id": "6803b0dd-8b5a-4161-9101-e62de85599d9",
+                  "createdAt": "2018-10-01T12:42:43.986Z",
+                  "updatedAt": "2018-10-01T12:42:43.986Z",
+                  "User": {
+                      "id": 3,
+                      "first_name": "Test2",
+                      "last_name": "Last2",
+                      "hospital": "Hospital2",
+                      "picture_profile": null,
+                      "user_name": "test2",
+                      "country": "Germany"
+                  }
+              }
+          ],
+          "User": {
+              "id": 1,
+              "first_name": "Test0",
+              "last_name": "Last0",
+              "hospital": "Hospital0",
+              "picture_profile": null,
+              "user_name": "test0",
+              "country": "USA"
+          }
+      }
+  }
+  ```
+
 ## Installed Package Requirements
 
    sudo npm install nodemon -g
