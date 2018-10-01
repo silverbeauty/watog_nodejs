@@ -47,9 +47,7 @@ const create = async (req, res) => {
 const get = async (req, res) => {
 	const { id } = req.params
 	const room = await Room.findOne({
-		where: {
-			id: room.id
-		},
+		where: { id},
 		include: [{
 			model: Member,
 			include: [{ model: User}]
