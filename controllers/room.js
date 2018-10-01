@@ -4,6 +4,7 @@ const User = require('../models/user')
 const Member = require('../models/member')
 const Room = require('../models/room')
 
+const userFields = ['id', 'first_name', 'last_name', 'hospital', 'picture_profile', 'user_name', 'country']
 
 const create = async (req, res) => {
 	const roomObj = req.body
@@ -47,12 +48,13 @@ const create = async (req, res) => {
 const get = async (req, res) => {
 	const { id } = req.params
 	const room = await Room.findOne({
-		where: { id},
+		where: { id },
 		include: [{
 			model: Member,
-			include: [{ model: User}]
+			include: [{ model: User, attributes: userFields }]
 		}, {
-			model: User
+			model: User,
+			attributes: userFields
 		}]
 	})
 
