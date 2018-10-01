@@ -15,12 +15,14 @@ const create = async (req, res) => {
 
 	let room = await new Room(roomObj).save()
 
-	const members = await Member.bulkCreate(aryMemberId.map(m => {
-		return {
-			user_id: m,
-			room_id: room.id
-		}
-	}))
+	if (Array.isArray(aryMemberId)) {
+		const members = await Member.bulkCreate(aryMemberId.map(m => {
+			return {
+				user_id: m,
+				room_id: room.id
+			}
+		}))		
+	}
 
 	// Load room again
 
@@ -30,7 +32,7 @@ const create = async (req, res) => {
 		},
 		include: [{
 			model: Member,
-			include: [{ model: user_id}]
+			include: [{ model: User}]
 		}, {
 			model: User
 		}]

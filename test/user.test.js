@@ -417,7 +417,7 @@ test('Create Sample Data', async t => {
     .post(`/api/room`)
     .set({ Authorization: tokens[0], 'Content-Type': 'application/json' })
     .send({
-      category_id: 0,
+      category_id: 1,
       jobs: 'obg',
       title: 'test',
       description: 'test room',
