@@ -18,8 +18,10 @@ const create = async (req, res) => {
 	}).save()
 
 	const members = await Member.bulkCreate(aryMemberId.map(m => {
-		user_id: m,
-		room_id: room.id
+		return {
+			user_id: m,
+			room_id: room.id
+		}
 	}))
 
 	// Load room again
