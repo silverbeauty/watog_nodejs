@@ -738,13 +738,21 @@ Reset password by old password
   }
   ```
 
-#### GET `/api/room?[Query]`.  
+#### GET `/api/room/my`.  
   Query my rooms.  
+
+  Body. 
+  ```
+  {
+    "status": true,
+    "data": [Room]
+  }
+  ```
 
 #### GET `/api/room?[Query]`.  
   Query rooms.   
   
-  Available queries: `user_id`
+  Available queries: `user_id`, `title`, `description`
 
   Body. 
   ```
