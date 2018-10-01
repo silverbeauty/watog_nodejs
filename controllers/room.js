@@ -70,7 +70,7 @@ const get = async (req, res) => {
 const query = async (req, res) => {
 	const { query } = req
 
-	const rooms = await Room.find({
+	const rooms = await Room.findAll({
 		where: query,
 		include: [{
 			model: Member,
@@ -89,8 +89,9 @@ const query = async (req, res) => {
 
 // Query my rooms I am the owner or a member
 const queryMyRooms = async (req, res) => {
+	console.info('queryMyRooms')
 	const { currentUser } = req
-	const memberRooms = await Room.find({
+	const memberRooms = await Room.findAll({
 		where: {},
 		include: [{
 			model: Member,

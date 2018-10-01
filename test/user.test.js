@@ -425,6 +425,18 @@ test('Create Sample Data', async t => {
       members: [users[1].id, users[2].id] // add user[]
     })
 
+  await request(app)
+    .post(`/api/room`)
+    .set({ Authorization: tokens[0], 'Content-Type': 'application/json' })
+    .send({
+      category_id: 1,
+      jobs: 'obg',
+      title: 'test1',
+      description: 'test room',
+      countries: 'USA',
+      members: [users[1].id, users[2].id] // add user[]
+    })
+
   t.is(createRoomRes.status, 200)
   t.is(createRoomRes.body.status, true)
   t.is(typeof createRoomRes.body.data, 'object')
@@ -434,6 +446,14 @@ test('Create Sample Data', async t => {
     .set({ Authorization: tokens[0] })
 
   t.is(getRoomRes.status, 200)
+
+  const myRoomRes = await request(app)
+    .get(`/api/room/my`)
+    .set({ Authorization: tokens[1] })
+
+  t.is(myRoomRes.status, 200)
+  t.is(myRoomRes.body.status, true)
+  t.is(myRoomRes.body.data.length, 1)
 
   // Remove user profile test
   const deleteMeRes = await request(app)

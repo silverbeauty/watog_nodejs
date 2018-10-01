@@ -13,13 +13,13 @@ const router = express.Router()
 router.post('/',
   UserCtrl.checkAuth, catchError(RoomCtrl.create))
 
-// Get a single room
-router.get('/:id',
-  UserCtrl.checkAuth, catchError(RoomCtrl.get))
-
 // Query my rooms
 router.get('/my',
   UserCtrl.checkAuth, catchError(RoomCtrl.queryMyRooms))
+
+// Get a single room
+router.get('/:id',
+  UserCtrl.checkAuth, catchError(RoomCtrl.get))
 
 // Query rooms
 router.get('/',
