@@ -9,7 +9,7 @@ const app         = require('../app');
 const debug       = require('debug')('myapp:server');
 const http        = require('http');
 const socketIO    = require('socket.io');
-const socketioJwt = require("socketio-jwt");
+
 
 const chat         = require('../controllers/chat');
 

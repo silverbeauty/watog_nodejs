@@ -1,3 +1,4 @@
+const socketioJwt = require("socketio-jwt")
 
 const authenticated = (socket) => {
   //this socket is authenticated, we are good to handle more events from it.
@@ -21,5 +22,5 @@ const setup = (io) => {
 }
 
 module.exports = {
-	authenticated
+	setup
 }
