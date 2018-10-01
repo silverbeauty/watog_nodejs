@@ -411,11 +411,22 @@ test('Create Sample Data', async t => {
 
   t.is(meRes.status, 200)
 
+  // Chat API test
+
+  const deleteMeRes = await request(app)
+    .post(`/api/room`)
+    .set({ Authorization: tokens[0] })
+
+
+
+
+
   // Remove user profile test
 
-	const deleteMeRes = await request(app)
-  	.get(`/api/user/me`)
-  	.set({ Authorization: tokens[0] })
+
+  const deleteMeRes = await request(app)
+    .get(`/api/user/me`)
+    .set({ Authorization: tokens[0] })
 
   t.is(deleteMeRes.status, 200)
 
