@@ -6,7 +6,7 @@ const Post = require('./post')
 const Category = require('./category')
 const Vote = require('./vote')
 const Member = require('./member')
-const Room = require('./member')
+const Room = require('./room')
 
 const User = sequelize.define('User', {
   id: {
