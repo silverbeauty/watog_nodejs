@@ -89,7 +89,23 @@ const query = async (req, res) => {
 
 // Query my rooms I am the owner or a member
 const queryMyRooms = async (req, res) => {
+	const { currentUser } = req
+	const memberRooms = await Room.find({
+		where: {},
+		include: [{
+			model: Member,
+			include: [{ model: User, attributes: userFields }],
+			where: { user_id: currentUser.id }
+		}, {
+				model: User,
+				attributes: userFields
+			}]
+		})
 
+	res.send({
+		status: true,
+		data: memberRooms
+	})
 }
 
 module.exports = {
