@@ -413,21 +413,23 @@ test('Create Sample Data', async t => {
 
   // Chat API test
 
-  const deleteMeRes = await request(app)
+  const createRoomRes = await request(app)
     .post(`/api/room`)
-    .set({ Authorization: tokens[0] })
+    .set({ Authorization: tokens[0], 'Content-Type': 'application/json' })
+    .send({
+      category_id: 0,
+      jobs: 'obg',
+      title: 'test',
+      description: 'test room',
+      countries: 'USA'
+    })
 
-
-
-
+  t.is(createRoomRes.status, 200)
 
   // Remove user profile test
-
-
   const deleteMeRes = await request(app)
     .get(`/api/user/me`)
     .set({ Authorization: tokens[0] })
 
   t.is(deleteMeRes.status, 200)
-
 })

@@ -34,12 +34,12 @@ const Room = sequelize.define('Room', {
   },
   is_private: {
     type: Sequelize.BOOLEAN,
-    allowNull: false,
+    allowNull: true,
     default: false
   },
   is_one_to_one: { // is one to one or is multi
     type: Sequelize.BOOLEAN,
-    allowNull: false,
+    allowNull: true,
     default: false
   },
   hash: { // represent 1:1 chat rooms

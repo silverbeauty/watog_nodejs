@@ -13,9 +13,7 @@ const create = async (req, res) => {
 	delete roomObj.members
 	roomObj.user_id = req.currentUser.id
 
-	let room = await new Room({
-		roomObj
-	}).save()
+	let room = await new Room(roomObj).save()
 
 	const members = await Member.bulkCreate(aryMemberId.map(m => {
 		return {
