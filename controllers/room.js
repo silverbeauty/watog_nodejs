@@ -1,8 +1,10 @@
 const uuidv1 = require('uuid/v1')
+const Sequelize = require('sequelize')
 
 const User = require('../models/user')
 const Member = require('../models/member')
 const Room = require('../models/room')
+const { Op } = Sequelize
 
 const userFields = ['id', 'first_name', 'last_name', 'hospital', 'picture_profile', 'user_name', 'country']
 
@@ -69,6 +71,19 @@ const get = async (req, res) => {
 
 const query = async (req, res) => {
 	const { query } = req
+	
+
+	if (query.title) {
+		query.title = {
+			[Op.like]: '%' + query.title + '%'
+		}
+	}
+
+	if (query.description) {
+		query.description = {
+			[Op.like]: '%' + query.description + '%'
+		}
+	}	
 
 	const rooms = await Room.findAll({
 		where: query,
