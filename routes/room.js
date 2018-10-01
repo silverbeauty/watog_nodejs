@@ -13,4 +13,8 @@ const router = express.Router()
 router.post('/',
   UserCtrl.checkAuth, catchError(RoomCtrl.create))
 
+// Get a single room
+router.get('/:id',
+  UserCtrl.checkAuth, catchError(RoomCtrl.get))
+
 module.exports = router
