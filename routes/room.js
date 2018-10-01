@@ -17,4 +17,8 @@ router.post('/',
 router.get('/:id',
   UserCtrl.checkAuth, catchError(RoomCtrl.get))
 
+// Get a single room
+router.get('/',
+  UserCtrl.checkAuth, catchError(RoomCtrl.query))
+
 module.exports = router
