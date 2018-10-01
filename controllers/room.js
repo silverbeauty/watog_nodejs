@@ -64,7 +64,28 @@ const get = async (req, res) => {
 	})
 }
 
+const query = async (req, res) => {
+	const { query } = req
+
+	const rooms = await Room.find({
+		where: query,
+		include: [{
+			model: Member,
+			include: [{ model: User, attributes: userFields }]
+		}, {
+			model: User,
+			attributes: userFields
+		}]
+	})
+
+	res.send({
+		status: true,
+		data: rooms
+	})
+}
+
 module.exports = {
+	query,
 	get,
 	create
 }
