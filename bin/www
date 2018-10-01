@@ -26,14 +26,8 @@ app.set('port', port);
 
 var server = http.createServer(app);
 const io = socketIO(server);
-global.io = io;
 
-io.sockets
-  .on('connection', socketioJwt.authorize({
-    secret: process.env.JWT_TOKEN,
-    timeout: 15000 // 15 seconds to send the authentication message
-  })).on('authenticated', chat.authenticated);
-
+chat.setup(io);
 /**
  * Listen on provided port, on all network interfaces.
  */
