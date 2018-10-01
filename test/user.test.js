@@ -426,12 +426,14 @@ test('Create Sample Data', async t => {
     })
 
   t.is(createRoomRes.status, 200)
+  t.is(createRoomRes.body.status, true)
+  t.is(typeof createRoomRes.body.data, 'object')
 
-  const getRoomRest = await request(app)
-    .post(`/api/room/` + createRoomRes.body.data.id)
+  const getRoomRes = await request(app)
+    .get(`/api/room/${createRoomRes.body.data.id}`)
     .set({ Authorization: tokens[0] })
 
-  t.is(getRoomRest.status, 200)
+  t.is(getRoomRes.status, 200)
 
   // Remove user profile test
   const deleteMeRes = await request(app)
