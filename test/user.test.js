@@ -421,7 +421,8 @@ test('Create Sample Data', async t => {
       jobs: 'obg',
       title: 'test',
       description: 'test room',
-      countries: 'USA'
+      countries: 'USA',
+      members: [users[1].id, users[2].id] // add user[]
     })
 
   t.is(createRoomRes.status, 200)
