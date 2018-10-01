@@ -84,7 +84,13 @@ const query = async (req, res) => {
 	})
 }
 
+// Query my rooms I am the owner or a member
+const queryMyRooms = async (req, res) => {
+
+}
+
 module.exports = {
+	queryMyRooms,
 	query,
 	get,
 	create
