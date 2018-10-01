@@ -10,6 +10,9 @@ const create = async (req, res) => {
 	const roomObj = req.body
 	const aryMemberId = roomObj.members
 
+	// TODO: should check duplicated ids
+	aryMemberId.push(req.currentUser.id)
+
 	// delete member array
 	delete roomObj.members
 	roomObj.user_id = req.currentUser.id
