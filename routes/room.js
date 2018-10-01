@@ -17,7 +17,11 @@ router.post('/',
 router.get('/:id',
   UserCtrl.checkAuth, catchError(RoomCtrl.get))
 
-// Get a single room
+// Query my rooms
+router.get('/my',
+  UserCtrl.checkAuth, catchError(RoomCtrl.queryMyRooms))
+
+// Query rooms
 router.get('/',
   UserCtrl.checkAuth, catchError(RoomCtrl.query))
 
