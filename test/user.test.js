@@ -411,12 +411,50 @@ test('Create Sample Data', async t => {
 
   t.is(meRes.status, 200)
 
-  // Remove user profile test
+  // Chat API test
 
-	const deleteMeRes = await request(app)
-  	.get(`/api/user/me`)
-  	.set({ Authorization: tokens[0] })
+  const createRoomRes = await request(app)
+    .post(`/api/room`)
+    .set({ Authorization: tokens[0], 'Content-Type': 'application/json' })
+    .send({
+      category_id: 1,
+      jobs: 'obg',
+      title: 'test',
+      description: 'test room',
+      countries: 'USA',
+      members: [users[1].id, users[2].id] // add user[]
+    })
+
+  t.is(createRoomRes.status, 200)
+  t.is(createRoomRes.body.status, true)
+  t.is(typeof createRoomRes.body.data, 'object')
+
+  const getRoomRes = await request(app)
+    .get(`/api/room/${createRoomRes.body.data.id}`)
+    .set({ Authorization: tokens[0] })
+
+  t.is(getRoomRes.status, 200)
+
+  const myRoomRes = await request(app)
+    .get(`/api/room/my`)
+    .set({ Authorization: tokens[1] })
+
+  t.is(myRoomRes.status, 200)
+  t.is(myRoomRes.body.status, true)
+  t.is(myRoomRes.body.data.length, 1)
+
+  const queryRoomRes = await request(app)
+    .get(`/api/room?title=test`)
+    .set({ Authorization: tokens[1] })
+
+  t.is(queryRoomRes.status, 200)
+  t.is(queryRoomRes.body.status, true)
+  t.is(queryRoomRes.body.data.length, 1)
+
+  // Remove user profile test
+  const deleteMeRes = await request(app)
+    .get(`/api/user/me`)
+    .set({ Authorization: tokens[0] })
 
   t.is(deleteMeRes.status, 200)
-
 })
