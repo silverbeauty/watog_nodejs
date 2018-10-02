@@ -17,7 +17,7 @@
   "deploy" : {
     "staging" : {
       "user" : "valeri",
-      "key"  : "~/.ssh/id_rsa.pem",
+      "key"  : "~/.ssh/id_rsa",
       // Multi host is possible, just by passing IPs/hostname as an array
       "host" : "151.236.34.11",
       // Branch
