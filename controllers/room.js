@@ -10,10 +10,16 @@ const userFields = ['id', 'first_name', 'last_name', 'hospital', 'picture_profil
 
 const create = async (req, res) => {
 	const roomObj = req.body
-	const aryMemberId = roomObj.members
+	let aryMemberId = roomObj.members
+
+
 
 	// TODO: should check duplicated ids
 	aryMemberId.push(req.currentUser.id)
+
+	aryMemberId = aryMemberId.filter((elem, pos) => {
+	    return myArray.indexOf(elem) == pos
+	})
 
 	// delete member array
 	delete roomObj.members
