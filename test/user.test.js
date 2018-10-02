@@ -429,12 +429,6 @@ test('Create Sample Data', async t => {
   t.is(createRoomRes.body.status, true)
   t.is(typeof createRoomRes.body.data, 'object')
 
-  const getRoomRes = await request(app)
-    .get(`/api/room/${createRoomRes.body.data.id}`)
-    .set({ Authorization: tokens[0] })
-
-  t.is(getRoomRes.status, 200)
-
   const myRoomRes = await request(app)
     .get(`/api/room/my`)
     .set({ Authorization: tokens[1] })
@@ -453,7 +447,7 @@ test('Create Sample Data', async t => {
 
   // user[0] is adding users[3]
 
-  const addMemberRes = await request(app)
+  let addMemberRes = await request(app)
     .post('/api/room/' + createRoomRes.body.data.id + '/member')
     .set({ Authorization: tokens[0], 'Content-Type': 'application/json' })
     .send({
@@ -461,6 +455,23 @@ test('Create Sample Data', async t => {
     })
 
   t.is(addMemberRes.status, 200)
+
+  const getRoomRes = await request(app)
+    .get(`/api/room/${createRoomRes.body.data.id}`)
+    .set({ Authorization: tokens[0] })
+
+  t.is(getRoomRes.status, 200)
+  t.is(getRoomRes.body.data.Members.length, 4) // 4 members - 0,1,2,3
+
+  // add again
+  addMemberRes = await request(app)
+    .post('/api/room/' + createRoomRes.body.data.id + '/member')
+    .set({ Authorization: tokens[0], 'Content-Type': 'application/json' })
+    .send({
+      user_id: users[3].id
+    })
+
+  t.is(addMemberRes.status, 400)
 
   // Remove user profile test
   const deleteMeRes = await request(app)

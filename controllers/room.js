@@ -188,7 +188,7 @@ const addMember = async (req, res) => {
 	} else {
 		member = new Member({
 			user_id,
-			room_id: room_id,
+			room_id: room.id,
 			removed: false
 		})
 		await member.save()
