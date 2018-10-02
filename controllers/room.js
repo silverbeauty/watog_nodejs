@@ -214,7 +214,7 @@ const addMember = async (req, res) => {
 	})
 }
 
-const getMessages = (req, res) => {
+const getMessages = async (req, res) => {
 	const room = await Room.findOne({ where: { id: req.params.id }})
 	if (!room) {
 		return res.status(400).send({
