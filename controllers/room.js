@@ -230,12 +230,19 @@ const getMessages = async (req, res) => {
 	const limit = query.limit || 10
 	const order = query.order || 'createdAt'
 	const direction = query.direction || 'ASC'
+	const { text } = query
 
 	where.room_id = room.id
 
 	where['createdAt']= {
 		[Op.lte]: new Date(query.to || new Date()),
 		[Op.gt]: new Date(query.from || new Date(0))
+	}
+
+	if (text) {
+		where['text'] = {
+			[Op.like]: '%' + text + '%'
+		}
 	}
 
 	const messages = await Message.findAll({ 

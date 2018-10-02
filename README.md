@@ -840,10 +840,15 @@ Query: `from`, `to`, `order`, `direction`, `limit`
 
 - `direction`: ordering direction, `ASC` or `DESC`, default: `ASC` 
 - `order`: ordering field name, default: `createdAt`
+- `limit`: limit count
+- `text`: query for text
 
-##### Example  
-- /api/room/c3f79091-ec13-492a-9d7f-94a70c075d7e/messages?to=1638496040186&limit=10
+##### Example 
+- /api/room/c3f79091-ec13-492a-9d7f-94a70c075d7e/messages?limit=10
  Get last 10 messages for room: `c3f79091-ec13-492a-9d7f-94a70c075d7e`  
+
+- /api/room/c3f79091-ec13-492a-9d7f-94a70c075d7e/messages?text=test&limit=100
+ Get last 100 messages for room: `c3f79091-ec13-492a-9d7f-94a70c075d7e`  containing `test`
 
 Body
 
