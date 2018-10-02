@@ -1,6 +1,6 @@
 
 const Sequelize = require('sequelize')
-const { DB_PATH, TEST_DB_PATH } = require('./file')
+const { DB_PATH, TEST_DB_PATH } = require('./path')
 
 console.info('NODE_ENV:', process.env.NODE_ENV)
 
