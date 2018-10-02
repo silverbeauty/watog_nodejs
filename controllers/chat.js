@@ -2,7 +2,9 @@ const socketioJwt = require("socketio-jwt")
 const User = require('../models/user')
 const Member = require('../models/member')
 const Room = require('../models/room')
+const Message = require('../models/room')
 
+const userFields = ['id', 'first_name', 'last_name', 'hospital', 'picture_profile', 'user_name', 'country']
 let io
 
 const authenticated = async (socket) => {
@@ -15,8 +17,8 @@ const authenticated = async (socket) => {
 
   // TODO:Send message
   // io.to('some room').emit('some event');
-  const user = await User.findOne({ where: { email } })
-  !user && socket.disconnect()
+  const currentUser = await User.findOne({ where: { email } })
+  !currentUser && socket.disconnect()
 
   // Find all his rooms
   const memberRooms = await Room.findAll({
@@ -35,11 +37,41 @@ const authenticated = async (socket) => {
     socket.join(r.id) // subscribe to rooms
   })
 
-  socket.on('new_message', createNewMessage.bind(this, socket, user))
+  socket.on('new_message', createNewMessage.bind(this, socket, currentUser))
 }
 
-const createNewMessage = async (socket, user, data, callback) => {
-  
+const createNewMessage = async (socket, currentUser, data, callback) => {
+  const { room_id } = data
+  // Load room
+  const room = await Room.findOne({
+    where: { id: id },
+    include: [{
+      model: Member,
+      include: [{ model: User, attributes: userFields }],
+      where: { user_id: currentUser.id, removed: false }
+    }, {
+        model: User,
+        attributes: userFields
+      }]
+  })
+
+  if (!room) {
+    return callback({
+      status: false,
+      error: 'invalid_room'
+    })
+  } 
+
+  const message = await (new Message({
+    user_id: currentUser.id,
+    room_id,
+    text: data.text,
+  })).save()
+
+  callback({
+    status: true,
+    data: message
+  })
 }
 
 const setup = (io) => {
