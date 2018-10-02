@@ -799,22 +799,7 @@ Reset password by old password
                       "country": "France"
                   }
               },
-              {
-                  "id": 2,
-                  "user_id": 3,
-                  "room_id": "6803b0dd-8b5a-4161-9101-e62de85599d9",
-                  "createdAt": "2018-10-01T12:42:43.986Z",
-                  "updatedAt": "2018-10-01T12:42:43.986Z",
-                  "User": {
-                      "id": 3,
-                      "first_name": "Test2",
-                      "last_name": "Last2",
-                      "hospital": "Hospital2",
-                      "picture_profile": null,
-                      "user_name": "test2",
-                      "country": "Germany"
-                  }
-              }
+              ...
           ],
           "User": {
               "id": 1,
@@ -885,6 +870,57 @@ Body
     ]
 }
 ```
+
+### Socket.io signals
+Socket.io Connection URL: http://xxx:port?token=`JWT string`  
+After connected, the client will receive `authenticated` signal
+
+#### Client -> Server
+
+##### `send_message`: Send a new message
+Data  
+
+```
+{
+ "text": "test3",
+  "room_id": "c3f79091-ec13-492a-9d7f-94a70c075d7e"
+}
+```
+
+#### Server -> Client
+
+#### `authenticated`: Socket.io login success
+#### `new_message`: New message is created
+
+Data  
+```
+{
+  id,
+  room_id,
+  member_id,
+  text,
+  is_announcement,
+  createdAt:
+  updatedAt:
+  Member: {
+    id,
+    user_id,
+    room_id,
+    removed,
+    createdAt,
+    updatedAt,
+    User: {
+      id,
+      first_name,
+      last_name,
+      user_name,
+      country,
+      picture_profile
+    }
+  }
+}
+```
+Example: ![Response](https://image.ibb.co/iVQymz/Screen_Shot_2018_10_02_at_9_24_08_PM.png)
 
 ## Installed Package Requirements
 
