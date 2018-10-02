@@ -25,7 +25,7 @@
       // Git repository to clone
       "repo" : "git@gitlab.com:watog-app/sql-nodejs.git",
       // Path of the application on target servers
-      "path" : "/var/www/production",
+      "path" : "/var/www/watog_api.com/api",
       // Can be used to give options in the format used in the configura-
       // tion file.  This is useful for specifying options for which there
       // is no separate command-line flag, see 'man ssh' 
