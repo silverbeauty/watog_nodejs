@@ -5,7 +5,9 @@ const cookieParser = require('cookie-parser')
 const logger = require('morgan')
 const cors = require('cors')
 const fs = require('fs')
-require('dotenv').config()
+
+const { ENV_PATH } = require('./config/path')
+require('dotenv').config({ path: ENV_PATH })
 
 const indexRouter = require('./routes/index')
 
@@ -30,17 +32,6 @@ if (!process.env.WATOG_DOMAIN) {
 if (!process.env.TWILIO_SID || !process.env.TWILIO_AUTH_TOKEN || !process.env.TWILIO_FROM) {
   console.error('Please set the valid TWILIO_SID, TWILIO_AUTH_TOKEN, TWILIO_FROM')
   process.exit(1)
-}
-
-const fileDir = path.resolve('files/')
-const docsDir = path.resolve('docs/')
-
-if (!fs.existsSync(fileDir)){
-  fs.mkdirSync(fileDir)
-}
-
-if (!fs.existsSync(docsDir)){
-  fs.mkdirSync(docsDir)
 }
 
 // view engine setup
