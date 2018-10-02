@@ -747,6 +747,53 @@ Reset password by old password
   }
   ```
 
+  Response
+  ```
+  {
+              "id": "c3f79091-ec13-492a-9d7f-94a70c075d7e",
+              "user_id": 1,
+              "category_id": 1,
+              "jobs": "obg",
+              "title": "test",
+              "description": "test room",
+              "countries": "USA",
+              "is_private": null,
+              "is_one_to_one": null,
+              "hash": null,
+              "avatar": null,
+              "background": null,
+              "createdAt": "2018-10-02T06:58:07.555Z",
+              "updatedAt": "2018-10-02T06:58:07.555Z",
+              "Members": [
+                  {
+                      "id": 3,
+                      "user_id": 1,
+                      "room_id": "c3f79091-ec13-492a-9d7f-94a70c075d7e",
+                      "removed": false,
+                      "createdAt": "2018-10-02T06:58:07.558Z",
+                      "updatedAt": "2018-10-02T06:58:07.558Z",
+                      "User": {
+                          "id": 1,
+                          "first_name": "Test0",
+                          "last_name": "Last0",
+                          "hospital": "Hospital0",
+                          "picture_profile": null,
+                          "user_name": "test0",
+                          "country": "USA"
+                      }
+                  },
+              ],
+              "User": { // Creator
+                  "id": 1,
+                  "first_name": "Test0",
+                  "last_name": "Last0",
+                  "hospital": "Hospital0",
+                  "picture_profile": null,
+                  "user_name": "test0",
+                  "country": "USA"
+              }
+          }
+  ```
 #### GET `/api/room/my`.  
   Query my rooms.  
 
