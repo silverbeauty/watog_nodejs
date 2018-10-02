@@ -32,17 +32,6 @@ if (!process.env.TWILIO_SID || !process.env.TWILIO_AUTH_TOKEN || !process.env.TW
   process.exit(1)
 }
 
-const fileDir = path.resolve('files/')
-const docsDir = path.resolve('docs/')
-
-if (!fs.existsSync(fileDir)){
-  fs.mkdirSync(fileDir)
-}
-
-if (!fs.existsSync(docsDir)){
-  fs.mkdirSync(docsDir)
-}
-
 // view engine setup
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'pug')

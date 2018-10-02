@@ -6,6 +6,7 @@ const base64Img = require('base64-img')
 
 const File = require('../models/file')
 const User = require('../models/user')
+const { FILES_PATH, DOCS_PATH } = require('../config/file')
 
 const create = async (req, res) => {
   if (req.file) {
@@ -15,7 +16,6 @@ const create = async (req, res) => {
         name: req.file.filename,
         type: 'image'
       })
-
       await file.save()
     }
     res.send({
@@ -27,7 +27,7 @@ const create = async (req, res) => {
     })
   } else if (req.body.file) { // base 64 image
     const fileName = uuidv1()
-    const filePath = base64Img.imgSync(req.body.file, path.resolve('files/'), fileName)
+    const filePath = base64Img.imgSync(req.body.file, FILES_PATH, fileName)
     if (req.currentUser) {
       const file = new File({
         user_id: req.currentUser.id,
@@ -49,7 +49,7 @@ const create = async (req, res) => {
 }
 
 const get = (req, res) => {
-  const filePath = path.resolve(`./files/${req.params.id}`)
+  const filePath = FILES_PATH + req.params.id
   console.info('File Path:', filePath)
   if (fs.existsSync(filePath)) {
     const contentType = mime.contentType(path.extname(req.params.id))
@@ -65,7 +65,7 @@ const get = (req, res) => {
 
 // TODO: it needs a supervisor access or own access
 const getVerifyDoc = (req, res) => {
-  const filePath = path.resolve(`./docs/${req.params.id}`)
+  const filePath = DOCS_PATH + req.params.id
   console.info('File Path:', filePath)
   if (fs.existsSync(filePath)) {
     const contentType = mime.contentType(path.extname(req.params.id))
@@ -105,7 +105,7 @@ const uploadVerifyDoc = async (req, res) => {
   } else {
     const fileName = uuidv1()
     try {
-      const filePath = base64Img.imgSync(req.body.file, path.resolve('docs/'), fileName)
+      const filePath = base64Img.imgSync(req.body.file, DOCS_PATH, fileName)
       const file = new File({
         user_id: currentUser.id,
         name: path.basename(filePath),
@@ -145,7 +145,7 @@ const remove = async (req, res) => {
     })
 
     if (file) {
-      fs.unlinkSync(path.resolve('files/' + req.params.id))
+      fs.unlinkSync(FILES_PATH + req.params.id)
       res.send({
         status: true,
         data: {
