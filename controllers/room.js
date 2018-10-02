@@ -12,13 +12,11 @@ const create = async (req, res) => {
 	const roomObj = req.body
 	let aryMemberId = roomObj.members
 
-
-
 	// TODO: should check duplicated ids
 	aryMemberId.push(req.currentUser.id)
 
 	aryMemberId = aryMemberId.filter((elem, pos) => {
-	    return myArray.indexOf(elem) == pos
+	    return aryMemberId.indexOf(elem) == pos
 	})
 
 	// delete member array
