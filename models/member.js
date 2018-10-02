@@ -17,6 +17,11 @@ const Member = sequelize.define('Member', {
     type: Sequelize.UUID,
     allowNull: false
   },
+  removed: {
+    type: Sequelize.BOOLEAN,
+    allowNull: false,
+    default: false
+  }
 })
 
 module.exports = Member

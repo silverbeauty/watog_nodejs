@@ -14,6 +14,10 @@ router.post('/',
   UserCtrl.checkAuth, catchError(RoomCtrl.create))
 
 // Query my rooms
+router.post('/:id/member',
+  UserCtrl.checkAuth, catchError(RoomCtrl.addMember))
+
+// Query my rooms
 router.get('/my',
   UserCtrl.checkAuth, catchError(RoomCtrl.queryMyRooms))
 

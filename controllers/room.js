@@ -29,7 +29,8 @@ const create = async (req, res) => {
 		const members = await Member.bulkCreate(aryMemberId.map(m => {
 			return {
 				user_id: m,
-				room_id: room.id
+				room_id: room.id,
+				removed: false
 			}
 		}))		
 	}
@@ -66,6 +67,13 @@ const get = async (req, res) => {
 			attributes: userFields
 		}]
 	})
+
+	if (!room) {
+		return res.status(400).send({
+			status: true,
+			error: 'no_room'
+		})
+	}
 
 	res.send({
 		status: true,
@@ -115,7 +123,7 @@ const queryMyRooms = async (req, res) => {
 		include: [{
 			model: Member,
 			include: [{ model: User, attributes: userFields }],
-			where: { user_id: currentUser.id }
+			where: { user_id: currentUser.id, removed: false }
 		}, {
 				model: User,
 				attributes: userFields
@@ -128,9 +136,88 @@ const queryMyRooms = async (req, res) => {
 	})
 }
 
+const addMember = async (req, res) => {
+	const { id } = req.params
+	const { user_id } = req.body
+
+	let room = await Room.findOne({ where: { id }	})
+
+	// Check room
+	if (!room) {
+		return res.status(400).send({
+			status: false,
+			error: 'no_room'
+		})
+	}
+
+	// check user
+	const user = await User.findOne({ where: { id: user_id }})
+	if (!user) {
+		return res.status(400).send({
+			status: false,
+			error: 'no_user'
+		})
+	}
+
+	// Check if owner
+	// TODO: should check if admin
+	if (room.user_id !== req.currentUser.id) {
+		return res.status(400).send({
+			status: false,
+			error: 'no_permission'
+		})
+	}
+
+	let member = await Room.findOne({
+		where: {
+			user_id,
+			room_id: room.id
+		}
+	})
+
+	if (member && !member.removed) {
+		return res.status(400).send({
+			status: false,
+			error: 'already_added'
+		})
+	}
+
+	if (member && member.removed) {
+		member.removed = false;
+		await member.save()
+	} else {
+		member = new Member({
+			user_id,
+			room_id: room_id,
+			removed: false
+		})
+		await member.save()
+	}
+
+	// Should announce here
+
+	// Load room again
+	room = await Room.findOne({
+		where: { id },
+		include: [{
+			model: Member,
+			include: [{ model: User, attributes: userFields }]
+		}, {
+			model: User,
+			attributes: userFields
+		}]
+	})
+
+	res.send({
+		status: true,
+		data: room
+	})
+}
+
 module.exports = {
 	queryMyRooms,
 	query,
 	get,
-	create
+	create,
+	addMember
 }
