@@ -4,6 +4,8 @@ const Sequelize = require('sequelize')
 const User = require('../models/user')
 const Member = require('../models/member')
 const Room = require('../models/room')
+const Message = require('../models/message')
+
 const { Op } = Sequelize
 
 const userFields = ['id', 'first_name', 'last_name', 'hospital', 'picture_profile', 'user_name', 'country']
@@ -223,18 +225,26 @@ const getMessages = async (req, res) => {
 		})
 	}
 
-	const { query } = query
+	const { query } = req
 	const where = {}
 	const limit = query.limit || 10
+	const order = query.order || 'createdAt'
+	const direction = query.direction || 'ASC'
 
 	where.room_id = room.id
-	where.createdAt[Op.lte] = new Date(query.to)
+
+	where.createdAt = {
+		[Op.lte]: new Date(query.to)
+	}
+	console.info('')
 
 	const messages = await Message.findAll({ 
 		where, 
 		limit,
-		include: [{ model: Member, include: [{ model: User, userFields }]}]
+		include: [{ model: Member, include: [{ model: User, attributes: userFields }]}],
+		order: [[order, direction]]
 	})
+
 	res.send({
 		status: true,
 		data: messages
