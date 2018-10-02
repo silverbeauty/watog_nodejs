@@ -1,4 +1,5 @@
-const socketioJwt = require("socketio-jwt")
+const jwt = require('jsonwebtoken')
+
 const User = require('../models/user')
 const Member = require('../models/member')
 const Room = require('../models/room')
@@ -8,9 +9,9 @@ const userFields = ['id', 'first_name', 'last_name', 'hospital', 'picture_profil
 let io
 
 const authenticated = async (socket) => {
+  console.info('Check User fo Socket:', socket.id, socket.decoded)
   //this socket is authenticated, we are good to handle more events from it.
-  const { email } = socket.decoded_token
-  console.log('Socket User Authorized: ' + email)
+  const { email } = socket.decoded
   // TODO: read all rooms
   // TODO: join rooms
   // socket.join('some room');
@@ -19,6 +20,8 @@ const authenticated = async (socket) => {
   // io.to('some room').emit('some event');
   const currentUser = await User.findOne({ where: { email } })
   !currentUser && socket.disconnect()
+
+  console.info('Socket User Authorized: ', currentUser.get({plain: true}))
 
   // Find all his rooms
   const memberRooms = await Room.findAll({
@@ -76,12 +79,34 @@ const createNewMessage = async (socket, currentUser, data, callback) => {
 
 const setup = (io) => {
 	io = io
-
+  console.info('Setup Socket.io:')
   io.sockets
-    .on('connection', socketioJwt.authorize({
-      secret: process.env.JWT_TOKEN,
-      timeout: 15000 // 15 seconds to send the authentication message
-    })).on('authenticated', authenticated)
+    .on('connection', (socket) => {
+      console.info('Socket Connected:', socket.id)
+      setTimeout(() => {
+        if (!socket || !socket.decoded) { // not authenticated for 15 seconds
+
+          try { socket.disconnect(true) } catch(e) { console.error(e) }
+        }
+      }, 15000) // 15 seconds
+      socket.on('authenticate', async (data) => {
+        let decoded
+        try {
+          decoded = jwt.verify(data.token, process.env.JWT_SECRET)
+        } catch (e) {
+          console.error('Socket Auth Failed:', e)
+          socket.disconnect(true)
+          return
+        }
+        console.info('Socket JWT Authenticated:', socket.id, decoded)
+        socket.decoded = decoded
+        authenticated(socket)
+      })
+      .on('disconnecting', () => {
+        console.info('Socket Disconnecting:', socket.id)
+      })
+      //auth(socket)
+    })
 }
 
 module.exports = {
