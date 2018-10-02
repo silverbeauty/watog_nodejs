@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken')
 const User = require('../models/user')
 const Member = require('../models/member')
 const Room = require('../models/room')
-const Message = require('../models/room')
+const Message = require('../models/message')
 
 const userFields = ['id', 'first_name', 'last_name', 'hospital', 'picture_profile', 'user_name', 'country']
 let io
@@ -42,10 +42,10 @@ const authenticated = async (socket) => {
     socket.join(r.id) // subscribe to rooms
   })
 
-  socket.on('new_message', createNewMessage.bind(this, socket, currentUser))
+  socket.on('send_message', createNewMessage.bind(this, socket, currentUser))
 }
 
-const createNewMessage = async (socket, currentUser, data, callback) => {
+const createNewMessage = async (socket, currentUser, data) => {
   const { room_id } = data
   // Load room
   const room = await Room.findOne({
@@ -61,10 +61,10 @@ const createNewMessage = async (socket, currentUser, data, callback) => {
   })
 
   if (!room) {
-    return callback({
+    return {
       status: false,
       error: 'invalid_room'
-    })
+    }
   } 
 
   const message = await (new Message({
@@ -73,10 +73,17 @@ const createNewMessage = async (socket, currentUser, data, callback) => {
     text: data.text,
   })).save()
 
-  callback({
-    status: true,
-    data: message
+  const result = await Message.findOne({
+    where: { id: message.id },
+    include: [{ model: Member, include: [{ model: User, attributes: userFields }] }]
   })
+
+  socket.to(room.id).emit('new_message', result)
+
+  return {
+    status: true,
+    data: result
+  }
 }
 
 const checkJWT = (socket, token) => {

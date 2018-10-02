@@ -8,7 +8,7 @@ const Message = sequelize.define('Message', {
     type: Sequelize.UUID,
     defaultValue: Sequelize.UUIDV4,
   },
-  user_id: {
+  member_id: {
     type: Sequelize.INTEGER,
     allowNull: false
   },
