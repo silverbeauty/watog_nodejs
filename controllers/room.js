@@ -233,10 +233,10 @@ const getMessages = async (req, res) => {
 
 	where.room_id = room.id
 
-	where.createdAt = {
-		[Op.lte]: new Date(query.to)
+	where['createdAt']= {
+		[Op.lte]: new Date(query.to || new Date()),
+		[Op.gt]: new Date(query.from || new Date(0))
 	}
-	console.info('')
 
 	const messages = await Message.findAll({ 
 		where, 

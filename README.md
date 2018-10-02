@@ -829,6 +829,58 @@ Reset password by old password
   }
   ```
 
+#### GET `/api/room/:id/messages?[Query]`   
+
+Get messages for room  
+
+Query: `from`, `to`, `order`, `direction`, `limit`
+
+- `to`: to return messages created before the timestamp, UTC timestamp by `Date().getTime()`, default: new Date().getTime() 
+- `from`: to return messages created after the timestamp, UTC timestamp by `Date().getTime()`, default: new Date().getTime()   
+
+- `direction`: ordering direction, `ASC` or `DESC`, default: `ASC` 
+- `order`: ordering field name, default: `createdAt`
+
+##### Example  
+- /api/room/c3f79091-ec13-492a-9d7f-94a70c075d7e/messages?to=1638496040186&limit=10
+ Get last 10 messages for room: `c3f79091-ec13-492a-9d7f-94a70c075d7e`  
+
+Body
+
+```
+{
+    "status": true,
+    "data": [
+        {
+            "id": "e2857217-a2b7-4ad1-961a-90f07b3fc2db",
+            "room_id": "c3f79091-ec13-492a-9d7f-94a70c075d7e",
+            "member_id": 1,
+            "text": "test",
+            "is_announcement": null,
+            "createdAt": "2018-10-02T16:50:21.363Z",
+            "updatedAt": "2018-10-02T16:50:21.363Z",
+            "Member": {
+                "id": 1,
+                "user_id": 2,
+                "room_id": "c3f79091-ec13-492a-9d7f-94a70c075d7e",
+                "removed": false,
+                "createdAt": "2018-10-02T06:58:07.558Z",
+                "updatedAt": "2018-10-02T06:58:07.558Z",
+                "User": {
+                    "id": 2,
+                    "first_name": "Test1",
+                    "last_name": "Last1",
+                    "hospital": "Hospital1",
+                    "picture_profile": null,
+                    "user_name": "test1",
+                    "country": "France"
+                }
+            }
+        }, {...}, {...}        
+    ]
+}
+```
+
 ## Installed Package Requirements
 
    sudo npm install nodemon -g
