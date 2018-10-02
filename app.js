@@ -5,7 +5,9 @@ const cookieParser = require('cookie-parser')
 const logger = require('morgan')
 const cors = require('cors')
 const fs = require('fs')
-require('dotenv').config()
+
+const { ENV_PATH } = require('./config/path')
+require('dotenv').config({ path: ENV_PATH })
 
 const indexRouter = require('./routes/index')
 

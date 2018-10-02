@@ -6,7 +6,7 @@ const base64Img = require('base64-img')
 
 const File = require('../models/file')
 const User = require('../models/user')
-const { FILES_PATH, DOCS_PATH } = require('../config/file')
+const { FILES_PATH, DOCS_PATH } = require('../config/path')
 
 const create = async (req, res) => {
   if (req.file) {
