@@ -451,6 +451,17 @@ test('Create Sample Data', async t => {
   t.is(queryRoomRes.body.status, true)
   t.is(queryRoomRes.body.data.length, 1)
 
+  // user[0] is adding users[3]
+
+  const addMemberRes = await request(app)
+    .post('/api/room/' + createRoomRes.body.data.id + '/member')
+    .set({ Authorization: tokens[0], 'Content-Type': 'application/json' })
+    .send({
+      user_id: users[3].id
+    })
+
+  t.is(addMemberRes.status, 200)
+
   // Remove user profile test
   const deleteMeRes = await request(app)
     .get(`/api/user/me`)
