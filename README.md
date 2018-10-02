@@ -7,7 +7,16 @@
 `npm start`
 ### Required Env Variables
 
-Set these env variables in .env file at the root level of the project
+Set these env variables in `/var/www/watog_api.com/watog_env`.
+Files, docs, db, test db are stored in the following paths defined in `config/path`.
+
+```
+  module.exports.FILES_PATH = '/var/www/watog_api.com/files/'
+  module.exports.DOCS_PATH = '/var/www/watog_api.com/docs/'
+  module.exports.DB_PATH = '/var/www/watog_api.com/watogDB.sqlite'
+  module.exports.TEST_DB_PATH = '/var/www/watog_api.com/test_watogDB.sqlite'
+  module.exports.ENV_PATH = '/var/www/watog_api.com/watog_env'
+```
 
 #### PORT=3000
 #### TWILIO_SID=***
