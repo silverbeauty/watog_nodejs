@@ -65,10 +65,15 @@ const createNewMessage = async (socket, currentUser, data) => {
       status: false,
       error: 'invalid_room'
     }
-  } 
+  }
+
+  const member = await Member.findOne({
+    user_id: currentUser.id,
+    room_id: room.id
+  })
 
   const message = await (new Message({
-    user_id: currentUser.id,
+    member_id: member.id,
     room_id,
     text: data.text,
   })).save()

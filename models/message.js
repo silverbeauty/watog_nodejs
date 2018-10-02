@@ -8,6 +8,10 @@ const Message = sequelize.define('Message', {
     type: Sequelize.UUID,
     defaultValue: Sequelize.UUIDV4,
   },
+  room_id: {
+    type: Sequelize.UUID,
+    allowNull: false
+  },
   member_id: {
     type: Sequelize.INTEGER,
     allowNull: false

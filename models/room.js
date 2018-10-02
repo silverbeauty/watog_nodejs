@@ -1,5 +1,7 @@
 const sequelize = require('../config/database')
 const Member = require('./member')
+const Message = require('./message')
+
 const Sequelize = require('sequelize')
 
 const Room = sequelize.define('Room', {
@@ -57,7 +59,9 @@ const Room = sequelize.define('Room', {
 })
 
 Room.hasMany(Member, { foreignKey: 'room_id', sourceKey: 'id' })
-
 Member.belongsTo(Room, { foreignKey: 'room_id', sourceKey: 'id' })
+
+Room.hasMany(Message, { foreignKey: 'room_id', sourceKey: 'id' })
+Message.belongsTo(Room, { foreignKey: 'room_id', sourceKey: 'id' })
 
 module.exports = Room

@@ -1,6 +1,7 @@
-const sequelize = require('../config/database')
-
 const Sequelize = require('sequelize')
+
+const sequelize = require('../config/database')
+const Message = require('./message')
 
 const Member = sequelize.define('Member', {
   id: {
@@ -23,5 +24,8 @@ const Member = sequelize.define('Member', {
     default: false
   }
 })
+
+Member.hasMany(Message, { foreignKey: 'member_id', sourceKey: 'id' })
+Message.belongsTo(Member, { foreignKey: 'member_id', sourceKey: 'id' })
 
 module.exports = Member
