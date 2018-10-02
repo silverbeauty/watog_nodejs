@@ -168,7 +168,7 @@ const addMember = async (req, res) => {
 		})
 	}
 
-	let member = await Room.findOne({
+	let member = await Member.findOne({
 		where: {
 			user_id,
 			room_id: room.id
