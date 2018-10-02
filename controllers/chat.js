@@ -6,7 +6,7 @@ const Room = require('../models/room')
 const Message = require('../models/message')
 
 const userFields = ['id', 'first_name', 'last_name', 'hospital', 'picture_profile', 'user_name', 'country']
-let io
+let sio
 
 const authenticated = async (socket) => {
   console.info('Check User fo Socket:', socket.id, socket.decoded)
@@ -84,9 +84,9 @@ const createNewMessage = async (socket, currentUser, data) => {
     include: [{ model: Member, include: [{ model: User, attributes: userFields }] }]
   })
 
-  console.info('New Message Created:', message)
+  console.info('New Message Created:', message.get({plain: true}))
 
-  socket.to(room.id).emit('new_message', result.get({
+  sio.to(room.id).emit('new_message', result.get({
     plain: true
   }))
 
@@ -111,7 +111,7 @@ const checkJWT = (socket, token) => {
 }
 
 const setup = (io) => {
-	io = io
+	sio = io
   console.info('Setup Socket.io:')
   io.sockets
     .on('connection', (socket) => {
