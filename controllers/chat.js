@@ -39,6 +39,7 @@ const authenticated = async (socket) => {
     })
 
   memberRooms.forEach(r => {
+    console.info('Joined to:', r.id)
     socket.join(r.id) // subscribe to rooms
   })
 
@@ -83,7 +84,11 @@ const createNewMessage = async (socket, currentUser, data) => {
     include: [{ model: Member, include: [{ model: User, attributes: userFields }] }]
   })
 
-  socket.to(room.id).emit('new_message', result)
+  console.info('New Message Created:', message)
+
+  socket.to(room.id).emit('new_message', result.get({
+    plain: true
+  }))
 
   return {
     status: true,
