@@ -21,8 +21,10 @@ const authenticated = async (socket) => {
   const currentUser = await User.findOne({ where: { email } })
   !currentUser && socket.disconnect()
 
-  console.info('Socket User Authorized: ', currentUser.get({plain: true}))
-
+  console.info('Socket User Authorized: ', currentUser.get({plain: true}).id)
+  socket.emit('authenticated', {
+    status: true
+  })
   // Find all his rooms
   const memberRooms = await Room.findAll({
     where: {},
@@ -47,7 +49,7 @@ const createNewMessage = async (socket, currentUser, data, callback) => {
   const { room_id } = data
   // Load room
   const room = await Room.findOne({
-    where: { id: id },
+    where: { id: room_id },
     include: [{
       model: Member,
       include: [{ model: User, attributes: userFields }],
@@ -77,30 +79,38 @@ const createNewMessage = async (socket, currentUser, data, callback) => {
   })
 }
 
+const checkJWT = (socket, token) => {
+  let decoded
+  try {
+    decoded = jwt.verify(token, process.env.JWT_SECRET)
+  } catch (e) {
+    console.error('Socket Auth Failed:', e)
+    socket.disconnect(true)
+    return
+  }
+  console.info('Socket JWT Authenticated:', socket.id, decoded)
+  socket.decoded = decoded
+  authenticated(socket)
+}
+
 const setup = (io) => {
 	io = io
   console.info('Setup Socket.io:')
   io.sockets
     .on('connection', (socket) => {
-      console.info('Socket Connected:', socket.id)
-      setTimeout(() => {
-        if (!socket || !socket.decoded) { // not authenticated for 15 seconds
+      const { token } = socket.handshake.query
+      if (token) {
+        checkJWT(socket, token)
+      } else {
+        setTimeout(() => {
+          if (!socket || !socket.decoded) { // not authenticated for 15 seconds
+            try { socket.disconnect(true) } catch(e) { console.error(e) }
+          }
+        }, 15000) // 15 seconds        
+      }
 
-          try { socket.disconnect(true) } catch(e) { console.error(e) }
-        }
-      }, 15000) // 15 seconds
       socket.on('authenticate', async (data) => {
-        let decoded
-        try {
-          decoded = jwt.verify(data.token, process.env.JWT_SECRET)
-        } catch (e) {
-          console.error('Socket Auth Failed:', e)
-          socket.disconnect(true)
-          return
-        }
-        console.info('Socket JWT Authenticated:', socket.id, decoded)
-        socket.decoded = decoded
-        authenticated(socket)
+        checkJWT(socket, data.token)
       })
       .on('disconnecting', () => {
         console.info('Socket Disconnecting:', socket.id)
