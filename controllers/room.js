@@ -214,10 +214,38 @@ const addMember = async (req, res) => {
 	})
 }
 
+const getMessages = (req, res) => {
+	const room = await Room.findOne({ where: { id: req.params.id }})
+	if (!room) {
+		return res.status(400).send({
+			success: false,
+			error: 'no_room'
+		})
+	}
+
+	const { query } = query
+	const where = {}
+	const limit = query.limit || 10
+
+	where.room_id = room.id
+	where.createdAt[Op.lte] = new Date(query.to)
+
+	const messages = await Message.findAll({ 
+		where, 
+		limit,
+		include: [{ model: Member, include: [{ model: User, userFields }]}]
+	})
+	res.send({
+		status: true,
+		data: messages
+	})
+}
+
 module.exports = {
 	queryMyRooms,
 	query,
 	get,
 	create,
-	addMember
+	addMember,
+	getMessages
 }
