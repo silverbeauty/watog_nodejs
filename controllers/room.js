@@ -146,12 +146,12 @@ const edit = async (req, res) => {
 	})
 
 	ChatCtrl.notifyRoomUpdate(result)
+	
 	res.send({
 		status: true,
 		data: result
 	})
 
-	await get(req, res)
 }
 
 const query = async (req, res) => {
