@@ -1015,6 +1015,7 @@ Data
 #### `new_message`: New message is created (Message object)
 #### `room_updated`: Room is updated (Room Object)
 #### `new_room`: A new room is created (Room Object)
+#### `new_member`:  A member left the room (Member Object)
 #### `member_left_room`:  A member left the room (Member Object)
 
 Data  
