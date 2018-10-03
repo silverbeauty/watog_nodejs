@@ -20,23 +20,23 @@ const Room = sequelize.define('Room', {
   },
   jobs: {
     type: Sequelize.STRING,
-    allowNull: false
+    allowNull: true
   },
   topics: {
     type: Sequelize.STRING,
-    allowNull: false
+    allowNull: true
   },
   title: {
     type: Sequelize.STRING,
-    allowNull: false
+    allowNull: true
   },
   description: {
     type: Sequelize.STRING,
-    allowNull: false
+    allowNull: true
   },
   countries: {
     type: Sequelize.STRING,
-    allowNull: false
+    allowNull: true
   },
   is_private: {
     type: Sequelize.BOOLEAN,
