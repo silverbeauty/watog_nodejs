@@ -252,7 +252,11 @@ const addMember = async (req, res) => {
 		where: {
 			user_id,
 			room_id: room.id
-		}
+		},
+		include: [{
+			model: User,
+			attributes: userFields
+		}]
 	})
 
 	if (member && !member.removed) {
@@ -274,6 +278,17 @@ const addMember = async (req, res) => {
 		await member.save()
 	}
 
+	const result = await Member.findOne({
+		where: {
+			id: member.id
+		},
+		include: [{
+			model: User,
+			attributes: userFields
+		}]
+	})
+
+	chat.notfyNewMember(result)
 	// Should announce here
 
 	// Load room again
