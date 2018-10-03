@@ -25,6 +25,10 @@ router.post('/:id/member',
 router.post('/:id/report',
   UserCtrl.checkAuth, catchError(RoomCtrl.report))
 
+// Leave a room
+router.post('/:id/leave',
+  UserCtrl.checkAuth, catchError(RoomCtrl.leave))
+
 // Query my rooms
 router.get('/my',
   UserCtrl.checkAuth, catchError(RoomCtrl.queryMyRooms))

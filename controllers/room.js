@@ -354,11 +354,61 @@ const report = async (req, res) => {
 		description
 	}).save()
 
-	console.info('ReportBody:', roomReport)
-
 	res.send({
 		status: true,
 		data: roomReport
+	})
+}
+
+const leave = async (req, res) => {
+	const { id } = req.params
+	const user_id = req.currentUser.id
+
+	let room = await Room.findOne({ where: { id }	})
+
+	// Check room
+	if (!room) {
+		return res.status(400).send({
+			status: false,
+			error: 'no_room'
+		})
+	}
+
+	// Check if owner
+	// TODO: should check if admin
+	if (room.user_id === req.currentUser.id) {
+		return res.status(400).send({
+			status: false,
+			error: 'creator_not_allowed'
+		})
+	}
+
+	const member = await Member.findOne({
+		where: {
+			user_id,
+			room_id: room.id
+		}
+	})
+
+	if (!member) {
+		return res.status(400).send({
+			status: false,
+			error: 'not_member'
+		})
+	} else if (member.removed) {
+		return res.status(400).send({
+			status: false,
+			error: 'already_left'
+		})
+	}
+
+	member.removed = true
+	const result = await member.save()
+
+	ChatCtrl.notifyRoomMemberLeft(result)
+
+	res.send({
+		status: true
 	})
 }
 
@@ -366,6 +416,7 @@ module.exports = {
 	queryMyRooms,
 	query,
 	get,
+	leave,
 	edit,
 	create,
 	addMember,

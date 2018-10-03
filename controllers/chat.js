@@ -112,6 +112,11 @@ const notifyRoomUpdate = (room) => {
   sio.to(room.id).email('room_updated', room.get({ plain: true }))
 }
 
+const notifyRoomMemberLeft = (member) => {
+  if (!sio) { return console.info('Socket not ready for member leave:', member ) }
+  sio.to(room.id).email('member_left_room', member.get({ plain: true }))
+}
+
 const checkJWT = (socket, token) => {
   let decoded
   try {
@@ -155,5 +160,6 @@ const setup = (io) => {
 module.exports = {
 	setup,
   notifyNewRoom,
-  notifyRoomUpdate
+  notifyRoomUpdate,
+  notifyRoomMemberLeft
 }
