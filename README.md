@@ -806,8 +806,9 @@ Reset password by old password
 #### PUT `/api/room/:id`.
 Edit room.    
 
-
 Available request body fields: 'jobs', 'topics', 'title', 'description', 'countries', 'is_private', 'avatar', 'background', 'category_id', 'archived'
+
+To archive a room: `archived: false`
 
 Same response with POST
 
@@ -887,7 +888,7 @@ Error types: 'no_room', 'invalid_permission'
             }
         }
     ]
-}
+  }
   ```
 
 #### GET `/api/room/:id/messages?[Query]`   
@@ -944,6 +945,27 @@ Body
             }
         }, {...}, {...}        
     ]
+}
+```
+#### POST `/api/room/:id/report`
+
+Report a room
+
+Body:
+```
+{
+  "type": // 'spam', 'violence', 'sex', 'other',
+  "description": // can be missed
+}
+```
+
+Response
+```
+{
+  "type":
+  "description":
+  "user_id":
+  "room_id":
 }
 ```
 
