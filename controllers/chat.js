@@ -38,6 +38,9 @@ const authenticated = async (socket) => {
       }]
     })
 
+  // Join self channel - will be used to notify room events
+  socket.join(currentUser.id)
+
   memberRooms.forEach(r => {
     console.info('Joined to:', r.id)
     socket.join(r.id) // subscribe to rooms
@@ -94,6 +97,10 @@ const createNewMessage = async (socket, currentUser, data) => {
     status: true,
     data: result
   }
+}
+
+const notifyNewRoom = (room) => {
+  
 }
 
 const checkJWT = (socket, token) => {

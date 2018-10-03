@@ -45,9 +45,9 @@ const create = async (req, res) => {
 		},
 		include: [{
 			model: Member,
-			include: [{ model: User}]
+			include: [{ model: User, attributes: userFields }]
 		}, {
-			model: User
+			model: User, attributes: userFields
 		}]
 	})
 
