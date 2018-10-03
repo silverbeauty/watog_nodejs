@@ -109,7 +109,7 @@ const edit = async (req, res) => {
 
 	const { body } = req
 
-	const fields = ['jobs', 'topics', 'title', 'description', 'countries', 'is_private', 'avatar', 'background', 'category_id']
+	const fields = ['jobs', 'topics', 'title', 'description', 'countries', 'is_private', 'avatar', 'background', 'category_id', 'archived']
 	
 	const invalidFields = []
 
@@ -153,6 +153,12 @@ const query = async (req, res) => {
 			[Op.like]: '%' + query.description + '%'
 		}
 	}	
+
+	if (!('archived' in query)) {
+		query.archived = {
+			[Op.not]: true
+		}
+	}
 
 	const rooms = await Room.findAll({
 		where: query,
@@ -312,7 +318,6 @@ const getMessages = async (req, res) => {
 		data: messages
 	})
 }
-
 
 module.exports = {
 	queryMyRooms,

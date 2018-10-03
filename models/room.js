@@ -43,6 +43,11 @@ const Room = sequelize.define('Room', {
     allowNull: true,
     default: false
   },
+  archived: {
+    type: Sequelize.BOOLEAN,
+    allowNull: true,
+    default: false
+  },
   is_one_to_one: { // is one to one or is multi
     type: Sequelize.BOOLEAN,
     allowNull: true,
