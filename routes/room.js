@@ -29,6 +29,10 @@ router.get('/my',
 router.get('/:id',
   UserCtrl.checkAuth, catchError(RoomCtrl.get))
 
+// Edit a single room
+router.put('/:id',
+  UserCtrl.checkAuth, catchError(RoomCtrl.edit))
+
 // Query rooms
 router.get('/',
   UserCtrl.checkAuth, catchError(RoomCtrl.query))

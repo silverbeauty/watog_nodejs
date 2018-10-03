@@ -87,6 +87,49 @@ const get = async (req, res) => {
 	})
 }
 
+const edit = async (req, res) => {
+	const { id } = req.params
+	let room = await Room.findOne({
+		where: { id }
+	})
+
+	if (!room) {
+		return res.status(400).send({
+			status: true,
+			error: 'no_room'
+		})
+	}
+	const { body } = req
+
+	const fields = ['jobs', 'topics', 'title', 'description', 'countries', 'is_private', 'avatar', 'background', 'category_id']
+	
+	const invalidFields = []
+
+	for (let key in body) {
+		if (fields.indexOf(key) < 0) { // It is not allowed
+			invalidFields.push(key)
+		}
+	}
+
+	if (invalidFields.length > 0) {
+		return res.status(400).send({
+			status: false,
+			error: 'fields_not_allowed',
+			fields: invalidFields
+		})
+	}
+
+	// Assign to room
+	for (let key in body) {
+		room[key] = body[key]
+	}
+
+	await room.save()
+	req.params.id = room.id
+
+	await get(req, res)
+}
+
 const query = async (req, res) => {
 	const { query } = req
 	
@@ -262,10 +305,12 @@ const getMessages = async (req, res) => {
 	})
 }
 
+
 module.exports = {
 	queryMyRooms,
 	query,
 	get,
+	edit,
 	create,
 	addMember,
 	getMessages
