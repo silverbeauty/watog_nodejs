@@ -103,13 +103,13 @@ const notifyNewRoom = (room) => {
   if (!sio) { return console.info('Socket not ready for room:', room ) }
   const { Members } = room
   Members.forEach((m) => {
-    sio.to(m.user_id).emit('new_room', room)
+    sio.to(m.user_id).emit('new_room', room.get({ plain: true }))
   })
 }
 
 const notifyRoomUpdate = (room) => {
   if (!sio) { return console.info('Socket not ready for room:', room ) }
-  sio.to(room.id).email('room_updated', room)
+  sio.to(room.id).email('room_updated', room.get({ plain: true }))
 }
 
 const checkJWT = (socket, token) => {
