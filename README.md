@@ -799,15 +799,27 @@ Reset password by old password
             "country": "France"
         }
     }
-}
+  }
   ```
 
 
-#### PUT `/api/room/:id`.  
+#### PUT `/api/room/:id`.
+Edit room.    
+
 
 Available request body fields: 'jobs', 'topics', 'title', 'description', 'countries', 'is_private', 'avatar', 'background', 'category_id'
 
 Same response with POST
+
+Error response: 
+
+```
+  {
+    status: false,
+    error: 'no_room'
+  }
+```
+Error types: 'no_room', 'invalid_permission'
 
 #### GET `/api/room/my`.  
   Query my rooms.  
