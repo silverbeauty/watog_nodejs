@@ -109,12 +109,14 @@ const notifyNewRoom = (room) => {
 
 const notifyRoomUpdate = (room) => {
   if (!sio) { return console.info('Socket not ready for room:', room ) }
-  sio.to(room.id).email('room_updated', room.get({ plain: true }))
+  sio.to(room.id).emit('room_updated', room.get({ plain: true }))
 }
 
 const notifyRoomMemberLeft = (member) => {
   if (!sio) { return console.info('Socket not ready for member leave:', member ) }
-  sio.to(room.id).email('member_left_room', member.get({ plain: true }))
+  // Leave room
+  sio.to(member.user_id).leave(member.room_id)
+  sio.to(member.room_id).emit('member_left_room', member.get({ plain: true }))
 }
 
 const checkJWT = (socket, token) => {

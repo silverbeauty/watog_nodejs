@@ -408,7 +408,8 @@ const leave = async (req, res) => {
 	ChatCtrl.notifyRoomMemberLeft(result)
 
 	res.send({
-		status: true
+		status: true,
+		data: result
 	})
 }
 

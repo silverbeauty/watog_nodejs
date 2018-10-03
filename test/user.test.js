@@ -503,6 +503,17 @@ test('Create Sample Data', async t => {
   t.is(reportRoomRes.body.data.user_id, users[1].id)
   t.is(reportRoomRes.body.data.room_id, createRoomRes.body.data.id)
 
+
+  const leaveRoomRes = await request(app)
+    .post('/api/room/' + createRoomRes.body.data.id + '/leave')
+    .set({ Authorization: tokens[1], 'Content-Type': 'application/json' })
+    .send()
+
+  t.is(leaveRoomRes.status, 200)
+  t.is(leaveRoomRes.body.status, true)
+  t.is(leaveRoomRes.body.data.removed, true)
+  t.is(leaveRoomRes.body.data.room_id, createRoomRes.body.data.id)
+
   // Remove user profile test
   const deleteMeRes = await request(app)
     .get(`/api/user/me`)

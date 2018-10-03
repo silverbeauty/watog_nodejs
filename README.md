@@ -962,10 +962,34 @@ Body:
 Response
 ```
 {
-  "type":
-  "description":
-  "user_id":
-  "room_id":
+  status:
+  data: {
+    "type":
+    "description":
+    "user_id":
+    "room_id":    
+  }
+}
+```
+
+#### POST `/api/room/:id/leave`
+
+Leave a room
+
+Body:
+```
+{
+
+}
+```
+
+Response
+```
+{
+  status: true,
+  data: { // Member object
+
+  }
 }
 ```
 
@@ -991,6 +1015,7 @@ Data
 #### `new_message`: New message is created (Message object)
 #### `room_updated`: Room is updated (Room Object)
 #### `new_room`: A new room is created (Room Object)
+#### `member_left_room`:  A member left the room (Member Object)
 
 Data  
 ```
