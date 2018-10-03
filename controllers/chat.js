@@ -100,6 +100,7 @@ const createNewMessage = async (socket, currentUser, data) => {
 }
 
 const notifyNewRoom = (room) => {
+  if (!sio) { return console.info('Socket not ready for room:', room ) }
   const { Members } = room
   Members.forEach((m) => {
     sio.to(m.user_id).emit('new_room', room)

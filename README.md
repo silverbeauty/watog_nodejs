@@ -740,6 +740,7 @@ Reset password by old password
   {
     "category_id": 1,
     "jobs": "OBG",
+    "topics": "topic1",
     "description": "Room2 Description",
     "title": "Room2",
     "countries": "USA",
@@ -753,10 +754,10 @@ Reset password by old password
   {
     "status": true,
     "data": {
-        "id": "2aad5346-7d41-4fd4-afcd-31e6ec53c7d0",
+        "id": "e63f0c83-cd27-4daa-8163-99a399fbbeb1",
         "user_id": 2,
-        "category_id": 1,
         "jobs": "OBG",
+        "topics": "topic1",
         "title": "Room2",
         "description": "Room2 Description",
         "countries": "USA",
@@ -765,16 +766,17 @@ Reset password by old password
         "hash": null,
         "avatar": null,
         "background": null,
-        "createdAt": "2018-10-03T06:12:01.681Z",
-        "updatedAt": "2018-10-03T06:12:01.681Z",
-        "Members": [
+        "createdAt": "2018-10-03T06:58:08.019Z",
+        "updatedAt": "2018-10-03T06:58:08.019Z",
+        "category_id": 1,
+        "Members": [ // Members
             {
                 "id": 5,
                 "user_id": 1,
-                "room_id": "2aad5346-7d41-4fd4-afcd-31e6ec53c7d0",
+                "room_id": "e63f0c83-cd27-4daa-8163-99a399fbbeb1",
                 "removed": false,
-                "createdAt": "2018-10-03T06:12:01.686Z",
-                "updatedAt": "2018-10-03T06:12:01.686Z",
+                "createdAt": "2018-10-03T06:58:08.032Z",
+                "updatedAt": "2018-10-03T06:58:08.032Z",
                 "User": {
                     "id": 1,
                     "first_name": "Test0",
@@ -785,42 +787,8 @@ Reset password by old password
                     "country": "USA"
                 }
             },
-            {
-                "id": 6,
-                "user_id": 2,
-                "room_id": "2aad5346-7d41-4fd4-afcd-31e6ec53c7d0",
-                "removed": false,
-                "createdAt": "2018-10-03T06:12:01.686Z",
-                "updatedAt": "2018-10-03T06:12:01.686Z",
-                "User": {
-                    "id": 2,
-                    "first_name": "Test1",
-                    "last_name": "Last1",
-                    "hospital": "Hospital1",
-                    "picture_profile": null,
-                    "user_name": "test1",
-                    "country": "France"
-                }
-            },
-            {
-                "id": 7,
-                "user_id": 3,
-                "room_id": "2aad5346-7d41-4fd4-afcd-31e6ec53c7d0",
-                "removed": false,
-                "createdAt": "2018-10-03T06:12:01.686Z",
-                "updatedAt": "2018-10-03T06:12:01.686Z",
-                "User": {
-                    "id": 3,
-                    "first_name": "Test2",
-                    "last_name": "Last2",
-                    "hospital": "Hospital2",
-                    "picture_profile": null,
-                    "user_name": "test2",
-                    "country": "Germany"
-                }
-            }
         ],
-        "User": {
+        "User": { // Creator
             "id": 2,
             "first_name": "Test1",
             "last_name": "Last1",

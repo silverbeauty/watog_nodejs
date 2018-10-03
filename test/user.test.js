@@ -417,9 +417,9 @@ test('Create Sample Data', async t => {
     .post(`/api/room`)
     .set({ Authorization: tokens[0], 'Content-Type': 'application/json' })
     .send({
-      category_id: 1,
       jobs: 'obg',
       title: 'test',
+      topics: 'topic1',
       description: 'test room',
       countries: 'USA',
       members: [users[1].id, users[2].id] // add user[]
