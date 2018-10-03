@@ -966,7 +966,9 @@ Data
 #### Server -> Client
 
 #### `authenticated`: Socket.io login success
-#### `new_message`: New message is created
+#### `new_message`: New message is created (Message object)
+#### `room_updated`: Room is updated (Room Object)
+#### `new_room`: A new room is created (Room Object)
 
 Data  
 ```

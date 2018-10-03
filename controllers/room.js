@@ -133,7 +133,23 @@ const edit = async (req, res) => {
 	}
 
 	await room.save()
-	req.params.id = room.id
+
+	const result = await Room.findOne({
+		where: { id },
+		include: [{
+			model: Member,
+			include: [{ model: User, attributes: userFields }]
+		}, {
+			model: User,
+			attributes: userFields
+		}]
+	})
+
+	ChatCtrl.notifyRoomUpdate(result)
+	res.send({
+		status: true,
+		data: result
+	})
 
 	await get(req, res)
 }

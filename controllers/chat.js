@@ -107,6 +107,11 @@ const notifyNewRoom = (room) => {
   })
 }
 
+const notifyRoomUpdate = (room) => {
+  if (!sio) { return console.info('Socket not ready for room:', room ) }
+  sio.to(room.id).email('room_updated', room)
+}
+
 const checkJWT = (socket, token) => {
   let decoded
   try {
@@ -149,5 +154,6 @@ const setup = (io) => {
 
 module.exports = {
 	setup,
-  notifyNewRoom
+  notifyNewRoom,
+  notifyRoomUpdate
 }
