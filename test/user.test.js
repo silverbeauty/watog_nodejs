@@ -491,7 +491,7 @@ test('Create Sample Data', async t => {
   const reportRoomRes = await request(app)
     .post('/api/room/' + createRoomRes.body.data.id + '/report')
     .set({ Authorization: tokens[1], 'Content-Type': 'application/json' })
-    .set({
+    .send({
       type: 'test',
       description: 'test_desc'
     })

@@ -345,11 +345,14 @@ const report = async (req, res) => {
 			error: 'no_room'
 		})
 	}
+	const { type, description } = req.body
+	console.info('ReportBody:', req.body)
 
 	const roomReport = await new RoomReport({
 		user_id: req.currentUser.id,
 		room_id: room.id,
-		...req.body
+		type, 
+		description
 	}).save()
 
 	res.send({
