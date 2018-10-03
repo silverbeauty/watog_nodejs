@@ -99,6 +99,14 @@ const edit = async (req, res) => {
 			error: 'no_room'
 		})
 	}
+
+	if (room.user_id !== req.currentUser.id) {
+		return res.status(400).send({
+			status: true,
+			error: 'invalid_permission'
+		})
+	}
+
 	const { body } = req
 
 	const fields = ['jobs', 'topics', 'title', 'description', 'countries', 'is_private', 'avatar', 'background', 'category_id']

@@ -463,6 +463,19 @@ test('Create Sample Data', async t => {
   t.is(getRoomRes.status, 200)
   t.is(getRoomRes.body.data.Members.length, 4) // 4 members - 0,1,2,3
 
+  // Edit room
+
+  const editRoomRes = await request(app)
+    .put(`/api/room/${createRoomRes.body.data.id}`)
+    .set({ Authorization: tokens[0], 'Content-Type': 'application/json' })
+    .send({
+      title: 'Edited Title'
+    })
+
+  t.is(editRoomRes.status, 200)
+  t.is(editRoomRes.body.status, true)
+  t.is(editRoomRes.body.data.title, 'Edited Title')
+
   // add again
   addMemberRes = await request(app)
     .post('/api/room/' + createRoomRes.body.data.id + '/member')

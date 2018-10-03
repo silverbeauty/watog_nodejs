@@ -744,7 +744,8 @@ Reset password by old password
     "description": "Room2 Description",
     "title": "Room2",
     "countries": "USA",
-    "members": [1, 2, 3]
+    "members": [1, 2, 3],
+    "avatar": "http://xxx.xxx/xxx.jpg"
   }
 
   ```
