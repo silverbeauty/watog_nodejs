@@ -801,6 +801,14 @@ Reset password by old password
     }
 }
   ```
+
+
+#### PUT `/api/room/:id`.  
+
+Available request body fields: 'jobs', 'topics', 'title', 'description', 'countries', 'is_private', 'avatar', 'background', 'category_id'
+
+Same response with POST
+
 #### GET `/api/room/my`.  
   Query my rooms.  
 
