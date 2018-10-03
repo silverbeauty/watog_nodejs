@@ -383,7 +383,7 @@ const leave = async (req, res) => {
 		})
 	}
 
-	const member = await Member.findOne({
+	let member = await Member.findOne({
 		where: {
 			user_id,
 			room_id: room.id
@@ -403,7 +403,14 @@ const leave = async (req, res) => {
 	}
 
 	member.removed = true
-	const result = await member.save()
+	await member.save()
+
+	const result = await Member.findOne({
+		where: {
+			id: member.id,
+		},
+		include: [{ model: User, attributes: userFields }]
+	})
 
 	ChatCtrl.notifyRoomMemberLeft(result)
 
