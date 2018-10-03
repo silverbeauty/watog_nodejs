@@ -807,7 +807,7 @@ Reset password by old password
 Edit room.    
 
 
-Available request body fields: 'jobs', 'topics', 'title', 'description', 'countries', 'is_private', 'avatar', 'background', 'category_id'
+Available request body fields: 'jobs', 'topics', 'title', 'description', 'countries', 'is_private', 'avatar', 'background', 'category_id', 'archived'
 
 Same response with POST
 
