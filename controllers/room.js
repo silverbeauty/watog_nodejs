@@ -4,6 +4,7 @@ const Sequelize = require('sequelize')
 const User = require('../models/user')
 const Member = require('../models/member')
 const Room = require('../models/room')
+const RoomReport = require('../models/room_report')
 const Message = require('../models/message')
 const ChatCtrl = require('./chat')
 
@@ -335,6 +336,28 @@ const getMessages = async (req, res) => {
 	})
 }
 
+const report = async (req, res) => {
+	const { id } = req.params
+	const room = await Room.findOne({ where: { id }})
+	if (!room) {
+		return res.status(400).send({
+			status: false,
+			error: 'no_room'
+		})
+	}
+
+	const roomReport = await new RoomReport({
+		user_id: req.currentUser.id,
+		room_id: room.id,
+		...req.body
+	}).save()
+
+	res.send({
+		status: true,
+		data: roomReport
+	})
+}
+
 module.exports = {
 	queryMyRooms,
 	query,
@@ -342,5 +365,6 @@ module.exports = {
 	edit,
 	create,
 	addMember,
-	getMessages
+	getMessages,
+	report
 }

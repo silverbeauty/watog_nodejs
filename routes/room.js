@@ -17,9 +17,13 @@ router.post('/',
 router.get('/:id/messages',
   UserCtrl.checkAuth, catchError(RoomCtrl.getMessages))
 
-// Query my rooms
+// Add Member to room
 router.post('/:id/member',
   UserCtrl.checkAuth, catchError(RoomCtrl.addMember))
+
+// Report a room
+router.post('/:id/report',
+  UserCtrl.checkAuth, catchError(RoomCtrl.report))
 
 // Query my rooms
 router.get('/my',
