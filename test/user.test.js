@@ -498,7 +498,7 @@ test('Create Sample Data', async t => {
 
   t.is(reportRoomRes.status, 200)
   t.is(reportRoomRes.body.status, true)
-  t.is(reportRoomRes.body.data.title, 'test')
+  t.is(reportRoomRes.body.data.type, 'test')
   t.is(reportRoomRes.body.data.description, 'test_desc')
   t.is(reportRoomRes.body.data.user_id, users[1].id)
   t.is(reportRoomRes.body.data.room_id, createRoomRes.body.data.id)

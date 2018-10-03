@@ -346,7 +346,6 @@ const report = async (req, res) => {
 		})
 	}
 	const { type, description } = req.body
-	console.info('ReportBody:', req.body)
 
 	const roomReport = await new RoomReport({
 		user_id: req.currentUser.id,
@@ -354,6 +353,8 @@ const report = async (req, res) => {
 		type, 
 		description
 	}).save()
+
+	console.info('ReportBody:', roomReport)
 
 	res.send({
 		status: true,
