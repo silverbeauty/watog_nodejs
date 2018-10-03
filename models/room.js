@@ -14,11 +14,15 @@ const Room = sequelize.define('Room', {
     type: Sequelize.INTEGER,
     allowNull: false
   },
-  category_id: { // Topic
+  category_id: { // Category
     type: Sequelize.INTEGER,
-    allowNull: false
+    allowNull: true
   },
   jobs: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
+  topics: {
     type: Sequelize.STRING,
     allowNull: false
   },
