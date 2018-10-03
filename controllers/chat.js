@@ -100,7 +100,10 @@ const createNewMessage = async (socket, currentUser, data) => {
 }
 
 const notifyNewRoom = (room) => {
-  
+  const { Members } = room
+  Members.forEach((m) => {
+    sio.to(m.user_id).emit('new_room', room)
+  })
 }
 
 const checkJWT = (socket, token) => {
@@ -144,5 +147,6 @@ const setup = (io) => {
 }
 
 module.exports = {
-	setup
+	setup,
+  notifyNewRoom
 }

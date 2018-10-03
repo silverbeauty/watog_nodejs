@@ -738,61 +738,99 @@ Reset password by old password
   Body. 
   ```
   {
-      category_id: 1,
-      jobs: String, // separated by ,
-      title: String,
-      description: String,
-      countries: String, // separated by ,
-      members: [1, 2, 3] // array of user id
+    "category_id": 1,
+    "jobs": "OBG",
+    "description": "Room2 Description",
+    "title": "Room2",
+    "countries": "USA",
+    "members": [1, 2, 3]
   }
+
   ```
 
   Response
   ```
   {
-              "id": "c3f79091-ec13-492a-9d7f-94a70c075d7e",
-              "user_id": 1,
-              "category_id": 1,
-              "jobs": "obg",
-              "title": "test",
-              "description": "test room",
-              "countries": "USA",
-              "is_private": null,
-              "is_one_to_one": null,
-              "hash": null,
-              "avatar": null,
-              "background": null,
-              "createdAt": "2018-10-02T06:58:07.555Z",
-              "updatedAt": "2018-10-02T06:58:07.555Z",
-              "Members": [
-                  {
-                      "id": 3,
-                      "user_id": 1,
-                      "room_id": "c3f79091-ec13-492a-9d7f-94a70c075d7e",
-                      "removed": false,
-                      "createdAt": "2018-10-02T06:58:07.558Z",
-                      "updatedAt": "2018-10-02T06:58:07.558Z",
-                      "User": {
-                          "id": 1,
-                          "first_name": "Test0",
-                          "last_name": "Last0",
-                          "hospital": "Hospital0",
-                          "picture_profile": null,
-                          "user_name": "test0",
-                          "country": "USA"
-                      }
-                  },
-              ],
-              "User": { // Creator
-                  "id": 1,
-                  "first_name": "Test0",
-                  "last_name": "Last0",
-                  "hospital": "Hospital0",
-                  "picture_profile": null,
-                  "user_name": "test0",
-                  "country": "USA"
-              }
-          }
+    "status": true,
+    "data": {
+        "id": "2aad5346-7d41-4fd4-afcd-31e6ec53c7d0",
+        "user_id": 2,
+        "category_id": 1,
+        "jobs": "OBG",
+        "title": "Room2",
+        "description": "Room2 Description",
+        "countries": "USA",
+        "is_private": null,
+        "is_one_to_one": null,
+        "hash": null,
+        "avatar": null,
+        "background": null,
+        "createdAt": "2018-10-03T06:12:01.681Z",
+        "updatedAt": "2018-10-03T06:12:01.681Z",
+        "Members": [
+            {
+                "id": 5,
+                "user_id": 1,
+                "room_id": "2aad5346-7d41-4fd4-afcd-31e6ec53c7d0",
+                "removed": false,
+                "createdAt": "2018-10-03T06:12:01.686Z",
+                "updatedAt": "2018-10-03T06:12:01.686Z",
+                "User": {
+                    "id": 1,
+                    "first_name": "Test0",
+                    "last_name": "Last0",
+                    "hospital": "Hospital0",
+                    "picture_profile": null,
+                    "user_name": "test0",
+                    "country": "USA"
+                }
+            },
+            {
+                "id": 6,
+                "user_id": 2,
+                "room_id": "2aad5346-7d41-4fd4-afcd-31e6ec53c7d0",
+                "removed": false,
+                "createdAt": "2018-10-03T06:12:01.686Z",
+                "updatedAt": "2018-10-03T06:12:01.686Z",
+                "User": {
+                    "id": 2,
+                    "first_name": "Test1",
+                    "last_name": "Last1",
+                    "hospital": "Hospital1",
+                    "picture_profile": null,
+                    "user_name": "test1",
+                    "country": "France"
+                }
+            },
+            {
+                "id": 7,
+                "user_id": 3,
+                "room_id": "2aad5346-7d41-4fd4-afcd-31e6ec53c7d0",
+                "removed": false,
+                "createdAt": "2018-10-03T06:12:01.686Z",
+                "updatedAt": "2018-10-03T06:12:01.686Z",
+                "User": {
+                    "id": 3,
+                    "first_name": "Test2",
+                    "last_name": "Last2",
+                    "hospital": "Hospital2",
+                    "picture_profile": null,
+                    "user_name": "test2",
+                    "country": "Germany"
+                }
+            }
+        ],
+        "User": {
+            "id": 2,
+            "first_name": "Test1",
+            "last_name": "Last1",
+            "hospital": "Hospital1",
+            "picture_profile": null,
+            "user_name": "test1",
+            "country": "France"
+        }
+    }
+}
   ```
 #### GET `/api/room/my`.  
   Query my rooms.  

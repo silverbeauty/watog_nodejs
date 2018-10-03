@@ -5,6 +5,7 @@ const User = require('../models/user')
 const Member = require('../models/member')
 const Room = require('../models/room')
 const Message = require('../models/message')
+const ChatCtrl = require('./chat')
 
 const { Op } = Sequelize
 
@@ -50,6 +51,9 @@ const create = async (req, res) => {
 			model: User, attributes: userFields
 		}]
 	})
+
+	// Emit signals in new room
+	ChatCtrl.notifyNewRoom(room)
 
 	res.send({
 		status: true,
