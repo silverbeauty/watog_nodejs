@@ -22,7 +22,22 @@ if (process.env.NODE_ENV === 'test') {
     storage: TEST_DB_PATH
   })
 } else { // production mode
-  sequelize = new Sequelize(process.env.DB_URL)
+  // sequelize = new Sequelize(process.env.DB_URL)
+  sequelize = new Sequelize('database', null, null, {
+    host: 'localhost',
+    dialect: 'sqlite',
+    operatorsAliases: false,
+
+    pool: {
+      max: 5,
+      min: 0,
+      acquire: 30000,
+      idle: 10000
+    },
+
+    // SQLite only
+    storage: DB_PATH
+  })
 }
 
 sequelize
