@@ -100,7 +100,7 @@ const createNewMessage = async (socket, currentUser, data) => {
 }
 
 const notifyNewRoom = (room) => {
-  if (!sio) { return console.info('Socket not ready for room:', room ) }
+  if (!sio) { return console.info('Socket not ready for room:', room.get({ plain: true }) ) }
   const { Members } = room
   Members.forEach((m) => {
     sio.to(m.user_id).emit('new_room', room.get({ plain: true }))
@@ -108,19 +108,19 @@ const notifyNewRoom = (room) => {
 }
 
 const notifyRoomUpdate = (room) => {
-  if (!sio) { return console.info('Socket not ready for room:', room ) }
+  if (!sio) { return console.info('Socket not ready for room:', room.get({ plain: true }) ) }
   sio.to(room.id).emit('room_updated', room.get({ plain: true }))
 }
 
 const notifyRoomMemberLeft = (member) => {
-  if (!sio) { return console.info('Socket not ready for member leave:', member ) }
+  if (!sio) { return console.info('Socket not ready for member leave:', member.get({ plain: true }) ) }
   // Leave room
   sio.to(member.user_id).leave(member.room_id)
   sio.to(member.room_id).emit('member_left_room', member.get({ plain: true }))
 }
 
 const notfyNewMember = (member) => {
-  if (!sio) { return console.info('Socket not ready for member leave:', member ) }
+  if (!sio) { return console.info('Socket not ready for member leave:', member.get({ plain: true }) ) }
   // Leave room
   sio.to(member.user_id).join(member.room_id)
   sio.to(member.room_id).emit('new_member', member.get({ plain: true }))
