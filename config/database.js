@@ -6,7 +6,7 @@ console.info('NODE_ENV:', process.env.NODE_ENV)
 let sequelize
 
 if (process.env.NODE_ENV === 'test') {
-  const sequelize = new Sequelize('database', null, null, {
+  sequelize = new Sequelize('database', null, null, {
     host: 'localhost',
     dialect: 'sqlite',
     operatorsAliases: false,
