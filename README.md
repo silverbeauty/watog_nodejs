@@ -995,6 +995,7 @@ Response
 
 ### Socket.io signals
 Socket.io Connection URL: http://xxx:port?token=`JWT string`  
+
 After connected, the client will receive `authenticated` signal
 
 #### Client -> Server
