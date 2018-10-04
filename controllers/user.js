@@ -328,7 +328,7 @@ const queryUsers = async (req, res) => {
   }
 
   query.sms_verified_date = {
-    [Op.not]: null
+    [Op.gt]: new Date(0)
   }
 
   // Enable this after mail gun integration
