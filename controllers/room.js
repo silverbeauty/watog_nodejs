@@ -242,6 +242,9 @@ const addMember = async (req, res) => {
 	// Check if owner
 	// TODO: should check if admin
 	if (room.user_id !== req.currentUser.id) {
+		console.info('Room Creator:', room.user_id)
+		console.info('Current User:', req.currentUser.id)
+
 		return res.status(400).send({
 			status: false,
 			error: 'no_permission'
@@ -288,7 +291,7 @@ const addMember = async (req, res) => {
 		}]
 	})
 
-	chat.notfyNewMember(result)
+	ChatCtrl.notfyNewMember(result)
 	// Should announce here
 
 	// Load room again

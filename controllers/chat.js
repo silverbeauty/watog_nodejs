@@ -170,5 +170,6 @@ module.exports = {
 	setup,
   notifyNewRoom,
   notifyRoomUpdate,
+  notfyNewMember,
   notifyRoomMemberLeft
 }
