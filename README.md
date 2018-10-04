@@ -1000,6 +1000,14 @@ After connected, the client will receive `authenticated` signal
 
 #### Client -> Server
 
+##### `authenticate`: Send JWT token to authenticate
+
+```
+{
+  token: 
+}
+```
+
 ##### `send_message`: Send a new message
 Data  
 
