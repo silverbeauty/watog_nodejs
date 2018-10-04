@@ -808,7 +808,7 @@ Edit room.
 
 Available request body fields: 'jobs', 'topics', 'title', 'description', 'countries', 'is_private', 'avatar', 'background', 'category_id', 'archived'
 
-To archive a room: `archived: false`
+To archive a room: `archived: true`
 
 Same response with POST
 
