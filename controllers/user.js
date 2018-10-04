@@ -323,6 +323,20 @@ const queryUsers = async (req, res) => {
 
   // Exclude removed users
   query.removed = { [Op.not]: true }
+  query.proof_of_status = {
+    [Op.not]: null
+  }
+
+  query.sms_verified_date = {
+    [Op.not]: null
+  }
+
+  // Enable this after mail gun integration
+  // query.email_verified_date = {
+  //   [Op.not]: null
+  // }
+  // Exclude non verified users
+
 
   // Remove offset, limit, name
   delete query.limit
