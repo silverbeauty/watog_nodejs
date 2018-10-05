@@ -21,6 +21,10 @@ router.get('/:id/messages',
 router.post('/:id/member',
   UserCtrl.checkAuth, catchError(RoomCtrl.addMember))
 
+// Kick a member
+router.delete('/:id/member',
+  UserCtrl.checkAuth, catchError(RoomCtrl.kickMember))
+
 // Report a room
 router.post('/:id/report',
   UserCtrl.checkAuth, catchError(RoomCtrl.report))

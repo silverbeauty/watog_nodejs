@@ -532,6 +532,101 @@ const leave = async (req, res) => {
 	})
 }
 
+
+const kickMember = async (req, res) => {
+	const { id } = req.params
+	const { user_id } = req.body
+
+	let room = await Room.findOne({ where: { id }	})
+
+	// Check room
+	if (!room) {
+		return res.status(400).send({
+			status: false,
+			error: 'no_room'
+		})
+	}
+
+	// check user
+	const user = await User.findOne({ where: { id: user_id }})
+	if (!user) {
+		return res.status(400).send({
+			status: false,
+			error: 'no_user'
+		})
+	}
+
+	// Check if owner
+	// TODO: should check if admin
+	if (room.user_id !== req.currentUser.id) {
+		console.info('Room Creator:', room.user_id)
+		console.info('Current User:', req.currentUser.id)
+
+		return res.status(400).send({
+			status: false,
+			error: 'no_permission'
+		})
+	}
+
+	let member = await Member.findOne({
+		where: {
+			user_id,
+			room_id: room.id
+		},
+		include: [{
+			model: User,
+			attributes: userFields
+		}]
+	})
+
+	if (!member) {
+		return res.status(400).send({
+			status: false,
+			error: 'no_member'
+		})
+	}
+
+	if (member.removed) {
+		return res.status(400).send({
+			status: false,
+			error: 'already_removed'
+		})
+	}
+	member.removed = false
+	await member.save()
+
+	const result = await Member.findOne({
+		where: {
+			id: member.id
+		},
+		include: [{
+			model: User,
+			attributes: userFields
+		}]
+	})
+
+	ChatCtrl.notifyMemberLeave(result)
+	// Should announce here
+
+	// Load room again
+	room = await Room.findOne({
+		where: { id },
+		include: [{
+			model: Member,
+			include: [{ model: User, attributes: userFields }]
+		}, {
+			model: User,
+			attributes: userFields
+		}]
+	})
+
+	res.send({
+		status: true,
+		data: room
+	})
+}
+
+
 module.exports = {
 	queryMyRooms,
 	query,
@@ -540,6 +635,7 @@ module.exports = {
 	edit,
 	create,
 	addMember,
+	kickMember,
 	getMessages,
 	report,
 	join
