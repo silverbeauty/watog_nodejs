@@ -849,6 +849,20 @@ Response:
   }
   ```
 
+#### GET `/api/room/:id`
+
+Get a single room
+
+Response:
+```
+{
+  status: true,
+  data: {
+    ... Room object,
+    messages_count: // Message count
+  }
+}
+```
 
 #### PUT `/api/room/:id`.
 Edit room.    
