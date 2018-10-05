@@ -488,6 +488,15 @@ test('Create Sample Data', async t => {
 
   t.is(addMemberRes.status, 400)
 
+
+    // join
+  const joinRes = await request(app)
+    .post('/api/room/' + createRoomRes.body.data.id + '/join')
+    .set({ Authorization: tokens[4], 'Content-Type': 'application/json' })
+    .send()
+
+  t.is(joinRes.status, 200)
+
   // Report room
 
   const reportRoomRes = await request(app)
