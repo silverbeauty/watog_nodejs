@@ -1033,6 +1033,40 @@ Response
 }
 ```
 
+#### POST `/api/room/:id/member`
+
+Add member to a room
+
+Request:
+```
+{
+  "user_id": 
+}
+```
+Response: 
+```
+{
+  Member object
+}
+```
+
+#### DELETE `/api/room/:id/member`
+
+Kick a member from a room (member's removed field is set to false)
+
+Request:
+```
+{
+  "user_id": 
+}
+```
+Response: 
+```
+{
+  Member object
+}
+```
+
 #### POST `/api/room/:id/join`
 
 Join a room
