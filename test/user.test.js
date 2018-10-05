@@ -488,7 +488,6 @@ test('Create Sample Data', async t => {
 
   t.is(addMemberRes.status, 400)
 
-
     // join
   const joinRes = await request(app)
     .post('/api/room/' + createRoomRes.body.data.id + '/join')
@@ -496,6 +495,9 @@ test('Create Sample Data', async t => {
     .send()
 
   t.is(joinRes.status, 200)
+  // Check if users[4] is here
+  console.info('Join Res:', joinRes.body.data)
+  t.is(joinRes.body.data.Members.filter((m) => { return m.user_id === users[4].id }).length, 1)
 
   // Report room
 
