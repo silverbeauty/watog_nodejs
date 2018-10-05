@@ -94,7 +94,7 @@ const get = async (req, res) => {
 		plain: true
 	})
 
-	result.messages_count = count
+	result.message_count = count
 
 	res.send({
 		status: true,
