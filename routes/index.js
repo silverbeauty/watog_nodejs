@@ -5,6 +5,7 @@ const category = require('./category')
 const post = require('./post')
 const file = require('./file')
 const room = require('./room')
+const learn = require('./learn')
 
 const router = express.Router()
 
@@ -17,5 +18,6 @@ router.use('/category', category)
 router.use('/post', post)
 router.use('/file', file)
 router.use('/room', room)
+router.use('/learn', learn)
 
 module.exports = router
