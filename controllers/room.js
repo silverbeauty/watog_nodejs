@@ -594,7 +594,7 @@ const kickMember = async (req, res) => {
 		})
 	}
 	member.removed = false
-	await member.save()
+	member = await member.save()
 
 	const result = await Member.findOne({
 		where: {
@@ -606,7 +606,7 @@ const kickMember = async (req, res) => {
 		}]
 	})
 
-	ChatCtrl.notifyMemberLeave(result)
+	ChatCtrl.notifyRoomMemberLeft(member)
 	// Should announce here
 
 	// Load room again
