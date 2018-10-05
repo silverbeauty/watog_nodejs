@@ -859,7 +859,7 @@ Response:
   status: true,
   data: {
     ... Room object,
-    messages_count: // Message count
+    message_count: // Message count
   }
 }
 ```
@@ -1158,6 +1158,7 @@ Data
   is_announcement,
   createdAt:
   updatedAt:
+  room_message_count:  // Count of messages in the room
   Member: {
     id,
     user_id,
