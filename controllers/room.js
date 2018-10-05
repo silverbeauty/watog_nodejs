@@ -341,8 +341,6 @@ const join = async (req, res) => {
 	}
 
 	//TODO: check current user's country
-
-	
 	// TODO: should send a request here
 
 	let member = await Member.findOne({

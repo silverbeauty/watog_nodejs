@@ -499,6 +499,20 @@ test('Create Sample Data', async t => {
   console.info('Join Res:', joinRes.body.data)
   t.is(joinRes.body.data.Members.filter((m) => { return m.user_id === users[4].id }).length, 1)
 
+  // kick users[0] kicks users[4]
+  const kickRes = await request(app)
+    .delete('/api/room/' + createRoomRes.body.data.id + '/member')
+    .set({ Authorization: tokens[0], 'Content-Type': 'application/json' })
+    .send({
+      user_id: users[4].id
+    })
+
+  console.info('KickRes:', kickRes.body)
+  t.is(kickRes.status, 200)
+  // Check if users[4] is here
+  console.info('Join Res:', joinRes.body.data)
+  t.is(kickRes.body.data.Members.filter((m) => { return m.user_id === users[4].id }).length, 0)
+
   // Report room
 
   const reportRoomRes = await request(app)
