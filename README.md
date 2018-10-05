@@ -730,6 +730,53 @@ Reset password by old password
   }
   ```
 
+### Learn API
+#### GET `/api/learn`
+
+Return the list/video data for learn section.
+
+Response:
+
+```
+{
+    "status": true,
+    "data": {
+        "institutional_contents": {
+            "name": "Institutional Contents",
+            "list": [
+                {
+                    "name": "WATOG",
+                    "videos": [
+                        {
+                            "link": "https://www.youtube.com/embed/dnnqs-rEUx8",
+                            "name": "Jean Christophe MARAN - L'intelligence artificielle pour la médecine et la chirurgie"
+                        }, ...
+                        
+                    ]
+                },
+                ...
+            ]
+        },
+        "sponsored_contents": {
+            "name": "Sponsored Contents",
+            "list": [
+                {
+                    "name": "CCD",
+                    "videos": [
+                        {
+                            "link": "https://www.youtube.com/embed/dnnqs-rEUx8",
+                            "name": "Jean Christophe MARAN - L'intelligence artificielle pour la médecine et la chirurgie"
+                        },
+                        ...
+                    ]
+                },
+                ...
+            ]
+        }
+    }
+}
+```
+
 ### Chat API
 
 #### POST `/api/room`.  

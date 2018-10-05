@@ -8,7 +8,7 @@ const router = express.Router()
 // Get a video list
 router.get('/', UserCtrl.checkAuth, (req, res) =>{
   res.send({
-    status: false,
+    status: true,
     data: learnData
   })
 })
