@@ -462,6 +462,8 @@ test('Create Sample Data', async t => {
 
   t.is(getRoomRes.status, 200)
   t.is(getRoomRes.body.data.Members.length, 4) // 4 members - 0,1,2,3
+  t.is(getRoomRes.body.data.messages_count, 0) // 4 members - 0,1,2,3
+
 
   // Edit room
 
