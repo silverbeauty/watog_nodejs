@@ -82,16 +82,28 @@ const createNewMessage = async (socket, currentUser, data) => {
     text: data.text,
   })).save()
 
-  const result = await Message.findOne({
+  const count = await Message.count({
+    where: {
+      room_id
+    }
+  })
+
+  const savedMsg = await Message.findOne({
     where: { id: message.id },
     include: [{ model: Member, include: [{ model: User, attributes: userFields }] }]
   })
 
-  console.info('New Message Created:', message.get({plain: true}))
-
-  sio.to(room.id).emit('new_message', result.get({
+  const result = savedMsg.get({
     plain: true
-  }))
+  })
+
+  result.room_message_count = await Message.count({
+    where: {
+      room_id
+    }
+  })
+
+  sio.to(room.id).emit('new_message', result)
 
   return {
     status: true,
