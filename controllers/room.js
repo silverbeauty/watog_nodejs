@@ -217,8 +217,10 @@ const queryMyRooms = async (req, res) => {
 		include: [{
 			model: Member,
 			include: [{ model: User, attributes: userFields }],
-			where: { user_id: currentUser.id, removed: false }
-		}, {
+			where: { user_id: currentUser.id, removed: false },
+			attributes: []
+		}
+		, {
 				model: User,
 				attributes: userFields
 			}]
@@ -593,7 +595,7 @@ const kickMember = async (req, res) => {
 			error: 'already_removed'
 		})
 	}
-	member.removed = false
+	member.removed = true
 	member = await member.save()
 
 	const result = await Member.findOne({

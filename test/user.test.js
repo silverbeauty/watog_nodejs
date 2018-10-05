@@ -511,7 +511,7 @@ test('Create Sample Data', async t => {
   t.is(kickRes.status, 200)
   // Check if users[4] is here
   console.info('Join Res:', joinRes.body.data)
-  t.is(kickRes.body.data.Members.filter((m) => { return m.user_id === users[4].id }).length, 0)
+  t.is(kickRes.body.data.Members.filter((m) => { return m.user_id === users[4].id })[0].removed, true)
 
   // Report room
 

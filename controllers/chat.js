@@ -114,9 +114,10 @@ const notifyRoomUpdate = (room) => {
 
 const notifyRoomMemberLeft = (member) => {
   if (!sio) { return console.info('Socket not ready for member leave:', member.get({ plain: true }) ) }
-  // Leave room
-  sio.to(member.user_id).leave(member.room_id)
   sio.to(member.room_id).emit('member_left_room', member.get({ plain: true }))
+  sio.sockets.to(member.user_id).clients((err, clients) => {
+    clients.forEach(c => {c.leave(member.room_id)})
+  })
 }
 
 const notfyNewMember = (member) => {
