@@ -82,9 +82,23 @@ const get = async (req, res) => {
 		})
 	}
 
+	// Count messages
+
+	const count = await Message.count({
+		where: {
+			room_id: room_id
+		}
+	})
+
+	const result = room.get({
+		plain: true
+	})
+
+	result.messages_count = count
+
 	res.send({
 		status: true,
-		data: room
+		data: result
 	})
 }
 
