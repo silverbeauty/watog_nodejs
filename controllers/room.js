@@ -340,15 +340,6 @@ const join = async (req, res) => {
 		})
 	}
 
-	// check user
-	const user = await User.findOne({ where: { id: user_id }})
-	if (!user) {
-		return res.status(400).send({
-			status: false,
-			error: 'no_user'
-		})
-	}
-
 	// TODO: should send a request here
 
 	let member = await Member.findOne({

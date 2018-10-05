@@ -1033,6 +1033,30 @@ Response
 }
 ```
 
+#### POST `/api/room/:id/join`
+
+Join a room
+
+Body:
+```
+{
+
+}
+```
+
+Response
+```
+{
+  status: true,
+  data: { // Member object
+
+  }
+}
+```
+
+Error codes: `no_room`, `already_joined`, `removed_by_creator`, `already_left`
+
+
 #### POST `/api/room/:id/leave`
 
 Leave a room
@@ -1053,6 +1077,8 @@ Response
   }
 }
 ```
+
+Error codes: `no_room`, `creator_not_allowed`, `not_member`, `already_left`
 
 ### Socket.io signals
 Socket.io Connection URL: http://xxx:port?token=`JWT string`  
