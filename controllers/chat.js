@@ -103,6 +103,8 @@ const createNewMessage = async (socket, currentUser, data) => {
     }
   })
 
+  console.info('New Message:', result)
+
   sio.to(room.id).emit('new_message', result)
 
   return {
