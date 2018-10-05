@@ -86,7 +86,7 @@ const get = async (req, res) => {
 
 	const count = await Message.count({
 		where: {
-			room_id: room_id
+			room_id: room.id
 		}
 	})
 
@@ -326,6 +326,95 @@ const addMember = async (req, res) => {
 	})
 }
 
+const join = async (req, res) => {
+	const { id } = req.params
+	const user_id = req.currentUser.id
+
+	let room = await Room.findOne({ where: { id }	})
+
+	// Check room
+	if (!room) {
+		return res.status(400).send({
+			status: false,
+			error: 'no_room'
+		})
+	}
+
+	// check user
+	const user = await User.findOne({ where: { id: user_id }})
+	if (!user) {
+		return res.status(400).send({
+			status: false,
+			error: 'no_user'
+		})
+	}
+
+	// TODO: should send a request here
+
+	let member = await Member.findOne({
+		where: {
+			user_id,
+			room_id: room.id
+		},
+		include: [{
+			model: User,
+			attributes: userFields
+		}]
+	})
+
+	if (member && !member.removed) {
+		return res.status(400).send({
+			status: false,
+			error: 'already_joined'
+		})
+	}
+
+	if (member && member.removed) {
+		member.removed = false;
+		return res.status(400).send({
+			status: false,
+			error: 'removed_by_creator'
+		})
+	} else {
+		member = new Member({
+			user_id,
+			room_id: room.id,
+			removed: false
+		})
+		await member.save()
+	}
+
+	const result = await Member.findOne({
+		where: {
+			id: member.id
+		},
+		include: [{
+			model: User,
+			attributes: userFields
+		}]
+	})
+
+	ChatCtrl.notfyNewMember(result)
+	// Should announce here
+
+	// Load room again
+	room = await Room.findOne({
+		where: { id },
+		include: [{
+			model: Member,
+			include: [{ model: User, attributes: userFields }]
+		}, {
+			model: User,
+			attributes: userFields
+		}]
+	})
+
+	res.send({
+		status: true,
+		data: room
+	})
+}
+
 const getMessages = async (req, res) => {
 	const room = await Room.findOne({ where: { id: req.params.id }})
 	if (!room) {
@@ -461,5 +550,6 @@ module.exports = {
 	create,
 	addMember,
 	getMessages,
-	report
+	report,
+	join
 }
