@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken')
+const _ = require('lodash')
 
 const User = require('../models/user')
 const Member = require('../models/member')
@@ -136,7 +137,12 @@ const notifyRoomMemberLeft = async (member) => {
   if (!sio) { return console.info('Socket not ready for member leave:', member.get({ plain: true }) ) }
   sio.to(member.room_id).emit('member_left_room', member.get({ plain: true }))
   sio.sockets.to(member.user_id).clients((err, clients) => {
-    clients.forEach(c => {c.leave(member.room_id)})
+    clients.forEach(id => { 
+      const socketIndex = _.findIndex(sio.sockets.sockets, { id });
+      if (socketIndex > -1) {
+        sio.sockets.sockets[socketIndex].leave(member.room_id)
+      }
+    })
   })
 
   const room = await Room.findOne({
@@ -154,13 +160,13 @@ const notifyRoomMemberLeft = async (member) => {
   const message = await (new Message({
     member_id: creator.id,
     room_id: member.room_id,
-    text: User.first_name + ' ' + User.last_name + ' left the room.',
+    text: member.User.first_name + ' ' + member.User.last_name + ' left the room.',
     is_announcement: true
   })).save()
 
   const count = await Message.count({
     where: {
-      room_id
+      room_id: member.room_id
     }
   })
 
