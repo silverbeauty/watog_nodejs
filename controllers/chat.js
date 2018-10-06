@@ -189,11 +189,55 @@ const notifyRoomMemberLeft = async (member) => {
   sio.to(room.id).emit('new_message', result)
 }
 
-const notfyNewMember = (member) => {
+const notifyNewMember = (member) => {
   if (!sio) { return console.info('Socket not ready for new member:', member.get({ plain: true }) ) }
   // Leave room
   sio.to(member.user_id).join(member.room_id)
   sio.to(member.room_id).emit('new_member', member.get({ plain: true }))
+
+
+  const room = await Room.findOne({
+    where: {id: member.room_id},
+  })
+
+  const creator = await Member.findOne({
+    where: {
+      room_id: member.room_id,
+      user_id: room.user_id
+    }
+  })
+
+  // Send announcement
+  const message = await (new Message({
+    member_id: creator.id,
+    room_id: member.room_id,
+    text: member.User.first_name + ' ' + member.User.last_name + ' is added to the room.',
+    is_announcement: true
+  })).save()
+
+  const count = await Message.count({
+    where: {
+      room_id: member.room_id
+    }
+  })
+
+  const savedMsg = await Message.findOne({
+    where: { id: message.id },
+    include: [{ model: Member, include: [{ model: User, attributes: userFields }] }]
+  })
+
+  const result = savedMsg.get({
+    plain: true
+  })
+
+  result.room_message_count = await Message.count({
+    where: {
+      room_id: member.room_id
+    }
+  })
+
+  // Send announcement
+  sio.to(room.id).emit('new_message', result)
 }
 
 const checkJWT = (socket, token) => {
@@ -240,6 +284,6 @@ module.exports = {
 	setup,
   notifyNewRoom,
   notifyRoomUpdate,
-  notfyNewMember,
+  notifyNewMember,
   notifyRoomMemberLeft
 }
