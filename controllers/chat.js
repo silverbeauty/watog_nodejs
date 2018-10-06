@@ -50,7 +50,11 @@ const authenticated = async (socket) => {
 }
 
 const createNewMessage = async (socket, currentUser, data) => {
-  const { room_id } = data
+  const { room_id, text } = data
+  if (!room_id || !text) {
+    console.info('Invalid send_message socket signal:', currentUser, data)
+    return
+  }
   // Load room
   const room = await Room.findOne({
     where: { id: room_id },
