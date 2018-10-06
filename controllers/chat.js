@@ -76,8 +76,10 @@ const createNewMessage = async (socket, currentUser, data) => {
   }
 
   const member = await Member.findOne({
-    user_id: currentUser.id,
-    room_id: room.id
+    where: {
+      user_id: currentUser.id,
+      room_id: room.id
+    }
   })
 
   const message = await (new Message({
