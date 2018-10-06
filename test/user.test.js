@@ -421,7 +421,7 @@ test('Create Sample Data', async t => {
       title: 'test',
       topics: 'topic1',
       description: 'test room',
-      countries: 'USA',
+      countries: countries.join(','),
       members: [users[1].id, users[2].id] // add user[]
     })
 
