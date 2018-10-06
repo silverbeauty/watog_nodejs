@@ -192,8 +192,18 @@ const notifyRoomMemberLeft = async (member) => {
 const notifyNewMember = async (member) => {
   if (!sio) { return console.info('Socket not ready for new member:', member.get({ plain: true }) ) }
   // Leave room
-  sio.to(member.user_id).join(member.room_id)
+  // sio.to(member.user_id).join(member.room_id)
   sio.to(member.room_id).emit('new_member', member.get({ plain: true }))
+
+  // join the new member to toom
+  sio.sockets.to(member.user_id).clients((err, clients) => {
+    clients.forEach(id => { 
+      const socketIndex = _.findIndex(sio.sockets.sockets, { id });
+      if (socketIndex > -1) {
+        sio.sockets.sockets[socketIndex].join(member.room_id)
+      }
+    })
+  })
 
 
   const room = await Room.findOne({
