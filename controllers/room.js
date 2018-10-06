@@ -307,7 +307,7 @@ const addMember = async (req, res) => {
 		}]
 	})
 
-	ChatCtrl.notfyNewMember(result)
+	ChatCtrl.notifyNewMember(result)
 	// Should announce here
 
 	// Load room again
@@ -388,7 +388,7 @@ const join = async (req, res) => {
 		}]
 	})
 
-	ChatCtrl.notfyNewMember(result)
+	ChatCtrl.notifyNewMember(result)
 	// Should announce here
 
 	// Load room again
