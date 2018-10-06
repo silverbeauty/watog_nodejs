@@ -342,6 +342,10 @@ const join = async (req, res) => {
 		})
 	}
 
+	const user = await User.findOne({
+		where: { id: user_id }
+	})
+
 	//TODO: check current user's country
 	// TODO: should send a request here
 
@@ -367,15 +371,22 @@ const join = async (req, res) => {
 		member.removed = false;
 		return res.status(400).send({
 			status: false,
-			error: 'removed_by_creator'
+			error: 'removed'
 		})
 	} else {
-		member = new Member({
-			user_id,
-			room_id: room.id,
-			removed: false
-		})
-		await member.save()
+		if (room.countries && room.countries.indexOf(user.country) > -1 ) {
+			member = new Member({
+				user_id,
+				room_id: room.id,
+				removed: false
+			})
+			await member.save()
+		} else {
+			return res.status(400).send({
+				status: false,
+				error: 'invalid_country'
+			})
+		}
 	}
 
 	const result = await Member.findOne({
