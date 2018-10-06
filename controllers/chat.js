@@ -132,12 +132,55 @@ const notifyRoomUpdate = (room) => {
   sio.to(room.id).emit('room_updated', room.get({ plain: true }))
 }
 
-const notifyRoomMemberLeft = (member) => {
+const notifyRoomMemberLeft = async (member) => {
   if (!sio) { return console.info('Socket not ready for member leave:', member.get({ plain: true }) ) }
   sio.to(member.room_id).emit('member_left_room', member.get({ plain: true }))
   sio.sockets.to(member.user_id).clients((err, clients) => {
     clients.forEach(c => {c.leave(member.room_id)})
   })
+
+  const room = await Room.findOne({
+    where: {id: member.room_id},
+  })
+
+  const creator = await Member.findOne({
+    where: {
+      room_id: member.room_id,
+      user_id: room.user_id
+    }
+  })
+
+  // Send announcement
+  const message = await (new Message({
+    member_id: creator.id,
+    room_id: member.room_id,
+    text: User.first_name + ' ' + User.last_name + ' left the room.',
+    is_announcement: true
+  })).save()
+
+  const count = await Message.count({
+    where: {
+      room_id
+    }
+  })
+
+  const savedMsg = await Message.findOne({
+    where: { id: message.id },
+    include: [{ model: Member, include: [{ model: User, attributes: userFields }] }]
+  })
+
+  const result = savedMsg.get({
+    plain: true
+  })
+
+  result.room_message_count = await Message.count({
+    where: {
+      room_id: member.room_id
+    }
+  })
+
+  // Send announcement
+  sio.to(room.id).emit('new_message', result)
 }
 
 const notfyNewMember = (member) => {
