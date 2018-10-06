@@ -127,6 +127,8 @@ const checkAuth = async (req, res, next) => {
   let decoded
   try {
     decoded = jwt.verify(token, process.env.JWT_SECRET)
+    const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+    console.info('Auth Success:', decoded, ip)
   } catch (err) {
     console.error(err)
     return res.status(401).send({
