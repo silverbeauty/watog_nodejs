@@ -189,7 +189,7 @@ const notifyRoomMemberLeft = async (member) => {
   sio.to(room.id).emit('new_message', result)
 }
 
-const notifyNewMember = (member) => {
+const notifyNewMember = async (member) => {
   if (!sio) { return console.info('Socket not ready for new member:', member.get({ plain: true }) ) }
   // Leave room
   sio.to(member.user_id).join(member.room_id)
