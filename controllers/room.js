@@ -392,6 +392,14 @@ const join = async (req, res) => {
 			error: 'removed'
 		})
 	} else {
+
+		if (!isNaN(room.member_count_limit) && memberCount >= room.member_count_limit) {
+			return res.status(400).send({
+				status: false,
+				error: 'member_count_limit_reached'
+			})
+		}
+
 		if (room.countries && room.countries.indexOf(user.country) > -1 ) {
 			member = new Member({
 				user_id,

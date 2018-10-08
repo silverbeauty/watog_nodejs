@@ -1050,6 +1050,8 @@ Response:
 }
 ```
 
+Error codes: `no_room`, `already_joined`, `removed_by_creator`, `already_left`, `member_count_limit_reached`
+
 #### DELETE `/api/room/:id/member`
 
 Kick a member from a room (member's removed field is set to false)
@@ -1088,7 +1090,7 @@ Response
 }
 ```
 
-Error codes: `no_room`, `already_joined`, `removed_by_creator`, `already_left`
+Error codes: `no_room`, `already_joined`, `removed_by_creator`, `already_left`, `member_count_limit_reached`
 
 
 #### POST `/api/room/:id/leave`
