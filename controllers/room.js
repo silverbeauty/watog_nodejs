@@ -348,7 +348,7 @@ const addMember = async (req, res) => {
 			}
 		})
 
-		if (!isNaN(room.member_count_limit) && memberCount >= room.member_count_limit) {
+		if (room.member_count_limit > 0 && memberCount >= room.member_count_limit) {
 			return res.status(400).send({
 				status: false,
 				error: 'member_count_limit_reached'
@@ -449,7 +449,7 @@ const join = async (req, res) => {
 			}
 		})
 
-		if (!isNaN(room.member_count_limit) && memberCount >= room.member_count_limit) {
+		if (room.member_count_limit > 0 && memberCount >= room.member_count_limit) {
 			return res.status(400).send({
 				status: false,
 				error: 'member_count_limit_reached'
