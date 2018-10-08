@@ -17,6 +17,10 @@ router.post('/',
 router.get('/:id/messages',
   UserCtrl.checkAuth, catchError(RoomCtrl.getMessages))
 
+// Send Message
+router.post('/:id/send_message',
+  UserCtrl.checkAuth, catchError(RoomCtrl.sendMessage))
+
 // Add Member to room
 router.post('/:id/member',
   UserCtrl.checkAuth, catchError(RoomCtrl.addMember))
