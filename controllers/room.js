@@ -785,5 +785,6 @@ module.exports = {
 	getMessages,
 	report,
 	join,
-	read
+	read,
+	sendMessage
 }
