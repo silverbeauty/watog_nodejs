@@ -306,8 +306,8 @@ const query = async (req, res) => {
     })
   }
 
-  const limit = query.limit || 10
-  const offset = query.offset || 0
+  const limit = parseInt(query.limit || 10)
+  const offset = parseInt(query.offset || 0)
   const order = query.order
   let direction = query.direction
   const isRandom = 'random' in query
