@@ -392,6 +392,14 @@ const join = async (req, res) => {
 			error: 'removed'
 		})
 	} else {
+		const memberCount = await Member.count({
+			where: {
+				room_id: room.id,
+				removed: {
+					[Op.not]: true
+				}
+			}
+		})
 
 		if (!isNaN(room.member_count_limit) && memberCount >= room.member_count_limit) {
 			return res.status(400).send({
