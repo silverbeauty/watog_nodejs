@@ -19,5 +19,13 @@ router.use('/post', post)
 router.use('/file', file)
 router.use('/room', room)
 router.use('/learn', learn)
+router.get('/live', (req, res) => {
+	res.send({
+		status: true,
+		data: {
+			youtube_id: '4K9TKvjTmWA'
+		}
+	})
+})
 
 module.exports = router
