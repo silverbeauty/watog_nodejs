@@ -430,6 +430,31 @@ test('Create Sample Data', async t => {
   t.is(createRoomRes.body.status, true)
   t.is(typeof createRoomRes.body.data, 'object')
 
+  // Send 3 messages
+  for (let i = 0; i < 3; i ++) {
+      // Send Message
+    const sendMsgRes = await request(app)
+      .post(`/api/room/` + createRoomRes.body.data.id + '/send_message')
+      .set({ Authorization: tokens[0], 'Content-Type': 'application/json' })
+      .send({
+        text: 'Test Message'
+      })
+
+    t.is(sendMsgRes.status, 200)
+    t.is(sendMsgRes.body.status, true)
+    t.is(sendMsgRes.body.data.text, 'Test Message' + i)
+  }
+
+
+  // Read room
+  const readRoomRes = await request(app)
+    .post(`/api/room/` + createRoomRes.body.data.id + '/read')
+    .set({ Authorization: tokens[0], 'Content-Type': 'application/json' })
+    .send()
+
+  t.is(readRoomRes.status, 200)
+  t.is(readRoomRes.body.status, true)
+
   const myRoomRes = await request(app)
     .get(`/api/room/my`)
     .set({ Authorization: tokens[1] })
@@ -463,8 +488,7 @@ test('Create Sample Data', async t => {
 
   t.is(getRoomRes.status, 200)
   t.is(getRoomRes.body.data.Members.length, 4) // 4 members - 0,1,2,3
-  t.is(getRoomRes.body.data.message_count, 0) // 4 members - 0,1,2,3
-
+  t.is(getRoomRes.body.data.message_count, 1) // 4 members - 0,1,2,3
 
   // Edit room
 

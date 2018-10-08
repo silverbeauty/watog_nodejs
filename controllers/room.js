@@ -697,8 +697,8 @@ const read = async (req, res) => {
 	// Count messages
 	// TODO: access check by members
 
-	await Message.updateAll({
-		read: true
+	await Message.update({
+		is_read: true
 	}, {
 		where: {
 			room_id: room.id
