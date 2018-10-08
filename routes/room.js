@@ -37,6 +37,10 @@ router.post('/:id/leave',
 router.post('/:id/join',
   UserCtrl.checkAuth, catchError(RoomCtrl.join))
 
+// Read room
+router.post('/:id/read',
+  UserCtrl.checkAuth, catchError(RoomCtrl.read))
+
 // Query my rooms
 router.get('/my',
   UserCtrl.checkAuth, catchError(RoomCtrl.queryMyRooms))
