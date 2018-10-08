@@ -792,7 +792,8 @@ Response:
     "title": "Room2",
     "countries": "USA",
     "members": [1, 2, 3],
-    "avatar": "http://xxx.xxx/xxx.jpg"
+    "avatar": "http://xxx.xxx/xxx.jpg", // optional
+    "member_count_limit": 100 // optional - if missed unlimited
   }
 
   ```
