@@ -674,6 +674,41 @@ const kickMember = async (req, res) => {
 	})
 }
 
+const read = async (req, res) => {
+	const { id } = req.params
+	const room = await Room.findOne({
+		where: { id },
+		include: [{
+			model: Member,
+			include: [{ model: User, attributes: userFields }]
+		}, {
+			model: User,
+			attributes: userFields
+		}]
+	})
+
+	if (!room) {
+		return res.status(400).send({
+			status: true,
+			error: 'no_room'
+		})
+	}
+
+	// Count messages
+	// TODO: access check by members
+
+	await Message.updateAll({
+		read: true
+	}, {
+		where: {
+			room_id: room.id
+		}
+	})
+
+	res.send({
+		status: true,
+	})
+}
 
 module.exports = {
 	queryMyRooms,
@@ -686,5 +721,6 @@ module.exports = {
 	kickMember,
 	getMessages,
 	report,
-	join
+	join,
+	read
 }
