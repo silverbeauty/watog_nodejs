@@ -710,6 +710,69 @@ const read = async (req, res) => {
 	})
 }
 
+const sendMessage = async (req, res) => {
+	const data = req.body
+	const { currentUser } = req
+	const room_id = req.params.id
+	const room = await Room.findOne({
+    where: { id: room_id },
+    include: [{
+      model: Member,
+      include: [{ model: User, attributes: userFields }],
+      where: { user_id: currentUser.id, removed: false }
+    }, {
+        model: User,
+        attributes: userFields
+      }]
+  })
+
+  if (!room) {
+    return {
+      status: false,
+      error: 'invalid_room'
+    }
+  }
+
+  const member = await Member.findOne({
+    where: {
+      user_id: currentUser.id,
+      room_id: room.id
+    }
+  })
+
+  const message = await (new Message({
+    member_id: member.id,
+    room_id,
+    text: data.text,
+  })).save()
+
+  const count = await Message.count({
+    where: {
+      room_id
+    }
+  })
+
+  const savedMsg = await Message.findOne({
+    where: { id: message.id },
+    include: [{ model: Member, include: [{ model: User, attributes: userFields }] }]
+  })
+
+  const result = savedMsg.get({
+    plain: true
+  })
+
+  result.room_message_count = await Message.count({
+    where: {
+      room_id
+    }
+  })
+
+  res.send({
+  	status: true,
+  	data: result
+  })
+}
+
 module.exports = {
 	queryMyRooms,
 	query,
