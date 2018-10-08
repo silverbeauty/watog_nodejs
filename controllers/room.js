@@ -680,7 +680,10 @@ const read = async (req, res) => {
 		where: { id },
 		include: [{
 			model: Member,
-			include: [{ model: User, attributes: userFields }]
+			include: [{ model: User, attributes: userFields }],
+			where: {
+				user_id: req.currentUser.id
+			}
 		}, {
 			model: User,
 			attributes: userFields
