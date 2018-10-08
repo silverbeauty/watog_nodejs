@@ -218,7 +218,6 @@ const queryMyRooms = async (req, res) => {
 			model: Member,
 			include: [{ model: User, attributes: userFields }],
 			where: { user_id: currentUser.id, removed: false },
-			attributes: []
 		}
 		, {
 				model: User,
@@ -226,9 +225,36 @@ const queryMyRooms = async (req, res) => {
 			}]
 		})
 
+
+
+	const results = memberRooms.map(r => { return r.get({plain: true}) })
+	for (let i in memberRooms) {
+
+		const member = memberRooms[i].Members[0]
+		delete memberRooms[i].Members
+
+		if (!member.last_read_at) {
+			member.last_read_at = new Date(0)
+		}
+		results[i].unread_message_count = await Message.count({
+			where: {
+				room_id: memberRooms[i].id,
+				createdAt: {
+					[Op.gt]: member.last_read_at
+				}
+			}
+		})
+
+		results[i].message_count = await Message.count({
+			where: {
+				room_id: memberRooms[i].id
+			}
+		})
+	}
+
 	res.send({
 		status: true,
-		data: memberRooms
+		data: results
 	})
 }
 
@@ -676,6 +702,8 @@ const kickMember = async (req, res) => {
 
 const read = async (req, res) => {
 	const { id } = req.params
+	const { currentUser } = req
+
 	const room = await Room.findOne({
 		where: { id },
 		include: [{
@@ -697,20 +725,22 @@ const read = async (req, res) => {
 		})
 	}
 
-	// Count messages
-	// TODO: access check by members
+  const member = await Member.findOne({
+    where: {
+      user_id: currentUser.id,
+      room_id: room.id
+    }
+  })
 
-	await Message.update({
-		is_read: true
-	}, {
-		where: {
-			room_id: room.id
-		}
-	})
+  member.last_read_at = new Date()
+  const result = await member.save()
 
-	res.send({
-		status: true,
-	})
+  res.send({
+  	status: true,
+  	data: {
+  		last_read_at: result.last_read_at
+  	}
+  })
 }
 
 const sendMessage = async (req, res) => {

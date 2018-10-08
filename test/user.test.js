@@ -437,7 +437,7 @@ test('Create Sample Data', async t => {
       .post(`/api/room/` + createRoomRes.body.data.id + '/send_message')
       .set({ Authorization: tokens[0], 'Content-Type': 'application/json' })
       .send({
-        text: 'Test Message'
+        text: 'Test Message' + i
       })
 
     t.is(sendMsgRes.status, 200)

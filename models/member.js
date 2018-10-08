@@ -22,6 +22,10 @@ const Member = sequelize.define('Member', {
     type: Sequelize.BOOLEAN,
     allowNull: false,
     default: false
+  },
+  last_read_at: {
+    type: Sequelize.DATE,
+    allowNull: true,
   }
 })
 
