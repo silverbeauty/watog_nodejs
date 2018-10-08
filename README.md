@@ -872,7 +872,7 @@ Available request body fields: 'jobs', 'topics', 'title', 'description', 'countr
 
 To archive a room: `archived: true`
 
-Same response with POST
+Same response with POST // message_count, unread_message_count included
 
 Error response: 
 
@@ -891,7 +891,7 @@ Error types: 'no_room', 'invalid_permission'
   ```
   {
     "status": true,
-    "data": [Room]
+    "data": [Room] // unread_message_count, message_count included
   }
   ```
 

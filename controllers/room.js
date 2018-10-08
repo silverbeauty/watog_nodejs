@@ -82,19 +82,41 @@ const get = async (req, res) => {
 		})
 	}
 
-	// Count messages
-
-	const count = await Message.count({
+	const member = await Member.findOne({
 		where: {
-			room_id: room.id
+			room_id: id,
+			user_id: req.currentUser.id,
+			removed: {
+				[Op.not]: true // Not removed
+			}
 		}
 	})
+
+	if (!member) {
+		return res.status(400).send({
+			status: true,
+			error: 'no_permission'
+		})
+	}
 
 	const result = room.get({
 		plain: true
 	})
 
-	result.message_count = count
+	result.message_count = await Message.count({
+		where: {
+			room_id: room.id
+		}
+	})
+
+	result.unread_message_count = await Message.count({
+			where: {
+				room_id: room.id,
+				createdAt: {
+					[Op.gt]: member.last_read_at || new Date(0)
+				}
+			}
+		})
 
 	res.send({
 		status: true,
