@@ -422,7 +422,8 @@ test('Create Sample Data', async t => {
       topics: 'topic1',
       description: 'test room',
       countries: countries.join(','),
-      members: [users[1].id, users[2].id] // add user[]
+      members: [users[1].id, users[2].id], // add user[]
+      member_count_limit: 10
     })
 
   t.is(createRoomRes.status, 200)

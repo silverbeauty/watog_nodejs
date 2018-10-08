@@ -124,7 +124,7 @@ const edit = async (req, res) => {
 
 	const { body } = req
 
-	const fields = ['jobs', 'topics', 'title', 'description', 'countries', 'is_private', 'avatar', 'background', 'category_id', 'archived']
+	const fields = ['jobs', 'topics', 'title', 'description', 'countries', 'is_private', 'avatar', 'background', 'category_id', 'archived', 'member_count_limit']
 	
 	const invalidFields = []
 

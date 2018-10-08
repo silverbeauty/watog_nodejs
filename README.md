@@ -867,7 +867,7 @@ Response:
 #### PUT `/api/room/:id`.
 Edit room.    
 
-Available request body fields: 'jobs', 'topics', 'title', 'description', 'countries', 'is_private', 'avatar', 'background', 'category_id', 'archived'
+Available request body fields: 'jobs', 'topics', 'title', 'description', 'countries', 'is_private', 'avatar', 'background', 'category_id', 'archived', 'member_count_limit'
 
 To archive a room: `archived: true`
 
