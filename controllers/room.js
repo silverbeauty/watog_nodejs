@@ -431,7 +431,7 @@ const getMessages = async (req, res) => {
 
 	const { query } = req
 	const where = {}
-	const limit = query.limit || 10
+	const limit = parseInt(query.limit || 10)
 	const order = query.order || 'createdAt'
 	const direction = query.direction || 'ASC'
 	const { text } = query

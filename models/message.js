@@ -24,6 +24,11 @@ const Message = sequelize.define('Message', {
     type: Sequelize.BOOLEAN,
     allowNull: true,
     default: false
+  },
+  is_read: {
+    type: Sequelize.BOOLEAN,
+    allowNull: true,
+    default: false
   }
 })
 

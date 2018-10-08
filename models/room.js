@@ -65,6 +65,10 @@ const Room = sequelize.define('Room', {
   background: { // background photo
     type: Sequelize.STRING,
     allowNull: true
+  },
+  member_count_limit: {
+    type: Sequelize.INTEGER,
+    allowNull: true
   }
 })
 
