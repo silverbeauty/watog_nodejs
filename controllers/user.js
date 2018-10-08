@@ -355,11 +355,11 @@ const queryUsers = async (req, res) => {
   }
 
   if (limit > 0) {
-    sQuery.limit = limit
+    sQuery.limit = parseInt(limit)
   }
 
   if (offset >= 0) {
-    sQuery.offset = offset
+    sQuery.offset = parseInt(offset)
   }
 
   if (order) {
