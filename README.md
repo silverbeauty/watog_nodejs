@@ -967,6 +967,10 @@ Query: `from`, `to`, `order`, `direction`, `limit`
 - `limit`: limit count
 - `text`: query for text
 
+#### POST `/api/room/:id/read`
+
+Mark messages as read for the room.
+
 ##### Example 
 - /api/room/c3f79091-ec13-492a-9d7f-94a70c075d7e/messages?limit=10
  Get last 10 messages for room: `c3f79091-ec13-492a-9d7f-94a70c075d7e`  
