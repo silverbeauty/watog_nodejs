@@ -24,6 +24,10 @@ const Message = sequelize.define('Message', {
     type: Sequelize.BOOLEAN,
     allowNull: true,
     default: false
+  },
+  file_url: {
+    type: Sequelize.STRING,
+    allowNull: false
   }
 })
 
