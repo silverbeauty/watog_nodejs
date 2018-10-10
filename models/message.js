@@ -27,7 +27,7 @@ const Message = sequelize.define('Message', {
   },
   file_url: {
     type: Sequelize.STRING,
-    allowNull: false
+    allowNull: true
   }
 })
 
