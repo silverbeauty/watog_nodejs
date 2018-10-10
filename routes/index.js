@@ -20,6 +20,7 @@ router.use('/file', file)
 router.use('/room', room)
 router.use('/learn', learn)
 router.get('/live', (req, res) => {
+	// https://www.googleapis.com/youtube/v3/playlists?channelId=UCL_KG4bwo7BsbU50jV_wNgg&part=snippet&key=AIzaSyAznLC1F29sn09_-gW-7E-i22a_U0r2I2g
 	res.send({
 		status: true,
 		data: {
