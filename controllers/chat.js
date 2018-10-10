@@ -87,6 +87,7 @@ const createNewMessage = async (socket, currentUser, data) => {
     member_id: member.id,
     room_id,
     text: data.text,
+    file_url: data.file_url
   })).save()
 
   const count = await Message.count({
