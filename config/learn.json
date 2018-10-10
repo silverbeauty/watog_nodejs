@@ -51,63 +51,12 @@
 			}]
 		}, {
 			"name": "SOGC",
-			"videos": [{
-				"link": "https://www.youtube.com/embed/dnnqs-rEUx8",
-				"name": "Jean Christophe MARAN - L'intelligence artificielle pour la médecine et la chirurgie"
-			},{
-				"link": "https://www.youtube.com/embed/dnnqs-rEUx8",
-				"name": "Jean Christophe MARAN - L'intelligence artificielle pour la médecine et la chirurgie"
-			},{
-				"link": "https://www.youtube.com/embed/dnnqs-rEUx8",
-				"name": "Jean Christophe MARAN - L'intelligence artificielle pour la médecine et la chirurgie"
-			},{
-				"link": "https://www.youtube.com/embed/dnnqs-rEUx8",
-				"name": "Jean Christophe MARAN - L'intelligence artificielle pour la médecine et la chirurgie"
-			},{
-				"link": "https://www.youtube.com/embed/dnnqs-rEUx8",
-				"name": "Jean Christophe MARAN - L'intelligence artificielle pour la médecine et la chirurgie"
-			},{
-				"link": "https://www.youtube.com/embed/dnnqs-rEUx8",
-				"name": "Jean Christophe MARAN - L'intelligence artificielle pour la médecine et la chirurgie"
-			},{
-				"link": "https://www.youtube.com/embed/dnnqs-rEUx8",
-				"name": "Jean Christophe MARAN - L'intelligence artificielle pour la médecine et la chirurgie"
-			},{
-				"link": "https://www.youtube.com/embed/dnnqs-rEUx8",
-				"name": "Jean Christophe MARAN - L'intelligence artificielle pour la médecine et la chirurgie"
-			},{
-				"link": "https://www.youtube.com/embed/dnnqs-rEUx8",
-				"name": "Jean Christophe MARAN - L'intelligence artificielle pour la médecine et la chirurgie"
-			}]
+			"videos": []
 		}, {
 			"name": "EBCOG",
 			"videos": [{
-				"link": "https://www.youtube.com/embed/dnnqs-rEUx8",
-				"name": "Jean Christophe MARAN - L'intelligence artificielle pour la médecine et la chirurgie"
-			},{
-				"link": "https://www.youtube.com/embed/dnnqs-rEUx8",
-				"name": "Jean Christophe MARAN - L'intelligence artificielle pour la médecine et la chirurgie"
-			},{
-				"link": "https://www.youtube.com/embed/dnnqs-rEUx8",
-				"name": "Jean Christophe MARAN - L'intelligence artificielle pour la médecine et la chirurgie"
-			},{
-				"link": "https://www.youtube.com/embed/dnnqs-rEUx8",
-				"name": "Jean Christophe MARAN - L'intelligence artificielle pour la médecine et la chirurgie"
-			},{
-				"link": "https://www.youtube.com/embed/dnnqs-rEUx8",
-				"name": "Jean Christophe MARAN - L'intelligence artificielle pour la médecine et la chirurgie"
-			},{
-				"link": "https://www.youtube.com/embed/dnnqs-rEUx8",
-				"name": "Jean Christophe MARAN - L'intelligence artificielle pour la médecine et la chirurgie"
-			},{
-				"link": "https://www.youtube.com/embed/dnnqs-rEUx8",
-				"name": "Jean Christophe MARAN - L'intelligence artificielle pour la médecine et la chirurgie"
-			},{
-				"link": "https://www.youtube.com/embed/dnnqs-rEUx8",
-				"name": "Jean Christophe MARAN - L'intelligence artificielle pour la médecine et la chirurgie"
-			},{
-				"link": "https://www.youtube.com/embed/dnnqs-rEUx8",
-				"name": "Jean Christophe MARAN - L'intelligence artificielle pour la médecine et la chirurgie"
+				"link": "https://www.youtube.com/embed/1AHvzwyMiLI",
+				"name": "EBCOG 2017 & TJOD 2017"
 			}]
 		}, {
 			"name": "RANZCOG",
