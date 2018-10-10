@@ -83,6 +83,8 @@ const createNewMessage = async (socket, currentUser, data) => {
     }
   })
 
+  member.last_read_at = new Date()
+
   const message = await (new Message({
     member_id: member.id,
     room_id,
