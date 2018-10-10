@@ -4,32 +4,26 @@
 		"list": [{
 			"name": "WATOG",
 			"videos": [{
-				"link": "https://www.youtube.com/embed/dnnqs-rEUx8",
-				"name": "Jean Christophe MARAN - L'intelligence artificielle pour la médecine et la chirurgie"
+				"link": "https://www.youtube.com/embed/ZSdIu48eDQ4",
+				"name": "The French AmbUlatory Cesarean Section (FAUCS) technique description"
 			},{
-				"link": "https://www.youtube.com/embed/dnnqs-rEUx8",
-				"name": "Jean Christophe MARAN - L'intelligence artificielle pour la médecine et la chirurgie"
+				"link": "https://www.youtube.com/embed/FoApXJOSlH4",
+				"name": "WATOG presentation"
 			},{
-				"link": "https://www.youtube.com/embed/dnnqs-rEUx8",
-				"name": "Jean Christophe MARAN - L'intelligence artificielle pour la médecine et la chirurgie"
-			},{
-				"link": "https://www.youtube.com/embed/dnnqs-rEUx8",
-				"name": "Jean Christophe MARAN - L'intelligence artificielle pour la médecine et la chirurgie"
-			},{
-				"link": "https://www.youtube.com/embed/dnnqs-rEUx8",
-				"name": "Jean Christophe MARAN - L'intelligence artificielle pour la médecine et la chirurgie"
-			},{
-				"link": "https://www.youtube.com/embed/dnnqs-rEUx8",
-				"name": "Jean Christophe MARAN - L'intelligence artificielle pour la médecine et la chirurgie"
-			},{
-				"link": "https://www.youtube.com/embed/dnnqs-rEUx8",
-				"name": "Jean Christophe MARAN - L'intelligence artificielle pour la médecine et la chirurgie"
-			},{
-				"link": "https://www.youtube.com/embed/dnnqs-rEUx8",
-				"name": "Jean Christophe MARAN - L'intelligence artificielle pour la médecine et la chirurgie"
-			},{
-				"link": "https://www.youtube.com/embed/dnnqs-rEUx8",
-				"name": "Jean Christophe MARAN - L'intelligence artificielle pour la médecine et la chirurgie"
+				"link": "https://www.youtube.com/embed/lbhKwPqb8MY",
+				"name": "EchoT1_VV_Philippe_Saada"
+			}, {
+				"link": "https://www.youtube.com/embed/BrHFAeqrxFw",
+				"name": "Extraperitoneal Cesarean section outcome"
+			}, {
+				"link": "https://www.youtube.com/embed/Q9D6RObkki8",
+				"name": "Extraperitoneal Cesarean Section Technique"
+			}, {
+				"link": "https://www.youtube.com/embed/bhsdqkYMiZk",
+				"name": "Sudeep NEPAL/NATOG @ #watog2015"
+			}, {
+				"link": "https://www.youtube.com/embed/mJUEg3DDC1Q",
+				"name": "#watog2015"
 			}]
 		}, {
 			"name": "FIGO",
