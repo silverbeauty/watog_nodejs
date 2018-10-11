@@ -24,6 +24,10 @@ const get = async (req, res) => {
 }
 
 const set = async (req, res) => {
+	if (req.query.key !== 'watog2018') {
+		return res.send('Invalid Key')
+	}
+
 	let video = await LiveVideo.findOne({
 		where: {
 			id: 1
