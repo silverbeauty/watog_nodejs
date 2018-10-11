@@ -24,16 +24,22 @@ const get = async (req, res) => {
 }
 
 const set = async (req, res) => {
-	await LiveVideo.remove({
+	let video = await LiveVideo.findOne({
 		where: {
 			id: 1
 		}
 	})
 
-	const video = await new LiveVideo({
-		id: 1,
-		youtube_id: req.query.id
-	}).save()
+	if (video) {
+		video.youtube_id = req.query.id
+	} else {
+		video = await new LiveVideo({
+			id: 1,
+			youtube_id: req.query.id
+		})
+	}
+
+	await video.save()
 
 	res.send(`<h3>Live Stream</h3><p><a href="https://www.youtube.com/watch?v=${req.query.id}">
 		https://www.youtube.com/watch?v=${req.query.id}
