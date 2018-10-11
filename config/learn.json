@@ -4,38 +4,35 @@
 		"list": [{
 			"name": "WATOG",
 			"videos": [{
-				"link": "https://www.youtube.com/embed/ZSdIu48eDQ4",
-				"name": "The French AmbUlatory Cesarean Section (FAUCS) technique description"
-			},{
 				"link": "https://www.youtube.com/embed/FoApXJOSlH4",
-				"name": "WATOG presentation"
+				"name": "WATOG introduction"
+			},{
+				"link": "https://www.youtube.com/embed/mJUEg3DDC1Q",
+				"name": "Meet watog !"
 			},{
 				"link": "https://www.youtube.com/embed/lbhKwPqb8MY",
-				"name": "EchoT1_VV_Philippe_Saada"
+				"name": "First trimester endovaginal ultrasound technique"
+			}, {
+				"link": "https://www.youtube.com/embed/ZSdIu48eDQ4",
+				"name": "The French AmbUlatory Cesarean Section technique (FAUCS)"
 			}, {
 				"link": "https://www.youtube.com/embed/BrHFAeqrxFw",
-				"name": "Extraperitoneal Cesarean section outcome"
-			}, {
-				"link": "https://www.youtube.com/embed/Q9D6RObkki8",
-				"name": "Extraperitoneal Cesarean Section Technique"
+				"name": "FAUCS outcome"
 			}, {
 				"link": "https://www.youtube.com/embed/bhsdqkYMiZk",
-				"name": "Sudeep NEPAL/NATOG @ #watog2015"
-			}, {
-				"link": "https://www.youtube.com/embed/mJUEg3DDC1Q",
-				"name": "#watog2015"
+				"name": "Watog countries"
 			}]
 		}, {
 			"name": "FIGO",
 			"videos": [{
-				"link": "https://www.youtube.com/embed/H1D_EJod6nI",
-				"name": "Reproductive Health & the Environment Symposium (FIGO XXI 2015 World Congress)"
-			},{
-				"link": "https://www.youtube.com/embed/e_R_56Qfunk",
-				"name": "FOGSI FIGO International Congress"
+				"link": "https://www.youtube.com/embed/7Tmxj_wDbgQ",
+				"name": "Message from the president"
 			},{
 				"link": "https://www.youtube.com/embed/xfN9sXornUA",
-				"name": "Register for the FIGO World Congress 2018"
+				"name": "Message from the chief executive"
+			},{
+				"link": "https://www.youtube.com/embed/XYDQhvNPbOc",
+				"name": "Maternal nutrition"
 			}]
 		}, {
 			"name": "ACOG",
