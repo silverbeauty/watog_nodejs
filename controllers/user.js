@@ -442,7 +442,7 @@ const sendVerifyEmail = async (req, res) => {
 
   // Save Verification Object
   await verify.save()
-  await EmailCtrl.send('support@watog.com', email, subject, html, html)
+  await EmailCtrl.send(process.env.VERIFY_EMAIL, email, subject, html, html)
   res.send({
     status: true
   })
