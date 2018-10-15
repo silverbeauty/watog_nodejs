@@ -29,6 +29,7 @@ Files, docs, db, test db are stored in the following paths defined in `config/pa
 #### SMTP_SECURE
 #### SMTP_USER
 #### SMTP_PASS
+#### VERIFY_EMAIL
 
 ## Endpoints
 
