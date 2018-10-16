@@ -105,7 +105,7 @@ const login = async (req, res) => {
   }
 
   // TODO: Include only email for now
-  const token = jwt.sign({email}, process.env.JWT_SECRET)
+  const token = jwt.sign({id:_user.id}, process.env.JWT_SECRET)
 
   const user = _user.get({
     plain: true
@@ -138,7 +138,7 @@ const checkAuth = async (req, res, next) => {
     // err
   }
 
-  req.currentUser = await User.findOne({ where: { email: decoded.email } })
+  req.currentUser = await User.findOne({ where: { id: decoded.id } })
 
   if (req.currentUser) {
     next()
