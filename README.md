@@ -301,6 +301,18 @@ Reset password by old password
   
   Send Verification SMS to `cell_phone` (Requires JWT set in `Authorization` header)
 
+#### POST `/user/verify/email/code`
+  
+  Verify email by code sent in the email
+
+  Request:
+
+  ```
+  {
+    code:   
+  }
+  ```
+
 #### GET `/user/verify/email/:code`. 
   
   Link sent in the verify email.  
