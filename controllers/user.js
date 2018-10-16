@@ -486,6 +486,10 @@ const sendVerifySms = async (req, res) => {
 
 const verifyEmail = async (req, res) => {
   const { code } = req.params
+  if (!code && code.length < 12) {
+    return res.status(400).send(`<h2>Invalid Link!</h2>`)
+  }
+
   const verify = await Verify.findOne({
     where: {
       code: code,
