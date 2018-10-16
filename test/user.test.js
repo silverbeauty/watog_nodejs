@@ -90,13 +90,15 @@ test('Create Sample Data', async t => {
 	  	}
 	  })
 
-	  t.is(verifyObj.user_id, meRes.body.data.id)
+	  t.is(aryVerifyObj.length, 2)
 
     if (i % 2 === 0) { // Verify email with link
+      const verifyObj = aryVerifyObj[0].code.length === 12 ? aryVerifyObj[0] : aryVerifyObj[1]
       const verifyEmailGetRes = await request(app)
         .get('/api/user/verify/email/' + verifyObj.code)
       t.is(verifyEmailGetRes.status, 200)
     } else { // Verify email with code
+      const verifyObj = aryVerifyObj[0].code.length === 4 ? aryVerifyObj[0] : aryVerifyObj[1]
       const verifyEmailCodeRes = await request(app)
         .post('/api/user/verify/email/code')
         .set({ 'Content-Type': 'application/json', Authorization: tokens[i] })
