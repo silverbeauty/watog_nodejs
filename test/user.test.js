@@ -92,10 +92,19 @@ test('Create Sample Data', async t => {
 
 	  t.is(verifyObj.user_id, meRes.body.data.id)
 
-	  const verifyEmailGetRes = await request(app)
-	  	.get('/api/user/verify/email/' + verifyObj.code)
-
-	  t.is(verifyEmailGetRes.status, 200)
+    if (i % 2 === 0) { // Verify email with link
+      const verifyEmailGetRes = await request(app)
+        .get('/api/user/verify/email/' + verifyObj.code)
+      t.is(verifyEmailGetRes.status, 200)
+    } else { // Verify email with code
+      const verifyEmailCodeRes = await request(app)
+        .post('/api/user/verify/email/code')
+        .set({ 'Content-Type': 'application/json', Authorization: tokens[i] })
+        .send({
+          code: verifyObj.code
+        })
+      t.is(verifyEmailCodeRes.status, 200)
+    }
 
 	  // Send SMS
 	  const smsRes = await request(app)

@@ -419,6 +419,8 @@ const sendVerifyEmail = async (req, res) => {
   const { email, id } = currentUser
   const subject = 'Please confirm your email address in Watog'
   const code = randomstring.generate(12)
+  const short_code = randomstring.generate(4)
+
   const link = process.env.WATOG_DOMAIN + '/api/user/verify/email/' + code
   const html = `<html>
     <head></head>
@@ -430,18 +432,25 @@ const sendVerifyEmail = async (req, res) => {
         link to verify your email address. 
         <a href="${link}">Verify</a>
         ${link}
+
+        <div>
+          You can use the following code in the app to verify:
+          <div><b>${short_code}</b></div>
+        </div>
       </p>
     </body>
     </html>`
 
-  const verify = new Verify({
+  await Verify.bulkCreate([{
     user_id: id,
     type: 'email',
-    code
-  })
+    code    
+  }, {
+    user_id: id,
+    type: 'email',
+    code: short_code
+  }])
 
-  // Save Verification Object
-  await verify.save()
   await EmailCtrl.send(process.env.VERIFY_EMAIL, email, subject, html, html)
   res.send({
     status: true
