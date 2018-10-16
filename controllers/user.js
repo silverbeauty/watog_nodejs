@@ -515,6 +515,56 @@ const verifyEmail = async (req, res) => {
     `)
 }
 
+const verifyEmailByCode = async (req, res) => {
+  const { code } = req.body
+  const { currentUser } = req
+
+  const verify = await Verify.findOne({
+    where: {
+      code: code,
+      type: 'email',
+      user_id: currentUser.id
+    }
+  })
+
+  if (!verify) {
+    return res.status(400).send({
+      status: false,
+      error: 'invalid_code'
+    })
+  }
+
+  const created = verify.createdAt.getTime()
+  const now = new Date().getTime()
+
+  if (now - created > 1000 * 60 * 60) { // 1 hr expire
+    return res.status(400).send({
+      status: false,
+      error: 'expired_code'
+    })
+  }
+
+  if (currentUser.email_verified_date) { // already verified
+    return res.status(400).send({
+      status: false,
+      error: 'already_verified'
+    })
+  }
+
+  currentUser.email_verified_date = new Date()
+  const savedUser = await currentUser.save()
+  const result = savedUser.get({
+    plain: true
+  })
+
+  delete result.password
+
+  res.send({
+    status: true,
+    data: result
+  })
+}
+
 const verifySms = async (req, res) => {
   const { currentUser } = req
   const { code } = req.params

@@ -48,6 +48,9 @@ router.get('/', UserCtrl.checkAuth, [
 ], catchError(UserCtrl.queryUsers))
 
 // Send Verify Email
+router.post('/verify/email/code', UserCtrl.checkAuth, catchError(UserCtrl.verifyEmailByCode))
+
+// Send Verify Email
 router.post('/verify/email', UserCtrl.checkAuth, catchError(UserCtrl.sendVerifyEmail))
 
 // Send Verify SMS
