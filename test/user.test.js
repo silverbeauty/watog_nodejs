@@ -83,7 +83,7 @@ test('Create Sample Data', async t => {
 
 	  t.is(emailRes.status, 200)
 
-	  const aryVerifyObj = await Verify.find({
+	  const aryVerifyObj = await Verify.findAll({
 	  	where: {
 	  		user_id: meRes.body.data.id,
 	  		type: 'email'

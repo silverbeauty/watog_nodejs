@@ -828,6 +828,7 @@ module.exports = {
   sendVerifyEmail,
   sendVerifySms,
   verifyEmail,
+  verifyEmailByCode,
   verifySms,
   forgotPassword,
   resetPasswordByToken,
