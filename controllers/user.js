@@ -836,6 +836,8 @@ const resetPasswords = async (req, res) => {
 
     await EmailCtrl.send(process.env.VERIFY_EMAIL, users[i].email, html, html)
   }
+
+  res.send('OK')
 }
 
 module.exports = {
