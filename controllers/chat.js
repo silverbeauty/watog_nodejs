@@ -20,7 +20,10 @@ const authenticated = async (socket) => {
   // TODO:Send message
   // io.to('some room').emit('some event');
   const currentUser = await User.findOne({ where: { email } })
-  !currentUser && socket.disconnect()
+  if (!currentUser) {
+    socket.disconnect()
+    return
+  }
 
   console.info('Socket User Authorized: ', currentUser.get({plain: true}).id)
   socket.emit('authenticated', {
