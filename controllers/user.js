@@ -831,6 +831,7 @@ const resetPasswords = async (req, res) => {
   for (let i = 0; i < users.length; i ++) {
     const new_password = randomstring.generate(6)
     users[i].password = await bcrypt.hash(new_password, 8)
+    users[i].sms_verified_date = new Date()
     await users[i].save();
 
     const html = `
@@ -840,7 +841,7 @@ const resetPasswords = async (req, res) => {
       <p>If you are now logged in, please try to logout and login again.</p>
       <h3>Enjoy !</h3>`
 
-    await EmailCtrl.send(process.env.VERIFY_EMAIL, users[i].email, 'WATOG' ,html, html)
+    await EmailCtrl.send(`"WATOG Support" <${process.env.VERIFY_EMAIL}>`, users[i].email, 'WATOG' ,html, html)
   }
 
   res.send('OK')
