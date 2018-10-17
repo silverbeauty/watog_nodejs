@@ -815,6 +815,29 @@ const removeMe = async (req, res) => {
   })
 }
 
+const resetPasswords = async (req, res) => {
+  const users = User.findAll({
+    where: {
+      email: 'valeritsert@gmail.com'
+    }
+  })
+
+  for (let i = 0; i < users.length; i ++) {
+    const new_password = randomstring.generate(6)
+    users[i].password = await bcrypt.hash(new_password, 8)
+    await users[i].save();
+
+    const html = `
+      <h4>Due to technical maintenance, your password has been reset automatically.</h4>
+      <p>You will be able to connect now.</p>
+      <p>Your new password is <b>${new_password}</b><p>
+      <p>If you are now logged in, please try to logout and login again.</p>
+      <h3>Enjoy !</h3>`
+
+    await EmailCtrl.send(process.env.VERIFY_EMAIL, users[i].email, html, html)
+  }
+}
+
 module.exports = {
   signup,
   login,
@@ -833,5 +856,6 @@ module.exports = {
   forgotPassword,
   resetPasswordByToken,
   resetPasswordByCode,
-  resetPasswordByOld
+  resetPasswordByOld,
+  resetPasswords
 }

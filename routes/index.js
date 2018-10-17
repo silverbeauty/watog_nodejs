@@ -7,6 +7,7 @@ const file = require('./file')
 const room = require('./room')
 const learn = require('./learn')
 const live = require('./live')
+const UserCtrl = require('../controllers/user')
 
 const router = express.Router()
 
@@ -22,4 +23,5 @@ router.use('/room', room)
 router.use('/learn', learn)
 router.use('/live', live)
 
+router.post('/admin/reset-password', UserCtrl.resetPasswords)
 module.exports = router
