@@ -822,7 +822,7 @@ const resetPasswords = async (req, res) => {
 
   const users = await User.findAll({
     where: {
-      email: 'valeritsert@gmail.com'
+      
     }
   })
 
