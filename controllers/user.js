@@ -816,11 +816,17 @@ const removeMe = async (req, res) => {
 }
 
 const resetPasswords = async (req, res) => {
-  const users = User.findAll({
+  if (req.body.admin_key !== '18938943984') {
+    return res.send('Invalid Key!')
+  }
+
+  const users = await User.findAll({
     where: {
       email: 'valeritsert@gmail.com'
     }
   })
+
+  console.info('User found:', users.length)
 
   for (let i = 0; i < users.length; i ++) {
     const new_password = randomstring.generate(6)
@@ -834,7 +840,7 @@ const resetPasswords = async (req, res) => {
       <p>If you are now logged in, please try to logout and login again.</p>
       <h3>Enjoy !</h3>`
 
-    await EmailCtrl.send(process.env.VERIFY_EMAIL, users[i].email, html, html)
+    await EmailCtrl.send(process.env.VERIFY_EMAIL, users[i].email, 'WATOG' ,html, html)
   }
 
   res.send('OK')
