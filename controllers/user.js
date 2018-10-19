@@ -670,19 +670,23 @@ const forgotPassword = async (req, res) => {
     <body style="font-family:sans-serif;">
       <h1 style="text-align:center">We received a request to reset your password</h1>
       <p>
+        <h3>WATOG Support</h3>
+
+        Please use this code in your app: <b>${code}/b> to reset your password.
+      </p>
+    </body>
+    </html>`
+
+  await EmailCtrl.send('support@watog.com', _user.email, 'Reset your Watog password', html, html)
+/*
         Use this link below to set up a new password.
         <p>
         <a href="${link}"><b>Reset Your Password</b></a>
         </p>
         Or simply you can copy this link to your browser:
         <b>${link}</b>
+*/
 
-        Use this code in your app: <b>${code}/b>
-      </p>
-    </body>
-    </html>`
-
-  await EmailCtrl.send('support@watog.com', _user.email, 'Reset your Watog password', html, html)
   res.send({
     status: true
   })
