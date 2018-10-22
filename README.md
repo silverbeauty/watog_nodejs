@@ -262,12 +262,32 @@ Send password reset link through email or verification code to cell phone
 
 #### POST `/reset-password/:token`  
 
-Reset password by the token sent by email
+Reset password by the link sent by email
 
   Body:  
   ```
   {
     password
+  }
+  ```
+
+  Response:  
+  ```
+  {
+    status: true
+  }
+  ```
+
+#### POST `/reset-password`  
+
+Reset password by the code sent by email
+
+  Rquest Body:  
+  ```
+  {
+    password,
+    email,
+    code
   }
   ```
 
