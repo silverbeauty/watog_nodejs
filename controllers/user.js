@@ -672,7 +672,7 @@ const forgotPassword = async (req, res) => {
       <p>
         <h3>WATOG Support</h3>
 
-        Please use this code in your app: <b>${code}/b> to reset your password.
+        Please use this code in your app: <b>${code}</b> to reset your password.
       </p>
     </body>
     </html>`
