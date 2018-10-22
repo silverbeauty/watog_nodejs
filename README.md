@@ -136,7 +136,7 @@ Files, docs, db, test db are stored in the following paths defined in `config/pa
 
 ### User APIs
 
-#### GET `/user/me`  
+#### GET `/api/user/me`  
   Return own profile by JWT  
 
   Response:  
@@ -173,7 +173,7 @@ Files, docs, db, test db are stored in the following paths defined in `config/pa
   ```
 
 
-#### PUT `/user/me`  
+#### PUT `/api/user/me`  
 
   Edit own profile by JWT  
 
@@ -187,7 +187,7 @@ Files, docs, db, test db are stored in the following paths defined in `config/pa
   }
   ```
 
-#### PUT `/user/me`  
+#### PUT `/api/user/me`  
 
   Edit own profile by JWT  
 
@@ -200,7 +200,7 @@ Files, docs, db, test db are stored in the following paths defined in `config/pa
   }
   ```
 
-#### GET `/user?[QUERY]`  
+#### GET `/api/user?[QUERY]`  
   Query users with [QUERY] - QUERY can be missing  
 
   Query:  
@@ -219,7 +219,7 @@ Files, docs, db, test db are stored in the following paths defined in `config/pa
     "data": [User Object]
   }
   ``` 
-#### GET `/user/:id`
+#### GET `/api/user/:id`
   Return a user with id  
 
   Response:  
@@ -232,7 +232,7 @@ Files, docs, db, test db are stored in the following paths defined in `config/pa
   }
   ```
 
-#### PUT `/user/me`
+#### PUT `/api/user/me`
   Edit own profile
 
   Body:
@@ -243,7 +243,7 @@ Files, docs, db, test db are stored in the following paths defined in `config/pa
   }
   ```
 
-#### POST `/user/forgot-password`
+#### POST `/api/user/forgot-password`
 
 Send password reset link through email or verification code to cell phone  
   Body:  
@@ -260,7 +260,7 @@ Send password reset link through email or verification code to cell phone
   }
   ```
 
-#### POST `/user/reset-password/:token`  
+#### POST `/api/user/reset-password/:token`  
 
 Reset password by the link sent by email
 
@@ -278,7 +278,7 @@ Reset password by the link sent by email
   }
   ```
 
-#### POST `/user/reset-password`  
+#### POST `/api/user/reset-password`  
 
 Reset password by the code sent by email
 
@@ -313,15 +313,15 @@ Reset password by old password
 
 ### Verify APIs  
 
-#### POST `/user/verify/email`  
+#### POST `/api/user/verify/email`  
   
   Send Verification Email (Requires JWT set in `Authorization` header)  
 
-#### POST `/user/verify/sms`. 
+#### POST `/api/user/verify/sms`. 
   
   Send Verification SMS to `cell_phone` (Requires JWT set in `Authorization` header)
 
-#### POST `/user/verify/email/code`
+#### POST `/api/user/verify/email/code`
   
   Verify email by code sent in the email
 
@@ -333,13 +333,13 @@ Reset password by old password
   }
   ```
 
-#### GET `/user/verify/email/:code`. 
+#### GET `/api/user/verify/email/:code`. 
   
   Link sent in the verify email.  
   User will click this link.   
   Response: normal HTTP response. 
 
-#### GET `/user/verify/sms/:code`
+#### GET `/api/user/verify/sms/:code`
   
   User should make a GET request with the codes sent by SMS.  
 
