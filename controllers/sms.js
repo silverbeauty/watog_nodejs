@@ -23,7 +23,7 @@ module.exports.send = (phoneNumber, text) => {
   throw error // Invalid phone number
 
   return twilio.messages
-    .create({from: fromNumber, body: text, to: phoneNumber})
+    .create({from: fromNumber, body: text, to: e164Phone})
     .then(message => {
       console.info('SMS Sent:', message)
       return message
