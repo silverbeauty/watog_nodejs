@@ -16,11 +16,13 @@ module.exports.send = (phoneNumber, text) => {
     })
   }
 
-  const error = {
-    error: 'Invalid Phone Number'
-  }
+  if (!e164Phone) {
+    const error = {
+      error: 'Invalid Phone Number'
+    }
 
-  throw error // Invalid phone number
+    throw error // Invalid phone number
+  }
 
   return twilio.messages
     .create({from: fromNumber, body: text, to: e164Phone})
