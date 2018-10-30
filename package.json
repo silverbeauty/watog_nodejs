@@ -34,6 +34,7 @@
     "nodemon": "^1.18.3",
     "nyc": "^13.0.1",
     "package.json": "^2.0.1",
+    "phone": "^2.2.0",
     "pug": "2.0.0-beta11",
     "randomstring": "^1.1.5",
     "sequelize": "^4.38.0",
