@@ -15,7 +15,7 @@
   "dependencies": {
     "ajv": "^6.5.2",
     "base64-img": "^1.0.4",
-    "bcrypt": "^3.0.0",
+    "bcrypt": "^5.0.0",
     "cookie-parser": "~1.4.3",
     "cors": "^2.8.4",
     "debug": "~2.6.9",
